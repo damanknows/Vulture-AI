@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: vulmap-backend
+    environment:
+      # These can be overridden by an .env file in the project root.
+      DB_URL: postgresql+psycopg://vulmap:vulmap@db:5432/vulmap
+      # NVD_API_KEY: <set your key here or in .env>
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      - ./:/app
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: vulmap-frontend
+    environment:
+      VITE_API_BASE: http://localhost:8000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  # Optional: PostgreSQL. Falls back to SQLite if not used (default dev mode).
+  db:
+    image: postgres:16-alpine
+    container_name: vulmap-db
+    environment:
+      POSTGRES_USER: vulmap
+      POSTGRES_PASSWORD: vulmap
+      POSTGRES_DB: vulmap
+    ports:
+      - "5432:5432"
+    volumes:
+      - vulmap-pgdata:/var/lib/postgresql/data
+
+volumes:
+  vulmap-pgdata:
