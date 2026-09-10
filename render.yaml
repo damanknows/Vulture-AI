@@ -1,0 +1,22 @@
+services:
+  # ── Vulture AI Unified Web Service (Full-Stack + Nmap) ──────────────────────
+  - type: web
+    name: vulture-ai
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: HOST
+        value: 0.0.0.0
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: DB_URL
+        value: sqlite:////app/vulmap.db
+      - key: ALLOWED_TARGETS
+        value: 127.0.0.1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
+      - key: NVD_API_KEY
+        sync: false

@@ -51,7 +51,8 @@ export interface ScanDetail extends ScanSummary {
   hosts: Host[]
 }
 
-const BASE = '/api'
+const API_ORIGIN = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+const BASE = `${API_ORIGIN}/api`
 
 async function jsonFetch<T>(path: string, init?: RequestInit): Promise<T> {
   const resp = await fetch(`${BASE}${path}`, {
