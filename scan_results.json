@@ -1,0 +1,34 @@
+{
+    "target": "https://api.internal-app.local",
+    "scan_timestamp": "2026-08-25T19:30:00Z",
+    "total_vulnerabilities": 3,
+    "vulnerabilities": [
+        {
+            "id": "VULN-001",
+            "cve": "CVE-2023-34362",
+            "severity": "CRITICAL",
+            "title": "SQL Injection in Authentication Route",
+            "endpoint": "/api/v1/auth/login",
+            "description": "Unsanitized user input in the username field allows unauthenticated SQL injection.",
+            "remediation": "Use parameterized queries and prepared statements. Sanitize all user inputs."
+        },
+        {
+            "id": "VULN-002",
+            "cve": "CVE-2024-21413",
+            "severity": "HIGH",
+            "title": "Outdated Dependency: Insecure JWT Library",
+            "endpoint": "package.json (jsonwebtoken < 9.0.0)",
+            "description": "The JWT library used for session verification contains an algorithm confusion vulnerability.",
+            "remediation": "Upgrade jsonwebtoken to version 9.0.2 or higher."
+        },
+        {
+            "id": "VULN-003",
+            "cve": "N/A",
+            "severity": "LOW",
+            "title": "Missing Security Headers",
+            "endpoint": "/",
+            "description": "The web server response headers lack 'Content-Security-Policy' and 'X-Frame-Options'.",
+            "remediation": "Configure reverse proxy / web server to inject modern security headers."
+        }
+    ]
+}
