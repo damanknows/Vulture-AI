@@ -5,9 +5,9 @@ import logging
 import os
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from backend.config import PROJECT_ROOT, get_settings
@@ -34,7 +34,6 @@ def create_app() -> FastAPI:
 
     # CORS configuration
     cors_origins = settings.cors_origins
-    # If CORS_ORIGINS is "*" or contains "*", allow all origins
     if "*" in cors_origins:
         app.add_middleware(
             CORSMiddleware,
@@ -57,16 +56,20 @@ def create_app() -> FastAPI:
         init_db()
         log.info("vulture-ai API ready (cors origins=%s)", cors_origins)
 
+    # ── Meta endpoints ────────────────────────────────────────────────────────
     @app.get("/health", tags=["meta"])
     def health() -> dict:
         return {"status": "ok"}
 
-    # Include API routers under /api
-    app.include_router(scans_router)
-    app.include_router(hosts_router)
+    # ── Include API routers under /api prefix ────────────────────────────────
+    # scans_router has prefix="/scans" → becomes /api/scans
+    # hosts_router has prefix="/hosts" → becomes /api/hosts
+    # chat_router has prefix="" with explicit /api/chat paths
+    app.include_router(scans_router, prefix="/api")
+    app.include_router(hosts_router, prefix="/api")
     app.include_router(chat_router)
 
-    # SPA static files serving (for all-in-one unified deployments on Render)
+    # ── SPA static files serving ──────────────────────────────────────────────
     dist_candidates = [
         PROJECT_ROOT / "frontend" / "dist",
         PROJECT_ROOT / "dist",
@@ -82,12 +85,14 @@ def create_app() -> FastAPI:
             app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
 
         @app.get("/{full_path:path}", include_in_schema=False)
-        async def serve_spa(full_path: str):
-            if full_path.startswith("api/") or full_path == "api":
-                return {"detail": "Not Found"}
+        async def serve_spa(request: Request, full_path: str):
+            # Let real API routes through — never serve index.html for /api/ or /health
+            if full_path.startswith("api/") or full_path == "api" or full_path == "health":
+                return JSONResponse({"detail": "Not Found"}, status_code=404)
             file_path = dist_dir / full_path
             if file_path.is_file():
                 return FileResponse(file_path)
+            # All SPA routes (e.g. /app, /scans/5) fall back to index.html
             return FileResponse(dist_dir / "index.html")
 
     return app
