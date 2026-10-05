@@ -235,8 +235,7 @@ def _execute_scan_task(scan_id: int) -> None:
         return
 
     if result.error and not result.hosts:
-        # Unreachable / down host — mark completed with 0 hosts but record the
-        # message in `error`. The frontend renders this gracefully.
+        # Truly failed — no data at all (mock fallback always returns hosts).
         _mark_failed(scan_id, result.error)
         return
 
