@@ -72,6 +72,7 @@ function AppShell() {
           <Routes>
             <Route path="/" element={<Dashboard onScanQueued={() => setRefreshKey((k) => k + 1)} />} />
             <Route path="/scans/:id" element={<ScanDetailView />} />
+            <Route path="*" element={<ScanDetailView />} />
           </Routes>
         </div>
         <aside className="space-y-3">

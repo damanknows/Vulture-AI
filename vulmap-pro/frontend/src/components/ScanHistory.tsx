@@ -84,7 +84,7 @@ export function ScanHistory({ refreshKey }: { refreshKey?: number }) {
                   </td>
                   <td className="px-3 py-2.5 text-right">
                     <Link
-                      to={`/scans/${s.id}`}
+                      to={`/app/scans/${s.id}`}
                       className="text-acc hover:underline inline-flex items-center gap-0.5"
                     >
                       View →
