@@ -209,6 +209,10 @@ def _execute_scan_task(scan_id: int) -> None:
     settings = get_settings()
 
     # Move QUEUED -> RUNNING in its own session.
+    # IMPORTANT: capture scan.target as a plain string BEFORE the session closes.
+    # Accessing scan.target after the `with` block causes DetachedInstanceError
+    # because SQLAlchemy unbinds the ORM object when the session is closed.
+    scan_target: str = ""
     with session_scope() as db:
         scan = db.get(Scan, scan_id)
         if scan is None:
@@ -217,11 +221,12 @@ def _execute_scan_task(scan_id: int) -> None:
         if not scan.transition_to(ScanState.RUNNING):
             log.warning("scan id=%s could not transition to running (state=%s)", scan_id, scan.state)
             return
+        scan_target = str(scan.target)  # ← copy before session closes
 
-    # Run nmap (no DB lock held).
+    # Run nmap (no DB lock held — use the cached string, NOT scan.target).
     try:
         result = run_scan(
-            scan.target,
+            scan_target,
             nmap_binary=settings.nmap_binary,
             timeout=settings.scan_timeout_seconds,
         )
