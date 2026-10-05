@@ -14,6 +14,7 @@ from backend.config import PROJECT_ROOT, get_settings
 from backend.db.session import init_db
 from backend.routes.hosts import router as hosts_router
 from backend.routes.scans import router as scans_router
+from backend.routes.chat import router as chat_router
 
 
 logging.basicConfig(
@@ -63,6 +64,7 @@ def create_app() -> FastAPI:
     # Include API routers under /api
     app.include_router(scans_router)
     app.include_router(hosts_router)
+    app.include_router(chat_router)
 
     # SPA static files serving (for all-in-one unified deployments on Render)
     dist_candidates = [
