@@ -1,5 +1,6 @@
 import json
 import random
+random.seed(42)
 import csv
 import os
 

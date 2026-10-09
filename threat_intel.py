@@ -35,23 +35,34 @@ def _write_cache(url: str, data: dict):
     except:
         pass
 
+
 def _fetch_url(url: str, headers: dict = None) -> dict:
     cached = _read_cache(url)
     if cached is not None:
         return cached
     
-    # Simple sleep for rate limiting NVD. Wait 6 seconds (10 req/min for safety)
-    if "nvd.nist.gov" in url:
-        time.sleep(6)
-        
-    try:
-        resp = requests.get(url, headers=headers, timeout=15)
-        resp.raise_for_status()
-        data = resp.json()
-        _write_cache(url, data)
-        return data
-    except Exception as e:
-        return {"error": str(e)}
+    max_retries = 3
+    base_delay = 6
+    
+    for attempt in range(max_retries):
+        if "nvd.nist.gov" in url:
+            time.sleep(base_delay * (attempt + 1))
+            
+        try:
+            resp = requests.get(url, headers=headers, timeout=15)
+            if resp.status_code == 429:
+                continue # Retry on rate limit
+            resp.raise_for_status()
+            data = resp.json()
+            _write_cache(url, data)
+            return data
+        except requests.exceptions.RequestException as e:
+            if attempt == max_retries - 1:
+                return {"error": str(e)}
+            time.sleep(2 ** attempt)
+        except Exception as e:
+            return {"error": str(e)}
+
 
 def fetch_nvd(cve_id: str) -> dict:
     url = f"https://services.nvd.nist.gov/rest/json/cves/2.0?cveId={cve_id}"
@@ -96,9 +107,14 @@ def fetch_epss(cve_ids: list[str]) -> dict:
             "error": data["error"]
         }
     
+
     results = {}
     for item in data.get("data", []):
-        results[item["cve"]] = float(item["epss"])
+        results[item["cve"]] = {
+            "epss": float(item["epss"]),
+            "date": item.get("date")
+        }
+
         
     return {
         "source": "epss",
@@ -151,6 +167,33 @@ def search_nvd(keyword: str) -> dict:
     return {
         "source": "nvd",
         "source_record_id": f"search:{keyword}",
+        "retrieved_at": retrieved_at,
+        "data": data
+    }
+
+
+def search_nvd_by_cpe(cpe_name: str) -> dict:
+    params = {"cpeName": cpe_name}
+    url = f"https://services.nvd.nist.gov/rest/json/cves/2.0?{urlencode(params)}"
+    headers = {}
+    api_key = os.environ.get("NVD_API_KEY")
+    if api_key:
+        headers["apiKey"] = api_key
+        
+    retrieved_at = datetime.now(timezone.utc).isoformat()
+    data = _fetch_url(url, headers=headers)
+    
+    if "error" in data:
+        return {
+            "source": "nvd",
+            "source_record_id": f"cpe:{cpe_name}",
+            "retrieved_at": retrieved_at,
+            "error": data["error"]
+        }
+        
+    return {
+        "source": "nvd",
+        "source_record_id": f"cpe:{cpe_name}",
         "retrieved_at": retrieved_at,
         "data": data
     }

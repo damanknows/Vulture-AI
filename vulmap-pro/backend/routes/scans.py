@@ -20,8 +20,8 @@ from sqlalchemy.orm import Session, selectinload
 from backend.config import get_settings, is_target_allowed
 from backend.db.models import Host, Port, Scan, ScanState, Vulnerability
 from backend.db.session import get_session, session_scope
-from scanner import cve_matcher
-from scanner.scanner import run_scan
+from . import cve_matcher
+from .scanner import run_scan
 
 log = logging.getLogger(__name__)
 

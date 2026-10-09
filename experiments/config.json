@@ -1,0 +1,16 @@
+{
+  "dataset": {
+    "file": "data/benchmark/cves.csv",
+    "md5_hash": "aff86523f247ec55cf26a12263cfe60e",
+    "sample_count": 40
+  },
+  "metrics": {
+    "ndcg": "Computes Normalized Discounted Cumulative Gain at K using relevance tiers (0-3). Uses standard exponential numerator (2^rel - 1) / log2(i+2).",
+    "spearman": "Computes Spearman Rank Correlation Coefficient across strictly ordered 1D lists."
+  },
+  "ablations": {
+    "vrs_no_epss": {"w_C": 0.30, "w_E": 0.00, "w_K": 0.25, "w_N": 0.25, "w_A": 0.20},
+    "vrs_no_kev": {"w_C": 0.30, "w_E": 0.25, "w_K": 0.00, "w_N": 0.25, "w_A": 0.20},
+    "vrs_no_context": {"w_C": 0.40, "w_E": 0.30, "w_K": 0.30, "w_N": 0.00, "w_A": 0.00}
+  }
+}

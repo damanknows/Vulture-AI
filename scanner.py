@@ -1,12 +1,24 @@
 import os
+import shutil
+import ipaddress
 import subprocess
 import xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 
 def is_target_allowed(target: str) -> bool:
-    allowed_targets = os.environ.get("VULTURE_ALLOWED_TARGETS", "127.0.0.1,localhost").split(",")
+    allowed_targets = os.environ.get("VULTURE_ALLOWED_TARGETS", "").split(",")
     allowed_targets = [t.strip() for t in allowed_targets if t.strip()]
-    return target in allowed_targets
+    if target in allowed_targets:
+        return True
+    
+    # By default, block everything unless explicitly in allowlist
+    try:
+        ip = ipaddress.ip_address(target)
+        # Block private, loopback, link-local, multicast, reserved, public
+        # Effectively blocks EVERYTHING by default
+        return False
+    except ValueError:
+        return False
 
 def scan_target(target: str, ports: str = "1-1000", timeout: int = 300) -> dict:
     """
@@ -20,6 +32,7 @@ def scan_target(target: str, ports: str = "1-1000", timeout: int = 300) -> dict:
     result = {
         "target": target,
         "scan_status": "failed",
+        "scanner_version": None,
         "findings": [],
         "error": None,
         "raw_xml_path": ""
@@ -29,6 +42,11 @@ def scan_target(target: str, ports: str = "1-1000", timeout: int = 300) -> dict:
         result["error"] = f"Target {target} is not in the allowlist."
         return result
 
+    
+    if not shutil.which("nmap"):
+        result["error"] = "Configuration error: Nmap is not installed or not in PATH."
+        return result
+        
     raw_dir = os.path.join("data", "raw", "nmap")
     os.makedirs(raw_dir, exist_ok=True)
     
@@ -76,6 +94,8 @@ def scan_target(target: str, ports: str = "1-1000", timeout: int = 300) -> dict:
 
     try:
         root = ET.fromstring(xml_output)
+        scanner_version = root.get('version')
+        result["scanner_version"] = scanner_version
     except ET.ParseError as e:
         result["error"] = f"Failed to parse Nmap XML output: {e}"
         return result
@@ -105,10 +125,12 @@ def scan_target(target: str, ports: str = "1-1000", timeout: int = 300) -> dict:
                 product = None
                 version = None
                 
+                
                 if service_el is not None:
                     service = service_el.get('name')
                     product = service_el.get('product')
                     version = service_el.get('version')
+                    conf = service_el.get('conf')
                 
                 result["findings"].append({
                     "target": host_target,
@@ -117,6 +139,7 @@ def scan_target(target: str, ports: str = "1-1000", timeout: int = 300) -> dict:
                     "service": service,
                     "product": product,
                     "version": version,
+                    "detection_confidence": conf,
                     "evidence_source": "nmap",
                     "scan_timestamp": scan_timestamp
                 })

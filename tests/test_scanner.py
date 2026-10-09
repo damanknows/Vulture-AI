@@ -35,6 +35,7 @@ def test_scan_target_allowlist_rejection():
     assert "not in the allowlist" in result["error"]
 
 def test_scan_target_success(monkeypatch, mock_nmap_xml, tmp_path):
+    monkeypatch.setenv("VULTURE_ALLOWED_TARGETS", "127.0.0.1")
     # Mock subprocess.run
     class MockProcess:
         returncode = 0
@@ -62,6 +63,7 @@ def test_scan_target_success(monkeypatch, mock_nmap_xml, tmp_path):
     assert finding["evidence_source"] == "nmap"
 
 def test_scan_target_timeout(monkeypatch):
+    monkeypatch.setenv("VULTURE_ALLOWED_TARGETS", "127.0.0.1")
     def mock_run_timeout(*args, **kwargs):
         raise subprocess.TimeoutExpired(cmd=args[0], timeout=kwargs.get("timeout", 0))
         
@@ -72,9 +74,44 @@ def test_scan_target_timeout(monkeypatch):
     assert "exceeded timeout" in result["error"]
 
 @pytest.mark.integration
-@pytest.mark.skip(reason="integration")
-def test_real_scan_target():
+# @pytest.mark.skip
+def test_real_scan_target(monkeypatch):
+    monkeypatch.setenv("VULTURE_ALLOWED_TARGETS", "127.0.0.1")
     # This will run a real nmap scan if executed
     result = scan_target("127.0.0.1", "22")
     assert result["scan_status"] == "completed"
     assert isinstance(result["findings"], list)
+
+def test_scan_target_empty_results(monkeypatch):
+    monkeypatch.setenv("VULTURE_ALLOWED_TARGETS", "127.0.0.1")
+    class MockProcess:
+        returncode = 0
+        stdout = "<?xml version=\"1.0\"?><nmaprun></nmaprun>"
+        stderr = ""
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: MockProcess())
+    result = scan_target("127.0.0.1")
+    assert result["scan_status"] == "completed"
+    assert len(result["findings"]) == 0
+
+def test_scan_target_malformed_xml(monkeypatch):
+    monkeypatch.setenv("VULTURE_ALLOWED_TARGETS", "127.0.0.1")
+    class MockProcess:
+        returncode = 0
+        stdout = "<?xml version=\"1.0\"?><nmaprun><host>" # malformed
+        stderr = ""
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: MockProcess())
+    result = scan_target("127.0.0.1")
+    assert result["scan_status"] == "failed"
+    assert "Failed to parse Nmap XML" in result["error"]
+
+def test_scan_target_scanner_failure(monkeypatch):
+    monkeypatch.setenv("VULTURE_ALLOWED_TARGETS", "127.0.0.1")
+    class MockProcess:
+        returncode = 1
+        stdout = ""
+        stderr = "Error allocating memory"
+    monkeypatch.setattr(subprocess, "run", lambda *args, **kwargs: MockProcess())
+    result = scan_target("127.0.0.1")
+    assert result["scan_status"] == "failed"
+    assert "Nmap failed" in result["error"]
+    assert "Error allocating memory" in result["error"]
