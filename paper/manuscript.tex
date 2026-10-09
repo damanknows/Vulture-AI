@@ -1,0 +1,52 @@
+\documentclass[conference]{IEEEtran}
+
+\newcommand{\todo}[1]{\textbf{TODO: #1}}
+\begin{document}
+
+\title{Vulture-AI: Context-Aware Vulnerability Prioritization with Retrieval-Augmented Generation}
+
+\author{\IEEEauthorblockN{Anonymous Authors}
+\IEEEauthorblockA{Anonymous Institute\\
+Email: anonymous@example.com}}
+
+\maketitle
+
+\begin{abstract}
+Vulnerability prioritization is challenging. In this paper, we introduce the Vulture Risk Score (VRS) and a retrieval-augmented generation (RAG) assistant...
+\end{abstract}
+
+\section{Introduction}
+Vulnerabilities are typically ranked by CVSS \cite{first2023cvss}. However, real-world risk requires threat intelligence (e.g., EPSS \cite{jacobs2021epss}, CISA KEV \cite{cisa2023kev}) and asset context \cite{prioritization2022}.
+
+\section{Related Work}
+Recent work explores LLMs \cite{smith2023llm} and RAG \cite{rag2023sec} for security.
+
+\section{Methodology}
+The Vulture Risk Score (VRS) is defined as:
+\begin{equation}
+VRS = 100 \times (w_C C + w_E E + w_K K + w_N N + w_A A)
+\end{equation}
+
+\section{Experimental Setup}
+We generated a benchmark of 40 CVEs, sourced from NVD \cite{nvd2023}. 
+
+\section{Results}
+Table \ref{tab:main} compares models.
+\todo{insert result: explain NDCG@10 from main\_comparison.tex}
+\input{../experiments/results/tables/main_comparison.tex}
+
+\section{Ablation \& Discussion}
+Table \ref{tab:ablation} shows our ablation study.
+\todo{insert result: explain the zero impact of KEV weight due to policy override}
+\input{../experiments/results/tables/ablation.tex}
+
+\section{Threats to Validity}
+Synthetic benchmark constraints.
+
+\section{Conclusion}
+VRS outperforms CVSS.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
