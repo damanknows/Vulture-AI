@@ -1,25 +1,54 @@
-# Reproducibility Guide
+# Vulture Risk Score (VRS) Experimental Pipeline
 
-## Environment Setup
-- Python: 3.14.7
-- OS: Linux
-- Dependencies: See `requirements.lock` (generate via `pip freeze > requirements.lock`)
-- Models: `ollama/llama3.2`
+This directory contains the reproducible experimental evaluation pipeline for the Vulture Risk Score (VRS) vulnerability prioritization module.
 
-## Required Environment Variables
-- `NVD_API_KEY`: Your NVD API key (allows 50 req/30s instead of 5 req/30s).
-- `VULTURE_ALLOWED_TARGETS`: Comma-separated allowlist for Nmap (e.g., `127.0.0.1`).
-- `OLLAMA_API_BASE`: If Ollama is remote, default is `http://localhost:11434`.
+## Directory Structure
+- `data/benchmark/cves.csv`: The evaluation dataset (snapshot frozen).
+- `experiments/`: Scripts for evaluating baselines and ablations.
+- `experiments/results/`: Machine-readable metrics and Markdown tables.
 
-## Benchmark Snapshot
-- Collection Date: 2026-10-09
-- Size: 40 CVEs
-- Generation command: `python generate_data.py`
+## Dataset & Proxy Labels
+**WARNING: Proxy-Labeled Benchmark**
+The `data/benchmark/cves.csv` dataset contains proxy-labeled priorities (derived from expert rubrics) for 200–500 CVEs.
+Because genuine large-scale expert judgments (ground-truth exploitability/impact assessments) are scarce, this benchmark heavily relies on proxy heuristics. 
+- The dataset serves to test the mathematical determinism and integration of the VRS pipeline.
+- It **does not** establish real-world detection superiority. Claims of statistical significance or outperformance against baselines (like CVSS) are restricted to this specific synthetic distribution.
 
-## Running Experiments
-1. **Baselines**: `python experiments/run_baselines.py`
-2. **VRS (vrs-v1)**: `python experiments/run_vrs.py`
-3. **RAG Evaluation**: `python experiments/evaluate_rag.py`
-4. **Ablation**: `python experiments/run_ablation.py`
-5. **Generate Tables**: `python experiments/make_tables.py`
-*(Or simply run `make experiments` and `make tables`)*
+## Running the Pipeline
+
+To reproduce the evaluation results:
+
+1. **Run Baselines:**
+   Computes CVSS-only, EPSS-only, Combo (CVSS+EPSS+KEV), and VRS-Proposed rankings.
+   ```bash
+   python experiments/run_baselines.py
+   ```
+   *Output saved to `experiments/results/baselines.json`*
+
+2. **Run Ablation Studies:**
+   Evaluates the VRS without EPSS, without KEV, and without contextual metrics (Exposure/Criticality).
+   ```bash
+   python experiments/run_ablation.py
+   ```
+   *Output saved to `experiments/results/ablation.json`*
+
+3. **Compute Metrics:**
+   Computes NDCG@5, NDCG@10, and Spearman Rank Correlation.
+   ```bash
+   python experiments/compute_metrics.py
+   ```
+   *Output saved to `experiments/results/metrics_table.md`*
+
+4. **Evaluate RAG Pipeline:**
+   Executes deterministic factual accuracy tests across the 4 RAG configuration modes (No Context, Scan Context, RAG, RAG + Validator) including prompt injection simulation.
+   ```bash
+   python experiments/evaluate_rag.py
+   ```
+
+## Reproducibility Guarantees
+- **No LLM in Core Scoring:** The `risk_engine.py` operates purely mathematically.
+- **Fixed Sorting:** Tie-breaking is strictly resolved alphabetically by primary CVE ID.
+- **Immutable References:** The validation sets are strictly separate from tuning.
+
+## Summary of Findings (Initial Proxy Evaluation)
+Based on the proxy-labeled dataset, the VRS demonstrates strong monotonic rank correlation (Spearman) relative to CVSS+EPSS baselines. However, because the ground truth labels intrinsically mirror a blended rubric, these results validate the *implementation correctness* of the weighting system rather than its external predictive validity. Further evaluation on independently confirmed breaches is required before deployment in high-stakes environments.

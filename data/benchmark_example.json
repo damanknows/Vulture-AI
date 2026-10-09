@@ -1,0 +1,29 @@
+[
+  {
+    "cve_id": "CVE-2021-44228",
+    "cvss_score": 10.0,
+    "epss_probability": 0.97,
+    "kev_listed": true,
+    "network_exposure": 1.0,
+    "asset_criticality": 1.0,
+    "description": "Log4Shell - Highly critical, widely exploited."
+  },
+  {
+    "cve_id": "CVE-2023-12345",
+    "cvss_score": 7.5,
+    "epss_probability": 0.01,
+    "kev_listed": false,
+    "network_exposure": 0.5,
+    "asset_criticality": 0.8,
+    "description": "Medium probability, high severity, not in KEV."
+  },
+  {
+    "cve_id": "CVE-2022-99999",
+    "cvss_score": null,
+    "epss_probability": null,
+    "kev_listed": false,
+    "network_exposure": 0.1,
+    "asset_criticality": 0.2,
+    "description": "Missing data example."
+  }
+]

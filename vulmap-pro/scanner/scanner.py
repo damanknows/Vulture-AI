@@ -141,7 +141,7 @@ def parse_nmap_xml(xml_text: str, *, target: Optional[str] = None) -> ScanResult
         return ScanResult(target=target or "", hosts=[])
 
     root = ET.fromstring(xml_text)
-    scan_target = target or root.attrib.get("args", "").split()[-1] if root.attrib.get("args") else ""
+    scan_target = target or (root.attrib.get("args", "").split()[-1] if root.attrib.get("args") else "")
 
     hosts: List[HostResult] = []
     for host_el in root.findall("host"):

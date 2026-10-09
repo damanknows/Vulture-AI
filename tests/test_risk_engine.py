@@ -5,56 +5,61 @@ from risk_engine import (
 )
 
 def make_finding(cve_id, cvss, epss, kev, n=0.5, a=0.5):
-    return {
-        "finding": {"network_exposure": n, "asset_criticality": a},
-        "cve_matches": [
-            {
-                "cve_id": cve_id,
-                "intel": {
-                    "data": {
-                        "metrics": {
-                            "cvssMetricV31": [{"cvssData": {"baseScore": cvss}}]
-                        }
-                    }
-                }
-            }
-        ] if cve_id else [],
-        "epss_scores": {cve_id: epss} if epss is not None else {},
-        "kev_matches": [cve_id] if kev else []
-    }
+    finding = {"finding": {}}
+    if n is not None: finding["finding"]["network_exposure"] = n
+    if a is not None: finding["finding"]["asset_criticality"] = a
+    
+    if cve_id:
+        match = {"cve_id": cve_id}
+        if cvss is not None: match["cvss_score"] = cvss
+        if epss is not None: match["epss_probability"] = epss
+        if kev is not None: match["kev_listed"] = kev
+        finding["cve_matches"] = [match]
+    else:
+        finding["cve_matches"] = []
+    
+    return finding
 
 def test_determinism():
     f1 = make_finding("CVE-1", 7.5, 0.1, False)
     f2 = make_finding("CVE-1", 7.5, 0.1, False)
-    
     assert compute_vrs(f1) == compute_vrs(f2)
 
 def test_kev_override_ranks_above_high_cvss():
-    # Finding 1: KEV listed but low CVSS
     f_kev = make_finding("CVE-KEV", 4.0, 0.5, True)
-    
-    # Finding 2: High CVSS, not in KEV
     f_high = make_finding("CVE-HIGH", 9.8, 0.9, False)
     
-    # Normally f_high would have higher VRS. Let's confirm it does have higher numerical VRS.
     vrs_kev = compute_vrs(f_kev)
     vrs_high = compute_vrs(f_high)
     assert vrs_high["vrs"] > vrs_kev["vrs"]
     
-    # But when ranking, f_kev should be first due to urgent bucket
     ranked = rank_findings([f_high, f_kev])
-    
     assert ranked[0]["primary_cve"] == "CVE-KEV"
     assert ranked[0]["score_data"]["bucket"] == "urgent"
     assert ranked[1]["primary_cve"] == "CVE-HIGH"
     assert ranked[1]["score_data"]["bucket"] == "standard"
 
 def test_missing_epss_handling():
-    # EPSS None
     f = make_finding("CVE-X", 5.0, None, False)
     res = compute_vrs(f)
-    assert "epss_missing" in res["missing_data"]
+    assert "epss_probability" in res["missing_data"]
     assert res["components"]["E"] == 0.0
+    assert any("Treated missing EPSS" in u for u in res["uncertainties"])
+    assert res["data_completeness"] == "partial"
+
+def test_missing_cvss_handling():
+    f = make_finding("CVE-X", None, 0.5, False)
+    res = compute_vrs(f)
+    assert res["vrs"] is None
+    assert res["bucket"] == "unavailable"
+
+def test_boundary_conditions():
+    with pytest.raises(ValueError):
+        compute_vrs(make_finding("CVE-X", 11.0, 0.5, False))
+    with pytest.raises(ValueError):
+        compute_vrs(make_finding("CVE-X", 5.0, 1.5, False))
+    with pytest.raises(ValueError):
+        compute_vrs(make_finding("CVE-X", 5.0, 0.5, False, n=2.0))
 
 def test_invalid_weights_raises():
     with pytest.raises(ValueError, match="sum to 1.0"):
@@ -72,7 +77,7 @@ def test_all_baselines():
     assert compute_cvss_epss_kev(f) == 100.0
     
     f2 = make_finding("CVE-BASE2", 5.0, 0.0, False, 0.0, 0.0)
-    assert compute_vrs(f2)["vrs"] == 12.5  # 0.25 * 0.5 * 100
-    assert compute_cvss_only(f2) == 50.0   # 5.0 / 10 * 100
+    assert compute_vrs(f2)["vrs"] == 12.5  
+    assert compute_cvss_only(f2) == 50.0   
     assert compute_epss_only(f2) == 0.0
-    assert compute_cvss_epss_kev(f2) == 16.67 # (0.5 + 0 + 0) / 3 * 100
+    assert compute_cvss_epss_kev(f2) == 16.67
