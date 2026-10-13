@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this benchmark dataset, scoring heuristic, or codebase in your research, please cite it as below."
+title: "Vulture-AI: Context-Aware Vulnerability Prioritization with Guardrailed Retrieval-Augmented Generation"
+version: 0.2.0
+date-released: 2026-10-14
+url: "https://github.com/damanknows/Vulture-AI"
+repository-code: "https://github.com/damanknows/Vulture-AI"
+keywords:
+  - "vulnerability-prioritization"
+  - "cvss"
+  - "epss"
+  - "cisa-kev"
+  - "ssvc"
+  - "retrieval-augmented-generation"
+  - "prompt-injection"
+authors:
+  - name: "Vulture-AI Research Authors"
+    website: "https://github.com/damanknows/Vulture-AI"
+preferred-citation:
+  type: conference-paper
+  title: "Vulture-AI: Context-Aware Vulnerability Prioritization with Guardrailed Retrieval-Augmented Generation"
+  authors:
+    - name: "Anonymous Author(s)"
+  conference:
+    name: "7th International Conference on Computing and Informatics (ICCI 2026)"
+  year: 2026

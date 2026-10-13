@@ -5,26 +5,95 @@ import logging
 from datetime import datetime, timezone
 from typing import List, Dict, Any, Optional
 
-# Inject vulmap-pro path to reuse existing NVD normalization
-# rather than duplicating it.
+import re
+from dataclasses import dataclass
 
-import sys
-import os
+@dataclass
+class CVSSInfo:
+    score: Optional[float]
+    severity: Optional[str]
 
-vulmap_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "vulmap-pro")
-if vulmap_path not in sys.path:
-    sys.path.insert(0, vulmap_path)
+_DISTRO_SUFFIX_RE = re.compile(
+    r"\b(Ubuntu|Debian|Fedora|RHEL|CentOS|Alpine|Arch|Gentoo|SUSE|openSUSE|"
+    r"FreeBSD|NetBSD|OpenBSD|macOS|Windows|MS|Windows-?Server|"
+    r"build|release|final|stable|legacy)\b",
+    re.IGNORECASE,
+)
+_PATCH_TAIL_RE = re.compile(
+    r"(p\d+)|(-0ubuntu[\w\.\-]*)|(-(\d+|\w+)ubuntu[\w\.\-]*)|"
+    r"(\.el\d+)|(\.fc\d+)|(\.alpine[\w\.\-]*)",
+    re.IGNORECASE,
+)
 
-# Safe import hack to avoid shadowing by root scanner.py
-original_scanner = sys.modules.pop("scanner", None)
-try:
-    import scanner.cve_matcher as vulmap_cve_matcher
-    normalize_service_string = vulmap_cve_matcher.normalize_service_string
-    build_cpe_uris = vulmap_cve_matcher.build_cpe_uris
-    _parse_cvss = vulmap_cve_matcher._parse_cvss
-finally:
-    if original_scanner:
-        sys.modules["scanner"] = original_scanner
+def _split_product_string(raw: str) -> tuple[str, str]:
+    raw = raw.strip()
+    if not raw:
+        return "", ""
+    parts = raw.split(None, 1)
+    if len(parts) == 1:
+        return parts[0], parts[0].lower()
+    vendor, product = parts[0], parts[1]
+    return vendor, f"{vendor} {product}".lower()
+
+def normalize_service_string(
+    product: Optional[str],
+    version: Optional[str],
+    extra: Optional[str] = None,
+) -> Optional[tuple[str, str, str]]:
+    if not product or not version:
+        return None
+    vendor, prod_key = _split_product_string(product)
+    raw_version = " ".join(p for p in [version, extra or ""] if p)
+    cleaned = _DISTRO_SUFFIX_RE.sub("", raw_version)
+    cleaned = _PATCH_TAIL_RE.sub("", cleaned)
+    cleaned = cleaned.strip(" .-_")
+    cleaned = re.sub(r"\s+", " ", cleaned)
+    if not cleaned:
+        return None
+    m = re.match(r"^([0-9]+(?:\.[0-9]+){0,3})", cleaned)
+    if m:
+        cleaned = m.group(1)
+    return vendor, prod_key, cleaned
+
+def build_cpe_uris(vendor: str, product: str, version: str) -> List[str]:
+    def esc(s: str) -> str:
+        return s.replace("\\", "\\\\").replace(":", "\\:").replace(" ", "\\ ")
+
+    v = esc(vendor.lower())
+    p = esc(product.lower())
+    ver = esc(version)
+    p_stripped = esc(product.split()[-1].lower() if product else product)
+
+    candidates = [
+        f"cpe:2.3:a:{v}:{p}:{ver}:*:*:*:*:*:*:*",
+    ]
+    if p_stripped and p_stripped != p:
+        candidates.append(f"cpe:2.3:a:{v}:{p_stripped}:{ver}:*:*:*:*:*:*:*")
+
+    seen = set()
+    out = []
+    for c in candidates:
+        if c not in seen:
+            seen.add(c)
+            out.append(c)
+    return out
+
+def _parse_cvss(metrics: dict) -> CVSSInfo:
+    primary = metrics.get("cvssMetricV31") or metrics.get("cvssMetricV30") or []
+    if not primary:
+        primary = metrics.get("cvssMetricV2") or []
+        if primary:
+            entry = primary[0].get("cvssData", {})
+            return CVSSInfo(
+                score=entry.get("baseScore"),
+                severity=entry.get("baseSeverity"),
+            )
+        return CVSSInfo(None, None)
+    entry = primary[0].get("cvssData", {})
+    return CVSSInfo(
+        score=entry.get("baseScore"),
+        severity=entry.get("baseSeverity"),
+    )
 
 from threat_intel import search_nvd_by_cpe, search_nvd, fetch_epss, fetch_kev
 from models import VulnerabilityRecord

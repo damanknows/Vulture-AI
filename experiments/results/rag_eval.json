@@ -1,32 +1,50 @@
-[
-  {
-    "cve_id": "CVE-2021-40033",
-    "has_evidence": true,
-    "has_unsupported_claims": false,
-    "manual_rubric_score": null
+{
+  "metadata": {
+    "evaluation_type": "Deterministic MockLLM Guardrail Verification",
+    "model_fixture": "deterministic_mock_completion",
+    "live_model_evaluated": false,
+    "disclaimer": "Tests guardrail filters, schema parsing, and attribution logic offline. Does not measure live foundation model hallucination rates."
   },
-  {
-    "cve_id": "CVE-2024-10002",
-    "has_evidence": true,
-    "has_unsupported_claims": false,
-    "manual_rubric_score": null
-  },
-  {
-    "cve_id": "CVE-2021-40031",
-    "has_evidence": true,
-    "has_unsupported_claims": false,
-    "manual_rubric_score": null
-  },
-  {
-    "cve_id": "CVE-2021-40036",
-    "has_evidence": true,
-    "has_unsupported_claims": false,
-    "manual_rubric_score": null
-  },
-  {
-    "cve_id": "CVE-2023-20016",
-    "has_evidence": true,
-    "has_unsupported_claims": false,
-    "manual_rubric_score": null
+  "sample_evaluations": [
+    {
+      "cve_id": "CVE-2024-99992",
+      "validation_status": "passed",
+      "has_evidence": true,
+      "has_unsupported_claims": false,
+      "vrs_score": 33.75
+    },
+    {
+      "cve_id": "CVE-2023-46805",
+      "validation_status": "passed",
+      "has_evidence": true,
+      "has_unsupported_claims": false,
+      "vrs_score": 94.0
+    },
+    {
+      "cve_id": "CVE-2023-34362",
+      "validation_status": "passed",
+      "has_evidence": true,
+      "has_unsupported_claims": false,
+      "vrs_score": 99.49
+    },
+    {
+      "cve_id": "CVE-2021-34527",
+      "validation_status": "passed",
+      "has_evidence": true,
+      "has_unsupported_claims": false,
+      "vrs_score": 85.96
+    },
+    {
+      "cve_id": "CVE-2024-3094",
+      "validation_status": "passed",
+      "has_evidence": true,
+      "has_unsupported_claims": false,
+      "vrs_score": 78.09
+    }
+  ],
+  "security_tests": {
+    "prompt_injection_neutralized": true,
+    "prompt_injection_warning": true,
+    "missing_evidence_handled": true
   }
-]
+}
