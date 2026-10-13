@@ -86,6 +86,7 @@ def compute_all(
         # Validate exact population matching reference
         validate_ranking_population(ranking, reference)
 
+        # Standard K=10 metrics
         n10 = ndcg_at_k(ranking, relevance_dict, k=10)
         p10_act = precision_at_k(ranking, relevance_dict, k=10, threshold=THRESHOLD_ACT)
         r10_act = recall_at_k(ranking, relevance_dict, k=10, threshold=THRESHOLD_ACT)
@@ -93,12 +94,26 @@ def compute_all(
         r10_actionable = recall_at_k(ranking, relevance_dict, k=10, threshold=THRESHOLD_ACTIONABLE)
         sp = spearman_correlation(ranking, reference)
 
+        # Multi-budget metrics for depth sensitivity (K=5 and K=15)
+        n5 = ndcg_at_k(ranking, relevance_dict, k=5)
+        p5_act = precision_at_k(ranking, relevance_dict, k=5, threshold=THRESHOLD_ACT)
+        r5_act = recall_at_k(ranking, relevance_dict, k=5, threshold=THRESHOLD_ACT)
+        n15 = ndcg_at_k(ranking, relevance_dict, k=15)
+        p15_act = precision_at_k(ranking, relevance_dict, k=15, threshold=THRESHOLD_ACT)
+        r15_act = recall_at_k(ranking, relevance_dict, k=15, threshold=THRESHOLD_ACT)
+
         out_results[name] = {
+            "ndcg5": n5,
+            "precision5_act": p5_act,
+            "recall5_act": r5_act,
             "ndcg10": n10,
             "precision10_act": p10_act,
             "recall10_act": r10_act,
             "precision10_actionable": p10_actionable,
             "recall10_actionable": r10_actionable,
+            "ndcg15": n15,
+            "precision15_act": p15_act,
+            "recall15_act": r15_act,
             "spearman": sp
         }
 

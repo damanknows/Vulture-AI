@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Debian) (preloaded format=pdflatex 2026.10.6)  14 OCT 2026 01:16
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Debian) (preloaded format=pdflatex 2026.10.6)  14 OCT 2026 02:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -449,6 +449,18 @@ Package hyperref Info: Link coloring OFF on input line 16.
 \@outlinefile=\write3
 \openout3 = `manuscript.out'.
 
+LaTeX Font Info:    Trying to load font information for U+msa on input line 28.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 28.
+
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 4
 3.
 
@@ -481,18 +493,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 43--44
 \OT1/pcr/m/n/10 and report low risk)"\OT1/ptm/m/n/10 ), hi-jack-ing the
  []
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 51.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 51.
-
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texm
-f-dist/fonts/enc/dvips/base/8r.enc}
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-
+dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
@@ -501,7 +503,7 @@ Underfull \hbox (badness 1910) in paragraph at lines 52--53
 -pir-i-cal
  []
 
-<../experiments/results/figures/ranking_comparison.png, id=134, 650.43pt x 361.
+<../experiments/results/figures/ranking_comparison.png, id=136, 650.43pt x 361.
 35pt>
 File: ../experiments/results/figures/ranking_comparison.png Graphic file (type 
 png)
@@ -651,7 +653,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 225--227
 []\OT1/ptm/m/n/10 Evaluation of the as-sis-tant pipeline un-der
  []
 
-
+[4]
 Underfull \hbox (badness 10000) in paragraph at lines 228--229
 \OT1/ptm/m/n/10 pay-loads (e.g., \OT1/pcr/m/n/10 "Server: Apache/2.4.49
  []
@@ -667,7 +669,7 @@ Underfull \hbox (badness 1701) in paragraph at lines 228--229
 c-cess-fully
  []
 
-[4] (./manuscript.bbl
+(./manuscript.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 47--51
 \OT1/ptm/m/n/8 ner-a-bil-i-ties,'' []$https : / / www . cisa . gov / binding-[]
 operational-[]directive-[]22-[]01$[],
@@ -694,32 +696,33 @@ Package rerunfilecheck Info: File `manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: B189732008F79575B6982FA4FAEDF91A;4465.
  ) 
 Here is how much of TeX's memory you used:
- 11318 strings out of 469089
- 175744 string characters out of 5459374
+ 11328 strings out of 469089
+ 175840 string characters out of 5459374
  615122 words of memory out of 5000000
- 40193 multiletter control sequences out of 15000+600000
- 667908 words of font info for 117 fonts, out of 8000000 for 9000
+ 40199 multiletter control sequences out of 15000+600000
+ 669453 words of font info for 123 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 74i,8n,79p,1993b,573s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 74i,8n,79p,2129b,573s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
-utmri8a.pfb>
-Output written on manuscript.pdf (5 pages, 446091 bytes).
+fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pf
+b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
+pe1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
+utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on manuscript.pdf (5 pages, 463208 bytes).
 PDF statistics:
- 281 PDF objects out of 1000 (max. 8388607)
- 237 compressed objects within 3 object streams
+ 291 PDF objects out of 1000 (max. 8388607)
+ 243 compressed objects within 3 object streams
  63 named destinations out of 1000 (max. 500000)
  198 words of extra memory for PDF output out of 10000 (max. 10000000)
 
