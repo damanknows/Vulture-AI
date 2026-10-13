@@ -1,4 +1,16 @@
-litellm>=1.50
-flask>=3.0
-flask-cors
-flask-cors
+# Core Web and API
+flask>=3.0.0
+flask-cors>=4.0.0
+requests>=2.31.0
+
+# Schema Validation and LLM Gateway
+pydantic>=2.5.0
+litellm>=1.50.0
+
+# Scientific Computing & Ranking Metrics
+numpy>=1.24.0
+scipy>=1.11.0
+matplotlib>=3.7.0
+
+# Testing & Verification
+pytest>=8.0.0

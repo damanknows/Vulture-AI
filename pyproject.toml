@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vulture-ai"
+version = "0.2.0"
+description = "Context-Aware Vulnerability Prioritization with Guardrailed Retrieval-Augmented Generation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "All Rights Reserved - See LICENSE" }
+authors = [
+    { name = "Vulture-AI Research Authors" }
+]
+keywords = [
+    "vulnerability-prioritization",
+    "cvss",
+    "epss",
+    "cisa-kev",
+    "ssvc",
+    "retrieval-augmented-generation",
+    "prompt-injection"
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Security",
+    "Intended Audience :: Science/Research"
+]
+dependencies = [
+    "flask>=3.0.0",
+    "flask-cors>=4.0.0",
+    "requests>=2.31.0",
+    "pydantic>=2.5.0",
+    "litellm>=1.50.0",
+    "numpy>=1.24.0",
+    "scipy>=1.11.0",
+    "matplotlib>=3.7.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["experiments*", "tests*"]

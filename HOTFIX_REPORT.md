@@ -1,101 +1,69 @@
-# Vulture-AI: Conference Submission Hotfix & Verification Report
+# Vulture-AI: Comprehensive Research Audit, Hotfix & Restructuring Report
 
 **Date**: 2026-10-14  
-**Target Venue**: IEEE ICCI 2026  
-**Auditor**: Senior Cybersecurity Research Engineer  
+**Target Venue**: 7th International Conference on Computing and Informatics (ICCI 2026)  
 **Branch**: `research-v2`  
-**Status**: Completed & Verified  
+**Evaluation Target**: Curated 41-Record Benchmark & Reproducibility Pipeline  
+**Status**: Completed, Tested & Fully Verified  
 
 ---
 
 ## 1. Executive Summary
 
-This report documents the targeted audit and hotfixes applied to the Vulture-AI repository to prepare the manuscript and experimental artifact suite for double-blind submission to IEEE ICCI 2026 under a strict deadline.
+This report documents the end-to-end repository audit, scientific calibration, modular restructuring, and quality hardening applied to the **Vulture-AI** codebase. The primary objective was to transform the existing repository into a clean, reproducible, research-grade artifact suite suitable for double-blind submission to IEEE ICCI 2026.
 
-All fixes strictly adhere to the project constraints:
-- **No architectural rebuilding**: The core risk scoring engine and RAG pipeline were preserved.
-- **Zero data fabrication**: Real public vulnerability records were preserved; synthetic edge cases were explicitly disclosed rather than concealed.
-- **Honest scientific framing**: Claims of "independent ground truth" were corrected to heuristic construct alignment with an SSVC-inspired triage rubric.
-- **Full reproducibility**: All experiments re-executed deterministically, SHA-256 checksums updated, and LaTeX manuscript recompiled.
+All tasks were executed under strict peer-review and reproducible-science constraints:
+* **Zero Fabrication**: No CVE data, rankings, metrics, citations, or tool outputs were invented.
+* **Preserved Functionality**: The core deterministic risk engine, Nmap scanning pipeline, RAG guardrails, and historical results were preserved.
+* **Rigorous Scientific Honesty**: Claims of "independent ground truth" were corrected to heuristic construct alignment with a CISA SSVC-inspired reference rubric.
+* **Complete Reproducibility**: Unified end-to-end execution (`reproduce_all.py`), updated SHA-256 provenance hashes, and verified 6-page double-blind IEEE manuscript compilation.
 
 ---
 
-## 2. Audited Areas & Applied Fixes
+## 2. Categorized Audit Checklist & Applied Fixes
 
-### Priority 1: Benchmark Integrity & Provenance
-* **Investigation of CVE-2024-99991 & CVE-2024-99992**:
-  - Found: These two identifiers are not registered in the NIST NVD or assigned by any CVE Numbering Authority (CNA). They were inserted to evaluate missing-data policies (missing CVSS base score and missing EPSS probability, respectively).
-  - Remediation: Rather than silently masquerading them as authentic public CVEs, both records were **explicitly marked as synthetic edge cases** in:
-    - `data/benchmark/cves.csv` (source reference and description fields updated)
-    - `data/benchmark/README.md` (prominent synthetic record disclosure banner)
-    - `generate_data.py` (updated verification counts and output summary)
-    - `paper/manuscript.tex` (abstract, methodology, and threats to validity)
-  - Composition: Exactly **39 verified public CVEs** + **2 synthetic missing-data edge cases** = 41 total records.
-* **Integrity Hash**:
-  - Updated SHA-256 hash: `27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e`.
-  - Replaced all stale MD5 references in `paper/manuscript.tex` and `experiments/config.json`.
-
-### Priority 2: Scientific Validity & Claim Calibration
-* **Ground-Truth Circularity Correction**:
-  - Corrected wording claiming "independent ground truth". The reference labels derive from a manual application of the CISA SSVC decision tree. Because SSVC decisions are informed by exploitation telemetry (KEV, EPSS) and exposure—the same features evaluated by VRS—correlation with SSVC reflects **heuristic construct alignment**, not empirical proof of breach prevention.
-  - Updated section title from *"Independent Ground-Truth Labeling"* to *"Reference Labeling via SSVC-Inspired Rubric"*.
-  - Disclosed that environmental metrics ($N$: Network Exposure, $A$: Asset Criticality) reflect archetypal reference deployment profiles (edge gateway vs. internal server), not live organizational network telemetry.
-* **Metric Difference Clarification**:
-  - Replaced percentage claims (e.g., "7.1% gain") with exact absolute delta ("absolute increase of 0.0706 in Spearman rank correlation").
-
-### Priority 3: Evaluation Completeness & Depth Sensitivity
-* **Multi-Budget Evaluation**:
-  - Evaluated rankings at $K=5$, $K=10$, and $K=15$ in `experiments/compute_metrics.py`, `experiments/make_tables.py`, and `paper/manuscript.tex`.
-  - **Ceiling Effects Explained**: Because the dataset contains 15 Tier 1 (Act) records, any ordering of the top 10 positions containing only Tier 1 items achieves $\text{NDCG@10} = 1.0000$ and $\text{P@10} = 1.0000$. This explains why multiple variants (Full VRS, No EPSS, No Bucket Override) achieve identical top-10 scores.
-  - **Depth Separation ($K=15$)**: At $K=15$, deeper budget evaluation reveals divergence:
-    - VRS Proposed: $\text{NDCG@15} = 1.0000$
-    - VRS (No KEV): $\text{NDCG@15} = 0.9675$
-    - VRS (No Context): $\text{NDCG@15} = 0.9130$
-    - EPSS-only: $\text{NDCG@15} = 0.8878$
-    - CVSS-only: $\text{NDCG@15} = 0.7855$
-* **EPSS Ablation Dynamics**:
-  - Documented why removing EPSS slightly increases Spearman correlation ($\rho = 0.9575$ vs. $0.9488$): EPSS models rolling 30-day exploitation likelihood, assigning high probabilities to high-volume automated scanning noise (e.g. OpenSSH user enumeration `CVE-2018-15473`, EPSS 0.986) which SSVC classifies as *Defer* (rank 36). Ablating EPSS allows CVSS technical impact and exposure to push this finding further down, improving rank alignment with the SSVC rubric.
-
-### Priority 4: Reproducibility & Test Coverage
-* **Unit Testing**:
-  - Created `tests/test_benchmark.py` (7 tests) verifying:
-    - Zero duplicate CVE identifiers
-    - Score ranges: CVSS $\in [0, 10]$, EPSS $\in [0, 1]$, KEV $\in \{0, 1\}$, exposure/criticality $\in [0, 1]$
-    - Correct missing-data handling for `CVE-2024-99991` (vrs=None, bucket='unavailable') and `CVE-2024-99992` (EPSS=0.0 default, uncertainty flagged)
-    - Rejection of invalid inputs and duplicates by validator
-* **MockLLM Labeling**:
-  - Explicitly labeled `evaluate_rag.py` and `tests/test_evidence_validator.py` as using deterministic offline MockLLM fixtures.
-  - Added scope limitation in Section 4.3 and Threats to Validity noting that live red-teaming against frontier commercial models is deferred to future work.
-* **Deterministic Seeds**:
-  - Enforced `random.seed(42)` in `experiments/evaluate_rag.py`.
+| Severity | Component / Path | Evidence / Identified Issue | Applied Fix | Verification Command | Status |
+|:---|:---|:---|:---|:---|:---:|
+| **CRITICAL** | `data/benchmark/cves.csv`, `paper/manuscript.tex`, `README.md` | Contradiction between documentation claiming "41 real CVEs" vs non-existent IDs (`CVE-2024-99991`, `CVE-2024-99992`). | Explicitly identified and marked the 2 synthetic missing-data edge cases across all datasets, READMEs, scripts, and manuscript (39 real + 2 synthetic = 41 total). | `python generate_data.py` | **FIXED** |
+| **CRITICAL** | `paper/manuscript.tex`, `README.md`, `REPRODUCIBILITY.md` | Methodological circularity: reference labels derived from SSVC share underlying features with VRS, yet were described as "independent ground truth". | Qualified labels as an author-curated reference rubric; disclosed construct circularity/alignment in methodology and threats to validity; disclaimed breach prediction. | Inspect Sections 3.2, 4.1, 5.1 of manuscript | **FIXED** |
+| **HIGH** | `requirements.txt` | Incomplete dependencies: missing `numpy`, `scipy`, `matplotlib`, `pydantic`, `requests`, `pytest`; duplicate `flask-cors`. | Completely updated `requirements.txt` with versioned, non-redundant dependencies across runtime, scientific metrics, and testing. | `pip install -r requirements.txt` | **FIXED** |
+| **HIGH** | `cve_matcher.py` | Fragile import hack: popped `"scanner"` from `sys.modules` and imported from `vulmap-pro`, coupling root to external subproject and `sqlalchemy`. | Embedded self-contained service normalization, CPE 2.3 URI builder, and CVSS parser directly in `cve_matcher.py`, completely removing `vulmap-pro` coupling. | `pytest tests/test_cve_matcher.py` | **FIXED** |
+| **HIGH** | `experiments/evaluate_rag.py`, `rag_eval.json` | Mock schema mismatch: mock returned `reason` instead of `explanation`, causing Pydantic validation failure; `rag_eval.json` referenced old synthetic CVEs. | Rewrote mock to match `ChatbotResponse` schema; verified offline injection refusal and missing evidence handling; documented MockLLM fixture with explicit metadata. | `python experiments/evaluate_rag.py` | **FIXED** |
+| **HIGH** | `paper/manuscript.tex`, `experiments/make_tables.py` | Ceiling effects at $K=10$ obscured model separation; misleading "7.1% gain" phrasing in manuscript. | Implemented multi-budget reporting ($K \in \{5, 10, 15\}$); added `multi_budget.tex`; corrected "7.1% gain" to exact absolute delta ("0.0706 increase in Spearman $\rho$"). | `python experiments/make_tables.py` | **FIXED** |
+| **MEDIUM** | Root files & `data/benchmark/` | Checksum inconsistencies: stale MD5 hash `ab2b5f12...` and old SHA-256 hash `e2a3419a...` cited in documentation. | Computed and synchronized authoritative SHA-256 hash (`27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e`) across all documentation and manifests. | `python generate_data.py` | **FIXED** |
+| **MEDIUM** | Project Packaging & Automation | Missing `pyproject.toml`, outdated `Makefile`, and missing automated CI pipeline. | Created `pyproject.toml`, expanded `Makefile` with comprehensive research targets, and added `.github/workflows/tests.yml` for multi-version Python CI. | `make test`, `make reproduce` | **FIXED** |
+| **MEDIUM** | Repository Governance & Docs | Missing `LICENSE`, `CITATION.cff`, `SECURITY.md`, `CONTRIBUTING.md`, `CHANGELOG.md`, `.env.example`, and supplementary research docs. | Created complete governance suite and 6 dedicated architectural/methodological reference files in `docs/`. | Inspect `docs/`, `CITATION.cff` | **FIXED** |
+| **LOW** | `experiments/evaluate_rag.py` | Missing random seed for sample selection. | Enforced `random.seed(42)` for deterministic reproducible sampling. | `python experiments/evaluate_rag.py` | **FIXED** |
 
 ---
 
 ## 3. Verified Experimental Results Summary
 
-### Comparative Baseline Performance ($N=41$)
-| Method | NDCG@5 | NDCG@10 | NDCG@15 | P@10 (Act) | R@10 (Act) | Spearman ($\rho$) |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| CVSS-only | 0.8062 | 0.7563 | 0.7855 | 0.6000 | 0.4000 | 0.7357 |
-| EPSS-only | 1.0000 | 0.9217 | 0.8878 | 0.8000 | 0.5333 | 0.8237 |
-| KEV-first | 0.8062 | 0.7945 | 0.8407 | 0.7000 | 0.4667 | 0.8247 |
-| CVSS+EPSS+KEV | 0.9250 | 0.9513 | 0.9373 | 0.9000 | 0.6000 | 0.8800 |
-| **VRS Proposed (vrs-v1)** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **0.6667** | **0.9488** |
+*All results reflect exact outputs generated by `experiments/reproduce_all.py` against the 41-record benchmark ($N=41$):*
 
-### VRS Ablation Study ($N=41$)
-| Variant | NDCG@5 | NDCG@10 | NDCG@15 | P@10 (Act) | R@10 (Act) | Spearman ($\rho$) |
-|:---|:---:|:---:|:---:|:---:|:---:|:---:|
-| VRS (Full Model) | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 0.6667 | 0.9488 |
-| VRS (No EPSS) | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 0.6667 | 0.9575 |
-| VRS (No KEV) | 1.0000 | 0.9581 | 0.9675 | 0.9000 | 0.6000 | 0.9451 |
-| VRS (No Context) | 0.9250 | 0.9513 | 0.9130 | 0.9000 | 0.6000 | 0.8782 |
-| VRS (No Bucket Override) | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 0.6667 | 0.9535 |
+### Comparative Baseline Performance
+| Method | NDCG@5 | NDCG@10 | NDCG@15 | P@10 (Act) | R@10 (Act) | P@10 (Actionable) | R@10 (Actionable) | Spearman ($\rho$) |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **CVSS-only** | 0.8062 | 0.7563 | 0.7855 | 0.6000 | 0.4000 | 1.0000 | 0.3704 | 0.7357 |
+| **EPSS-only** | 1.0000 | 0.9217 | 0.8878 | 0.8000 | 0.5333 | 1.0000 | 0.3704 | 0.8237 |
+| **KEV-first** | 0.8062 | 0.7945 | 0.8407 | 0.7000 | 0.4667 | 1.0000 | 0.3704 | 0.8247 |
+| **CVSS+EPSS+KEV** | 0.9250 | 0.9513 | 0.9373 | 0.9000 | 0.6000 | 1.0000 | 0.3704 | 0.8800 |
+| **VRS Proposed (`vrs-v1`)** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **0.6667** | **1.0000** | **0.3704** | **0.9488** |
+
+### VRS Ablation Study (Proportional Renormalization Policy)
+| Variant | Active Weights ($w_C, w_E, w_K, w_N, w_A$) | Bucket Policy | NDCG@5 | NDCG@10 | NDCG@15 | P@10 (Act) | R@10 (Act) | Spearman ($\rho$) |
+|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **VRS (Full Model)** | `0.25, 0.20, 0.20, 0.20, 0.15` | Urgent Enabled | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 0.6667 | 0.9488 |
+| **VRS (No EPSS)** | `0.3125, 0.00, 0.25, 0.25, 0.1875` | Urgent Enabled | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 0.6667 | 0.9575 |
+| **VRS (No KEV)** | `0.3125, 0.25, 0.00, 0.25, 0.1875` | Urgent Disabled | 1.0000 | 0.9581 | 0.9675 | 0.9000 | 0.6000 | 0.9451 |
+| **VRS (No Context)** | `0.3846, 0.3077, 0.3077, 0.00, 0.00` | Urgent Enabled | 0.9250 | 0.9513 | 0.9130 | 0.9000 | 0.6000 | 0.8782 |
+| **VRS (No Buckets)** | `0.25, 0.20, 0.20, 0.20, 0.15` | Score-Only | 1.0000 | 1.0000 | 1.0000 | 1.0000 | 0.6667 | 0.9535 |
 
 ---
 
-## 4. Verification Checklists & Commands
+## 4. Verification Checklists & Commands Actually Executed
 
-1. **Benchmark Integrity Check**:
+1. **Benchmark Schema & Provenance**:
    ```bash
    python generate_data.py
    # Outcome: [PASS] 41 records validated (39 real public + 2 synthetic edge cases)
@@ -105,28 +73,152 @@ All fixes strictly adhere to the project constraints:
 2. **Automated Test Suite**:
    ```bash
    pytest -v
-   # Outcome: 55 passed, 1 skipped (test_full_pipeline requires network/root nmap)
+   # Outcome: 55 passed, 1 skipped (test_full_pipeline skipped; requires network/root nmap)
    ```
 
-3. **Complete Experiment Pipeline**:
+3. **End-to-End Reproducibility Pipeline**:
    ```bash
    python experiments/reproduce_all.py
-   # Outcome: All baselines, ablations, metrics, tables, and manifest generated
+   # Outcome: Baselines, ablations, metrics, LaTeX tables, plots, and manifest generated successfully
    ```
 
-4. **Manuscript PDF Compilation**:
+4. **Deterministic RAG Guardrail Evaluation**:
+   ```bash
+   python experiments/evaluate_rag.py
+   # Outcome: Prompt injection neutralized, missing evidence handled, schema validated
+   ```
+
+5. **Manuscript PDF Compilation**:
    ```bash
    cd paper && pdflatex -interaction=nonstopmode manuscript.tex && bibtex manuscript && pdflatex -interaction=nonstopmode manuscript.tex && pdflatex -interaction=nonstopmode manuscript.tex
-   # Outcome: manuscript.pdf compiled successfully (6 pages, IEEE double-blind format)
+   # Outcome: manuscript.pdf compiled cleanly (6 pages, 465,344 bytes, IEEE double-blind format)
+   ```
+
+6. **Submission Reproducibility Package**:
+   ```bash
+   tar -czvf /tmp/vulture_ai_reproducibility.tar.gz \
+       --exclude-vcs \
+       --exclude='*.pyc' \
+       --exclude='*__pycache__*' \
+       --exclude='*.pytest_cache*' \
+       --exclude='*data/cache*' \
+       --exclude='*data/raw/nmap/*.xml' \
+       --exclude='*paper/*.aux' \
+       --exclude='*paper/*.log' \
+       --exclude='*paper/*.out' \
+       --exclude='*paper/*.bbl' \
+       --exclude='*paper/*.blg' \
+       --exclude='*venv*' \
+       --exclude='*.env' \
+       --exclude='*.tar.gz' \
+       . && mv /tmp/vulture_ai_reproducibility.tar.gz ./vulture_ai_reproducibility.tar.gz
+   # SHA-256: aa68bc6db196e46fcd4ab2895b2f86d842866495a76760ba1b67e15f590bf640 (Size: ~1.8 MB)
+   ```
+
+7. **Whitespace & Diff Verification**:
+   ```bash
+   git diff --check
+   # Outcome: 0 whitespace errors or formatting defects
    ```
 
 ---
 
-## 5. Submission Risks & Open Limitations
+## 5. Final Directory Structure
 
-1. **Construct Circularity (Documented in Threats to Validity)**:
-   - Evaluated against SSVC-derived labels. Because SSVC incorporates KEV, EPSS, and exposure, strong alignment reflects consistency with federal triage guidelines rather than independent predictive validation against enterprise incident logs. Reviewers will accept this when honestly stated, as now done in Sections 3.2, 4.1, and 5.1.
-2. **MockLLM Guardrail Evaluation**:
-   - The RAG guardrail evaluation in `evaluate_rag.py` uses a deterministic MockLLM fixture. It demonstrates that the architecture and validator correctly detect injection payloads and enforce numerical parity, but does not provide an empirical hallucination benchmark across live foundation models. This is now explicitly disclosed as a scope limitation in Section 4.3.
-3. **Manual Push Required**:
-   - The git remote uses HTTPS without stored credentials in the container environment. The changes must be committed locally and pushed manually by the user (`git push origin research-v2`).
+```
+Vulture-AI/
+├── .env.example                               # Documented environment variable template
+├── .github/
+│   └── workflows/
+│       └── tests.yml                          # Multi-version CI workflow (Python 3.10, 3.11)
+├── .gitignore                                 # Clean ignore rules for caches, secrets, and builds
+├── app.py                                     # Flask REST API server with target allowlist
+├── AUDIT_REPORT.md                            # Comprehensive research methodology audit report
+├── CHANGELOG.md                               # Version history adhering to Keep a Changelog
+├── CITATION.cff                               # Machine-readable academic citation metadata
+├── CONTRIBUTING.md                            # Development workflow and research ethics guide
+├── cve_matcher.py                             # Self-contained CPE 2.3 normalizer and CVE matcher
+├── data/
+│   └── benchmark/
+│       ├── cves.csv                           # 41-record benchmark dataset (39 verified + 2 synthetic)
+│       └── README.md                          # Dataset card and synthetic record disclosure
+├── docs/
+│   ├── architecture.md                        # System architecture, functional modules, and diagrams
+│   ├── dataset_card.md                        # Dataset schema, threat tiers, and source feeds
+│   ├── limitations.md                         # Detailed threats to validity, circularity, and ceiling effects
+│   ├── methodology.md                         # VRS formulation, ablation policies, and metric math
+│   ├── reproducibility.md                     # Step-by-step deterministic reproduction guide
+│   └── threat_model.md                        # Threat model: injection vectors, SSRF defense, guardrails
+├── evaluate_rag.py                            # Root deterministic RAG assistant demonstration
+├── evidence_validator.py                      # Regex prompt injection filter and numeric float validator
+├── experiments/
+│   ├── compute_metrics.py                     # Multi-budget NDCG and mid-rank Spearman computation
+│   ├── config.json                            # Verified experiment settings, weights, and SHA-256 hash
+│   ├── evaluate_rag.py                        # Deterministic RAG guardrail evaluation runner
+│   ├── make_tables.py                         # Publication LaTeX tables and empirical ranking scatter plots
+│   ├── metrics.py                             # Pure metric calculation functions (scipy tie-corrected)
+│   ├── reproduce_all.py                       # Unified end-to-end experiment reproduction runner
+│   ├── results/
+│   │   ├── ablation.json                      # Per-variant ablated rankings under proportional rescaling
+│   │   ├── baselines.json                     # Per-record baseline model predictions
+│   │   ├── figures/ranking_comparison.png     # Empirical ranking comparison scatter plot
+│   │   ├── metrics.json                       # Machine-readable multi-budget metric outputs
+│   │   ├── metrics_table.md                   # Markdown comparison tables (K=10 and multi-budget)
+│   │   ├── rag_eval.json                      # Deterministic RAG evaluation results
+│   │   ├── reproducibility_manifest.json      # Environment versions, weights, and execution manifest
+│   │   └── tables/                            # LaTeX comparison tables (main, multi-budget, ablation)
+│   ├── run_ablation.py                        # Proportional weight ablation runner
+│   └── run_baselines.py                       # Baseline prioritization model runner
+├── generate_data.py                           # Benchmark integrity checker and SHA-256 validator
+├── HOTFIX_REPORT.md                           # This comprehensive hotfix report
+├── LICENSE                                    # Copyright notice and license selection advisory
+├── Makefile                                   # Automation targets (test, reproduce, paper, clean)
+├── paper/
+│   ├── IEEEtran.cls                           # Official IEEE conference LaTeX document class
+│   ├── IEEEtran.bst                           # IEEEtran BibTeX bibliography style
+│   ├── manuscript.pdf                         # Compiled 6-page double-blind IEEE conference paper
+│   ├── manuscript.tex                         # Complete LaTeX paper source (anonymous metadata)
+│   ├── README.md                              # Compilation guide & double-blind transition notes
+│   └── references.bib                         # Verified academic bibliography
+├── pyproject.toml                             # Modern Python packaging metadata and tool configurations
+├── pytest.ini                                 # Pytest execution configuration
+├── README.md                                  # Complete research-grade project README (17 sections)
+├── requirements.txt                           # Versioned, non-redundant dependencies
+├── requirements-lock.txt                      # Locked dependency versions for exact environment replication
+├── retrieval.py                               # Structured evidence formatter and lookup engine
+├── risk_engine.py                             # Deterministic VRS scoring engine and tie-break sorter
+├── scanner.py                                 # Nmap execution wrapper with allowlist enforcement
+├── SECURITY.md                                # Vulnerability reporting and responsible disclosure policy
+├── tests/
+│   ├── integration/test_end_to_end.py         # Full pipeline integration test (network marked)
+│   ├── test_api_failure.py                    # NVD API error and network outage resilience tests
+│   ├── test_app.py                            # Flask API route tests
+│   ├── test_benchmark.py                      # Benchmark schema, score bound, and edge-case tests
+│   ├── test_cve_matcher.py                    # CPE matching, caching, and enrichment tests
+│   ├── test_evidence_validator.py             # Attribution, numeric parity, and injection detection tests
+│   ├── test_metrics.py                        # Metric validation, tied mid-ranks, and hand calculations
+│   ├── test_missing_epss.py                   # Missing EPSS graceful degradation tests
+│   ├── test_retrieval.py                      # Exact and hybrid retrieval tests
+│   ├── test_risk_engine.py                    # VRS determinism, KEV overrides, and boundary tests
+│   ├── test_scanner.py                        # Target allowlist rejection and timeout tests
+│   └── test_stale_intel.py                    # Cache TTL and stale threat intelligence tests
+├── threat_intel.py                            # NVD v2.0, FIRST EPSS, and CISA KEV fetchers
+├── vulture_ai_reproducibility.tar.gz          # Standalone clean reproduction archive
+└── vulture_chatbot.py                         # LiteLLM router and Pydantic schema validation envelope
+```
+
+---
+
+## 6. Remaining Limitations & Open Actions for Repository Owner
+
+1. **Formal License Selection**:
+   - `LICENSE` currently documents that a formal open-source license has not yet been selected. The repository owner should select an appropriate open-source license (e.g., Apache 2.0 or MIT) before general public release.
+2. **Security Contact Configuration**:
+   - `SECURITY.md` directs vulnerability reporters to GitHub Security Advisories. If an institutional security email is desired, it should be configured in repository settings.
+3. **Double-Blind Anonymity**:
+   - The manuscript (`paper/manuscript.tex` and `paper/manuscript.pdf`) is currently formatted as double-blind anonymous (`\author{\IEEEauthorblockN{Anonymous Author(s)}}` with PDF author metadata set to `Anonymous Author(s)`). Once accepted or when submitting to a single-blind track, real author affiliations should be unmasked.
+4. **Git Remote Push**:
+   - In accordance with safety policies, commits must be pushed manually by the owner:
+     ```bash
+     git push origin research-v2
+     ```
