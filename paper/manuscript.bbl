@@ -21,40 +21,56 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{first2023cvss}
+\bibitem{nvd2023}
+{National Institute of Standards and Technology}, ``{National Vulnerability
+  Database (NVD)},'' \url{https://nvd.nist.gov/}, 2026.
+
+\bibitem{first2019cvss}
 \BIBentryALTinterwordspacing
 {FIRST}, ``{Common Vulnerability Scoring System v3.1: Specification
-  Document},'' Forum of Incident Response and Security Teams, Tech. Rep., 2023.
+  Document},'' Forum of Incident Response and Security Teams, Tech. Rep., 2019.
   [Online]. Available:
   \url{https://www.first.org/cvss/v3.1/specification-document}
 \BIBentrySTDinterwordspacing
 
+\bibitem{mell2006cvss}
+P.~Mell, K.~Scarfone, and S.~Romanosky, ``A complete guide to the common
+  vulnerability scoring system version 2.0,'' \emph{IEEE Security \& Privacy},
+  vol.~5, no.~6, pp. 23--31, 2007.
+
 \bibitem{jacobs2021epss}
-J.~Jacobs, S.~Romanosky, B.~Edwards \emph{et~al.}, ``{Exploit Prediction
-  Scoring System (EPSS)},'' \emph{Digital Threats: Research and Practice},
-  2021.
+J.~Jacobs, S.~Romanosky, B.~Edwards, M.~Roytman, and I.~Adjerid, ``{Exploit
+  Prediction Scoring System (EPSS)},'' \emph{Digital Threats: Research and
+  Practice}, vol.~2, no.~3, pp. 1--17, 2021.
+
+\bibitem{cisa2021bod}
+{Cybersecurity and Infrastructure Security Agency}, ``{Binding Operational
+  Directive 22-01: Reducing the Significant Risk of Known Exploited
+  Vulnerabilities},''
+  \url{https://www.cisa.gov/binding-operational-directive-22-01}, 2021.
 
 \bibitem{cisa2023kev}
-{CISA}, ``{Known Exploited Vulnerabilities Catalog},''
-  \url{https://www.cisa.gov/known-exploited-vulnerabilities-catalog}, 2023.
+------, ``{Known Exploited Vulnerabilities Catalog},''
+  \url{https://www.cisa.gov/known-exploited-vulnerabilities-catalog}, 2026.
 
-\bibitem{prioritization2022}
-M.~Johnson and S.~Lee, ``Beyond cvss: Context-aware vulnerability
-  prioritization,'' in \emph{IEEE Symposium on Security and Privacy (SP)},
-  2022.
+\bibitem{spring2020ssvc}
+J.~M. Spring, E.~Hatlebakke, A.~Householder, A.~Manion, and D.~Shick,
+  ``{Prioritizing Vulnerability Response with a Stakeholder-Specific
+  Vulnerability Categorization},'' Software Engineering Institute, Carnegie
+  Mellon University, Tech. Rep. CMU/SEI-2020-TR-001, 2020.
 
-\bibitem{smith2023llm}
-A.~Smith and J.~Doe, ``Evaluating large language models for vulnerability
-  detection,'' in \emph{Proceedings of the 2023 ACM SIGSAC Conference on
-  Computer and Communications Security}, 2023.
+\bibitem{greshake2023prompt}
+K.~Greshake, S.~Abdelnabi, S.~Mishra, C.~Endres, T.~Holz, and M.~Fritz, ``Not
+  what you've signed up for: Compromising real-world {LLM}-integrated
+  applications with indirect prompt injection,'' in \emph{Proceedings of the
+  16th ACM Workshop on Artificial Intelligence and Security (AISEC)}, 2023, pp.
+  79--90.
 
-\bibitem{rag2023sec}
-Y.~Chen and L.~Wang, ``Retrieval-augmented generation for automated security
-  triaging,'' \emph{IEEE Transactions on Dependable and Secure Computing},
-  2023.
-
-\bibitem{nvd2023}
-{NIST}, ``{National Vulnerability Database},'' \url{https://nvd.nist.gov/},
-  2023.
+\bibitem{lewis2020rag}
+P.~Lewis, E.~Perez, A.~Piktus, F.~Petroni, V.~Karpukhin, N.~Goyal,
+  H.~K{\"u}ttler, M.~Lewis, W.-t. Yih, T.~Rockt{\"a}schel, S.~Riedel, and
+  D.~Kiela, ``Retrieval-augmented generation for knowledge-intensive {NLP}
+  tasks,'' in \emph{Advances in Neural Information Processing Systems
+  (NeurIPS)}, vol.~33, 2020, pp. 9459--9474.
 
 \end{thebibliography}

@@ -1,27 +1,60 @@
 \relax 
-\citation{first2023cvss}
-\citation{jacobs2021epss}
-\citation{cisa2023kev}
-\citation{prioritization2022}
-\citation{smith2023llm}
-\citation{rag2023sec}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{nvd2023}
+\citation{first2019cvss,mell2006cvss}
+\citation{jacobs2021epss}
+\citation{cisa2021bod,cisa2023kev}
+\citation{spring2020ssvc}
+\citation{greshake2023prompt}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}\protected@file@percent }
+\citation{first2019cvss}
+\citation{jacobs2021epss}
+\citation{cisa2021bod}
+\citation{spring2020ssvc}
+\citation{lewis2020rag}
+\citation{greshake2023prompt}
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Vulnerability Scoring and Threat Intelligence}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Retrieval-Augmented Generation and Security Safeguards}{2}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {III}Proposed Method}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}System Architecture}{2}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}The Vulture Risk Score (VRS)}{2}{subsection.3.2}\protected@file@percent }
+\newlabel{eq:vrs}{{1}{2}{The Vulture Risk Score (VRS)}{equation.1}{}}
+\citation{spring2020ssvc}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Empirical ranking comparisons across CVSS-only, EPSS-only, and Vulture-AI (VRS) relative to the CISA SSVC independent reference priority on the 41-CVE benchmark ($N=41$). VRS achieves strong monotonic alignment with operational emergency priorities.}}{3}{figure.1}\protected@file@percent }
+\newlabel{fig:ranking_comparison}{{1}{3}{Empirical ranking comparisons across CVSS-only, EPSS-only, and Vulture-AI (VRS) relative to the CISA SSVC independent reference priority on the 41-CVE benchmark ($N=41$). VRS achieves strong monotonic alignment with operational emergency priorities}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Guardrailed RAG Security Assistant}{3}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Experimental Setup}{3}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Benchmark Dataset}{3}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Independent Ground-Truth Labeling}{3}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Evaluated Baselines}{4}{subsection.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-D}}Evaluation Metrics}{4}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Results and Analysis}{4}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Prioritization Performance (RQ1)}{4}{subsection.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Vulnerability Prioritization Performance Across Methods ($N=41$)}}{4}{table.1}\protected@file@percent }
+\newlabel{tab:main}{{I}{4}{Vulnerability Prioritization Performance Across Methods ($N=41$)}{table.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Feature Sensitivity and Ablation Analysis (RQ2)}{4}{subsection.5.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces VRS Feature Ablation Study ($N=41$)}}{4}{table.2}\protected@file@percent }
+\newlabel{tab:ablation}{{II}{4}{VRS Feature Ablation Study ($N=41$)}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Evidence Grounding and Injection Resilience (RQ3)}{4}{subsection.5.3}\protected@file@percent }
 \bibstyle{IEEEtran}
 \bibdata{references}
-\bibcite{first2023cvss}{1}
-\bibcite{jacobs2021epss}{2}
-\bibcite{cisa2023kev}{3}
-\bibcite{prioritization2022}{4}
-\bibcite{smith2023llm}{5}
-\bibcite{rag2023sec}{6}
-\bibcite{nvd2023}{7}
-\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {III}Methodology}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Experimental Setup}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {V}Results}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Ablation \& Discussion}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VII}Threats to Validity}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VIII}Conclusion}{1}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{1}{}\protected@file@percent }
-\gdef \@abspage@last{1}
+\bibcite{nvd2023}{1}
+\bibcite{first2019cvss}{2}
+\bibcite{mell2006cvss}{3}
+\bibcite{jacobs2021epss}{4}
+\bibcite{cisa2021bod}{5}
+\bibcite{cisa2023kev}{6}
+\bibcite{spring2020ssvc}{7}
+\bibcite{greshake2023prompt}{8}
+\bibcite{lewis2020rag}{9}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-D}}Distinction of Completed vs. Proposed Work}{5}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Threats to Validity}{5}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Internal Validity}{5}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}External Validity}{5}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Construct Validity}{5}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{5}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{5}{section*.1}\protected@file@percent }
+\gdef \@abspage@last{5}
