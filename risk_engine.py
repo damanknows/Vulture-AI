@@ -194,7 +194,7 @@ def compute_kev_first(finding: dict) -> float:
     c_val = cvss if cvss is not None else 0.0
     return round(k_val + c_val, 2)
 
-def rank_findings(findings: list, weights: dict = None, policies: dict = None) -> list:
+def rank_findings(findings: list, weights: dict = None, policies: dict = None, use_buckets: bool = True) -> list:
     scored_findings = []
     for f in findings:
         score_data = compute_vrs(f, weights, policies)
@@ -214,10 +214,16 @@ def rank_findings(findings: list, weights: dict = None, policies: dict = None) -
         if b == "standard": return 1
         return 2
         
-    scored_findings.sort(key=lambda x: (
-        bucket_rank(x["score_data"]["bucket"]),
-        -x["score_data"]["vrs"] if x["score_data"]["vrs"] is not None else float('inf'),
-        x["primary_cve"]
-    ))
+    if use_buckets:
+        scored_findings.sort(key=lambda x: (
+            bucket_rank(x["score_data"]["bucket"]),
+            -x["score_data"]["vrs"] if x["score_data"]["vrs"] is not None else float('inf'),
+            x["primary_cve"]
+        ))
+    else:
+        scored_findings.sort(key=lambda x: (
+            -x["score_data"]["vrs"] if x["score_data"]["vrs"] is not None else float('inf'),
+            x["primary_cve"]
+        ))
     
     return scored_findings

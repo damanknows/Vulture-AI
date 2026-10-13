@@ -30,8 +30,14 @@ For top-$K$ binary relevance evaluation (Precision@10, Recall@10):
 - **Primary Threshold ($\tau = 3$, Act / Emergency Action)**: Evaluates whether the top 10 items identify the most critical Tier 1 vulnerabilities requiring immediate response ($N_{\text{relevant}} = 15$).
 - **Secondary Threshold ($\tau = 2$, Actionable Action)**: Evaluates whether the top 10 items identify high/urgent remediation items ($N_{\text{relevant}} = 27$).
 
-## 4. Threats to Validity & Limitations
-1. **Catalog Incompleteness**: Absence from the CISA KEV catalog does not guarantee that a vulnerability has never been exploited in targeted or covert campaigns.
-2. **Temporal Dynamics**: EPSS probabilities represent a rolling 30-day forecast and fluctuate daily. This benchmark captures a snapshot frozen on **2026-10-14**.
-3. **Environmental Context**: Network exposure ($N$) and asset criticality ($A$) in public benchmarks reflect reference deployment baselines (e.g. external edge service vs. internal host) rather than a specific organization's internal network topography.
-4. **Ordinal Discretization**: Real-world operational priorities are ordinal decisions rather than continuous real numbers; small rank shifts within the same decision tier do not represent operational failures.
+## 4. Dataset Integrity & Checksum
+- **Dataset File**: `data/benchmark/cves.csv`
+- **SHA-256 Hash**: `e2a3419a46f33b0e71bfc607a4031955d57b7188d56f1c635024219374177fc8`
+- **Validation Command**: `python generate_data.py`
+
+## 5. Threats to Validity & Limitations
+1. **Construct Circularity / Heuristic Alignment**: The ground-truth ordinal labels derive from CISA SSVC decision categories based on exploitation state (correlated with KEV and EPSS), exposure ($N$), and mission impact ($C$ and $A$). Consequently, high rank correlation with SSVC labels reflects **construct consistency / heuristic alignment** with established vulnerability triage principles, rather than independent empirical evidence of enterprise breach prevention.
+2. **Catalog Incompleteness**: Absence from the CISA KEV catalog does not guarantee that a vulnerability has never been exploited in targeted or covert campaigns.
+3. **Temporal Dynamics**: EPSS probabilities represent a rolling 30-day forecast and fluctuate daily. This benchmark captures a snapshot frozen on **2026-10-14**.
+4. **Environmental Context**: Network exposure ($N$) and asset criticality ($A$) in public benchmarks reflect reference deployment baselines (e.g. external edge service vs. internal host) rather than a specific organization's internal network topography.
+5. **Sample Size & Generalization**: The 41 records cover distinct risk archetypes and missing-data edge cases, but do not represent the entire historical universe of vulnerabilities. Observed ranking differences must not be interpreted as proving causal superiority across all network topologies.

@@ -1,4 +1,63 @@
 {
+  "benchmark_file": "data/benchmark/cves.csv",
+  "sample_count": 41,
+  "configurations": {
+    "vrs_full": {
+      "weights": {
+        "w_C": 0.25,
+        "w_E": 0.2,
+        "w_K": 0.2,
+        "w_N": 0.2,
+        "w_A": 0.15
+      },
+      "use_buckets": true,
+      "description": "Full VRS with KEV-first bucket policy"
+    },
+    "vrs_no_epss": {
+      "weights": {
+        "w_C": 0.3125,
+        "w_E": 0.0,
+        "w_K": 0.25,
+        "w_N": 0.25,
+        "w_A": 0.1875
+      },
+      "use_buckets": true,
+      "description": "EPSS ablated with proportional renormalization"
+    },
+    "vrs_no_kev": {
+      "weights": {
+        "w_C": 0.3125,
+        "w_E": 0.25,
+        "w_K": 0.0,
+        "w_N": 0.25,
+        "w_A": 0.1875
+      },
+      "use_buckets": true,
+      "description": "KEV weight ablated with proportional renormalization"
+    },
+    "vrs_no_context": {
+      "weights": {
+        "w_C": 0.384616,
+        "w_E": 0.307692,
+        "w_K": 0.307692,
+        "w_N": 0.0,
+        "w_A": 0.0
+      },
+      "use_buckets": true,
+      "description": "Exposure & Criticality ablated (technical metrics only)"
+    },
+    "vrs_no_buckets": {
+      "weights": {
+        "w_C": 0.25,
+        "w_E": 0.2,
+        "w_K": 0.2,
+        "w_N": 0.2,
+        "w_A": 0.15
+      },
+      "use_buckets": false,
+      "description": "Full weights ranked purely by continuous numerical score (no bucket override)"
+    }
+  },
   "vrs_full": [
     "CVE-2021-44228",
     "CVE-2024-1709",
@@ -53,8 +112,8 @@
     "CVE-2022-1388",
     "CVE-2022-22965",
     "CVE-2020-1472",
-    "CVE-2023-46805",
     "CVE-2023-23397",
+    "CVE-2023-46805",
     "CVE-2024-21413",
     "CVE-2021-41773",
     "CVE-2017-0144",
@@ -77,8 +136,8 @@
     "CVE-2022-23710",
     "CVE-2023-2640",
     "CVE-2024-99992",
-    "CVE-2022-0492",
     "CVE-2021-3560",
+    "CVE-2022-0492",
     "CVE-2018-15473",
     "CVE-2021-33037",
     "CVE-2021-22947",
@@ -167,6 +226,49 @@
     "CVE-2022-23710",
     "CVE-2022-0492",
     "CVE-2024-99992",
+    "CVE-2021-22947",
+    "CVE-2023-38546",
+    "CVE-2024-99991"
+  ],
+  "vrs_no_buckets": [
+    "CVE-2021-44228",
+    "CVE-2024-1709",
+    "CVE-2023-20198",
+    "CVE-2023-34362",
+    "CVE-2023-3519",
+    "CVE-2019-11510",
+    "CVE-2021-26855",
+    "CVE-2022-1388",
+    "CVE-2022-22965",
+    "CVE-2020-1472",
+    "CVE-2023-46805",
+    "CVE-2023-23397",
+    "CVE-2024-21413",
+    "CVE-2021-41773",
+    "CVE-2017-0144",
+    "CVE-2015-3306",
+    "CVE-2021-34527",
+    "CVE-2022-30190",
+    "CVE-2022-1292",
+    "CVE-2020-0601",
+    "CVE-2023-38831",
+    "CVE-2019-15846",
+    "CVE-2024-3094",
+    "CVE-2021-3156",
+    "CVE-2022-0847",
+    "CVE-2023-28252",
+    "CVE-2020-13935",
+    "CVE-2021-23017",
+    "CVE-2022-22978",
+    "CVE-2018-15473",
+    "CVE-2021-33037",
+    "CVE-2022-1552",
+    "CVE-2021-32625",
+    "CVE-2022-23710",
+    "CVE-2023-2640",
+    "CVE-2021-3560",
+    "CVE-2024-99992",
+    "CVE-2022-0492",
     "CVE-2021-22947",
     "CVE-2023-38546",
     "CVE-2024-99991"

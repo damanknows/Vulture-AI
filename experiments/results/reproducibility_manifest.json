@@ -1,0 +1,121 @@
+{
+  "execution_timestamp_utc": "2026-10-13T19:43:39.736654+00:00",
+  "benchmark_provenance": {
+    "filepath": "data/benchmark/cves.csv",
+    "sha256": "e2a3419a46f33b0e71bfc607a4031955d57b7188d56f1c635024219374177fc8",
+    "record_count": 41,
+    "sources": [
+      "NIST NVD (CVSS v3.1 base score)",
+      "FIRST.org EPSS (Live API probability snapshot)",
+      "CISA KEV Catalog (Active exploitation listing)",
+      "CISA SSVC Decision Rubric (Ordinal reference priorities)"
+    ]
+  },
+  "environment": {
+    "python_version": "3.14.7 (main, Sep 13 2026, 08:30:29) [GCC 16.2.0]",
+    "platform": "Linux-7.1.5+kali-amd64-x86_64-with-glibc2.43",
+    "numpy_version": "2.4.6",
+    "scipy_version": "1.17.1",
+    "matplotlib_version": "3.10.9+dfsg1"
+  },
+  "experimental_settings": {
+    "vrs_default_weights": {
+      "w_C": 0.25,
+      "w_E": 0.2,
+      "w_K": 0.2,
+      "w_N": 0.2,
+      "w_A": 0.15
+    },
+    "missing_data_policies": {
+      "missing_cvss": "bucket='unavailable', vrs=None, ranked last",
+      "missing_epss_default": 0.0,
+      "missing_exposure_default": 0.5,
+      "missing_criticality_default": 0.5
+    },
+    "tie_breaking_order": [
+      "1. Bucket tier (urgent KEV matches sort first)",
+      "2. Numerical VRS score (descending)",
+      "3. Primary CVE ID (alphabetical ascending)"
+    ],
+    "evaluation_thresholds": {
+      "tau_act": 3,
+      "tau_actionable": 2,
+      "k_budget": 10
+    },
+    "ablation_weight_policy": "Proportional renormalization: w_j' = w_j / sum(active_w)"
+  },
+  "results_summary": {
+    "CVSS-only": {
+      "ndcg10": 0.7563,
+      "precision10_act": 0.6,
+      "recall10_act": 0.4,
+      "precision10_actionable": 1.0,
+      "recall10_actionable": 0.3704,
+      "spearman": 0.7357
+    },
+    "EPSS-only": {
+      "ndcg10": 0.9217,
+      "precision10_act": 0.8,
+      "recall10_act": 0.5333,
+      "precision10_actionable": 1.0,
+      "recall10_actionable": 0.3704,
+      "spearman": 0.8237
+    },
+    "KEV-first": {
+      "ndcg10": 0.7945,
+      "precision10_act": 0.7,
+      "recall10_act": 0.4667,
+      "precision10_actionable": 1.0,
+      "recall10_actionable": 0.3704,
+      "spearman": 0.8247
+    },
+    "CVSS+EPSS+KEV": {
+      "ndcg10": 0.9513,
+      "precision10_act": 0.9,
+      "recall10_act": 0.6,
+      "precision10_actionable": 1.0,
+      "recall10_actionable": 0.3704,
+      "spearman": 0.88
+    },
+    "VRS Proposed": {
+      "ndcg10": 1.0,
+      "precision10_act": 1.0,
+      "recall10_act": 0.6667,
+      "precision10_actionable": 1.0,
+      "recall10_actionable": 0.3704,
+      "spearman": 0.9488
+    },
+    "VRS (No EPSS)": {
+      "ndcg10": 1.0,
+      "precision10_act": 1.0,
+      "recall10_act": 0.6667,
+      "precision10_actionable": 1.0,
+      "recall10_actionable": 0.3704,
+      "spearman": 0.9575
+    },
+    "VRS (No KEV)": {
+      "ndcg10": 0.9581,
+      "precision10_act": 0.9,
+      "recall10_act": 0.6,
+      "precision10_actionable": 1.0,
+      "recall10_actionable": 0.3704,
+      "spearman": 0.9451
+    },
+    "VRS (No Context)": {
+      "ndcg10": 0.9513,
+      "precision10_act": 0.9,
+      "recall10_act": 0.6,
+      "precision10_actionable": 1.0,
+      "recall10_actionable": 0.3704,
+      "spearman": 0.8782
+    },
+    "VRS (No Bucket Override)": {
+      "ndcg10": 1.0,
+      "precision10_act": 1.0,
+      "recall10_act": 0.6667,
+      "precision10_actionable": 1.0,
+      "recall10_actionable": 0.3704,
+      "spearman": 0.9535
+    }
+  }
+}

@@ -102,14 +102,17 @@ Vulture-AI/
 ├── vulture_chatbot.py         # LiteLLM router and Pydantic constraints
 ├── models.py                  # Dataclass definitions
 ├── REPRODUCIBILITY.md         # Academic reproducibility constraints
+├── generate_data.py           # Benchmark dataset integrity & schema validator
 ├── data/
-│   └── benchmark/cves.csv     # Synthetic proxy-labeled evaluation dataset
+│   └── benchmark/cves.csv     # 41 real public CVE records with NVD, EPSS, KEV, and SSVC labels
 ├── experiments/
-│   ├── run_baselines.py       # Computes reference rankings
-│   ├── run_ablation.py        # Generates ablated rankings
-│   ├── compute_metrics.py     # Generates NDCG & Spearman metrics
+│   ├── run_baselines.py       # Computes baseline rankings (CVSS, EPSS, KEV, Combo, VRS)
+│   ├── run_ablation.py        # Evaluates weight renormalization and bucket override ablations
+│   ├── compute_metrics.py     # Computes NDCG@10, P@10, R@10, and mid-rank Spearman rho
+│   ├── make_tables.py         # Generates publication LaTeX tables and empirical ranking scatter plots
+│   ├── reproduce_all.py       # Unified end-to-end reproducible experiment runner with provenance manifest
 │   └── evaluate_rag.py        # Validates LLM outputs against 4 RAG modes
-├── tests/                     # Comprehensive integration/unit test suite
+├── tests/                     # Comprehensive integration and unit test suite
 └── static/                    # Compiled React frontend SPA
 ```
 
@@ -178,21 +181,30 @@ The included Flask server acts as a development runner. Do not deploy this appli
 
 # 12. RESEARCH METHODOLOGY
 
-To evaluate the mathematical behavior and prioritization quality of the proposed Vulture Risk Score (VRS) heuristic, the experimental pipeline compares rankings across five distinct methods:
+To evaluate the mathematical behavior and prioritization quality of the proposed Vulture Risk Score (VRS) heuristic, the experimental pipeline compares rankings across five baseline methods and five ablation variants on identical records:
+
+**Baseline Methods:**
 1. **CVSS-only baseline**: Ranks findings strictly by CVSS base score descending.
 2. **EPSS-only baseline**: Ranks findings strictly by FIRST EPSS probability descending.
 3. **KEV-first baseline**: Prioritizes CISA KEV known exploited vulnerabilities first, sorted by CVSS.
-4. **CVSS + EPSS + KEV baseline**: Unweighted equal combination of the three threat signals.
-5. **Vulture-AI (VRS vrs-v1)**: Proposed context-aware formula with KEV urgent bucket policy override.
+4. **CVSS + EPSS + KEV baseline**: Equal-weight combination (1/3 each) of the three vulnerability metrics.
+5. **Vulture-AI (VRS Proposed)**: Proposed context-aware formula with KEV urgent bucket policy override.
+
+**Ablation Variants (Proportional Renormalization Policy):**
+*   **VRS (No EPSS)**: $w_E = 0$, remaining weights proportionally rescaled ($w_j' = w_j / \sum_{k \neq E} w_k$).
+*   **VRS (No KEV Weight)**: $w_K = 0$, remaining weights proportionally rescaled.
+*   **VRS (No Context / Tech-only)**: $w_N = 0, w_A = 0$, weights proportionally rescaled across $C, E, K$.
+*   **VRS (No Bucket Override)**: Full weights ($w_C=0.25, w_E=0.20, w_K=0.20, w_N=0.20, w_A=0.15$), but ranked strictly by continuous numerical VRS score without the categorical KEV-first bucket override (`use_buckets=False`).
 
 **Evaluation Metrics:**
 *   `NDCG@10`: Normalized Discounted Cumulative Gain at $K=10$ using exponential graded relevance $\sum_{i=1}^{10} \frac{2^{rel_i} - 1}{\log_2(i+1)}$ normalized by ideal DCG@10.
-*   `Precision@10`: Fraction of top-10 items meeting relevance threshold ($\tau = 3$, Act / Emergency Action; $\tau = 2$, Actionable).
-*   `Recall@10`: Fraction of total relevant items retrieved in top 10 ($N_{\text{Act}} = 15$).
-*   `Spearman Rank Correlation`: Monotonic rank tracking relative to reference priority order.
+*   `Precision@10` & `Recall@10`: Top-10 retrieval evaluated at two explicit decision thresholds:
+    - Primary Threshold ($\tau = 3$, Act / Emergency Remediation, $N_{\text{relevant}} = 15$).
+    - Secondary Threshold ($\tau = 2$, Actionable / Act or Attend, $N_{\text{relevant}} = 27$).
+*   `Spearman Rank Correlation (rho)`: Monotonic rank correlation using fractional mid-ranks for ties and Pearson correlation of ranks, with strict population validation.
 *   **Deterministic Tie-Breaking**: All methods enforce strict secondary sorting by primary CVE ID ascending.
 
-**Dataset & Independent Labels:** `data/benchmark/cves.csv` contains 41 real, publicly documented vulnerabilities with official NIST NVD CVSS scores, live FIRST EPSS probabilities, and CISA KEV listings. Reference priorities and relevance grades (3=Act, 2=Attend, 1=Track, 0=Defer) are mapped to **CISA SSVC (Stakeholder-Specific Vulnerability Categorization)** guidelines independently of the VRS formula.
+**Dataset & Independent Labels:** `data/benchmark/cves.csv` contains 41 real, publicly documented vulnerabilities with official NIST NVD CVSS scores, live FIRST EPSS probabilities, and CISA KEV listings. Reference priorities (1–41) and relevance grades (3=Act, 2=Attend, 1=Track, 0=Defer) are categorized according to **CISA SSVC (Stakeholder-Specific Vulnerability Categorization)** guidelines.
 
 # 13. EXPERIMENTAL RESULTS
 
@@ -205,22 +217,25 @@ The following table was generated automatically by `experiments/compute_metrics.
 | **KEV-first** | 0.7945 | 0.7000 | 0.4667 | 1.0000 | 0.3704 | 0.8247 |
 | **CVSS+EPSS+KEV** | 0.9513 | 0.9000 | 0.6000 | 1.0000 | 0.3704 | 0.8800 |
 | **VRS Proposed** | **1.0000** | **1.0000** | **0.6667** | **1.0000** | **0.3704** | **0.9488** |
-| VRS (No EPSS) | 1.0000 | 1.0000 | 0.6667 | 1.0000 | 0.3704 | 0.9585 |
+| VRS (No EPSS) | 1.0000 | 1.0000 | 0.6667 | 1.0000 | 0.3704 | 0.9575 |
 | VRS (No KEV) | 0.9581 | 0.9000 | 0.6000 | 1.0000 | 0.3704 | 0.9451 |
 | VRS (No Context) | 0.9513 | 0.9000 | 0.6000 | 1.0000 | 0.3704 | 0.8782 |
+| VRS (No Bucket Override) | 1.0000 | 1.0000 | 0.6667 | 1.0000 | 0.3704 | 0.9535 |
 
 **Key Findings:**
-1. **CVSS Misses Active Exploitation**: CVSS-only achieves only P@10=0.60 and R@10=0.40, ranking unexploited criticals (e.g. XZ Utils backdoor) above exploited services with lower CVSS scores (e.g. Apache 2.4.49 path traversal).
+1. **CVSS Misses Active Exploitation**: CVSS-only achieves P@10=0.60 and R@10=0.40, ranking unexploited critical vulnerabilities (e.g. XZ Utils backdoor, CVE-2024-3094) above lower-CVSS actively exploited services (e.g. Apache 2.4.49 path traversal, CVE-2021-41773).
 2. **Context & Policy Override Benefit**: VRS Proposed achieves NDCG@10=1.0000 and P@10=1.0000, successfully surfacing all emergency remediation items in the top tier. Ablating environmental context (`VRS No Context`) drops Spearman correlation from 0.9488 to 0.8782.
-3. **Limitations**: These results validate the mathematical integration and alignment with SSVC decision trees on 41 public CVEs; they do not prove that VRS eliminates enterprise breaches without organizational validation.
+3. **Score-Only vs. Bucket Override**: Ranking purely by continuous numerical score (`VRS No Bucket Override`) yields NDCG@10=1.0000 and Spearman=0.9535, confirming that the linear weighting formula itself surfaces critical KEV vulnerabilities even without the categorical urgent bucket override.
 
 # 14. REPRODUCIBILITY
 
-Vulture-AI guarantees algorithmic determinism in the core `risk_engine.py`. 
-*   **Dataset Hash**: `data/benchmark/cves.csv` evaluates to `ab2b5f1206f7519131d15ada0d71bd8e`.
-*   **Tie-breaking**: Predictably enforced via alphabetical primary CVE IDs across all baseline ranking algorithms.
-*   **Config Definitions**: Recorded directly within `experiments/config.json`.
-*   To independently verify:
+Vulture-AI guarantees algorithmic determinism across the entire pipeline.
+*   **Dataset Integrity**: `data/benchmark/cves.csv` evaluates to SHA-256 `e2a3419a46f33b0e71bfc607a4031955d57b7188d56f1c635024219374177fc8` (verified by `python generate_data.py`).
+*   **Unified Reproduction Command**: Run the end-to-end pipeline in a single step:
+    ```bash
+    python experiments/reproduce_all.py
+    ```
+*   **Individual Experiment Execution**:
     ```bash
     python experiments/run_baselines.py
     python experiments/run_ablation.py
@@ -228,13 +243,15 @@ Vulture-AI guarantees algorithmic determinism in the core `risk_engine.py`.
     python experiments/make_tables.py
     pytest -v
     ```
+*   **Reproducibility Manifest**: Detailed runtime provenance, software versions, and configuration settings are saved automatically to `experiments/results/reproducibility_manifest.json`.
 
 # 15. LIMITATIONS AND THREATS TO VALIDITY
 
-1.  **Service Banner Uncertainty:** Exact NVD CPE mapping relies entirely on Nmap accurately extracting non-obfuscated service strings. Failures in version discovery fall back to inaccurate candidate matches.
-2.  **Stale Threat Intelligence:** The system caches NVD outputs for 24 hours. Emerging CVE mutations during that window will be missed.
-3.  **Proxy Labels:** The benchmark results derive from expert heuristic judgments (Proxy Labels), representing internal consistency rather than real-world detection validation.
-4.  **Scanner Concurrency:** `nmap` executes as a blocking subprocess on the API main thread, risking thread starvation under high load.
+1.  **Construct Circularity / Heuristic Alignment:** The SSVC ground-truth labels are derived from decision trees considering exploitation state (correlated with KEV and EPSS), exposure ($N$), and mission impact ($C$ and $A$). Consequently, the high correlation between VRS and reference labels reflects **construct consistency / heuristic alignment** with SSVC triage logic, rather than independent empirical proof of breach prevention.
+2.  **Dataset Size & Generalization:** The benchmark contains 41 representative public CVEs. While covering diverse ecosystems and missing-data edge cases, performance differences demonstrate component sensitivity within this sample and cannot prove universal generalization or statistical causality.
+3.  **Temporal Dynamics:** EPSS probabilities represent a rolling 30-day forecast and fluctuate daily. This benchmark captures a snapshot frozen on **2026-10-14**.
+4.  **Service Banner Uncertainty:** Exact NVD CPE mapping relies entirely on Nmap accurately extracting non-obfuscated service strings. Failures in version discovery fall back to inaccurate candidate matches.
+5.  **Scanner Concurrency:** `nmap` executes as a blocking subprocess on the API main thread, risking thread starvation under high load.
 
 # 16. ROADMAP
 

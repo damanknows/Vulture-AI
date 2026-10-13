@@ -45,7 +45,7 @@
     "recall10_act": 0.6667,
     "precision10_actionable": 1.0,
     "recall10_actionable": 0.3704,
-    "spearman": 0.9585
+    "spearman": 0.9575
   },
   "VRS (No KEV)": {
     "ndcg10": 0.9581,
@@ -62,5 +62,13 @@
     "precision10_actionable": 1.0,
     "recall10_actionable": 0.3704,
     "spearman": 0.8782
+  },
+  "VRS (No Bucket Override)": {
+    "ndcg10": 1.0,
+    "precision10_act": 1.0,
+    "recall10_act": 0.6667,
+    "precision10_actionable": 1.0,
+    "recall10_actionable": 0.3704,
+    "spearman": 0.9535
   }
 }
