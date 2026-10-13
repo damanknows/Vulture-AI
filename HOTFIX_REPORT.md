@@ -94,7 +94,28 @@ All tasks were executed under strict peer-review and reproducible-science constr
    # Outcome: manuscript.pdf compiled cleanly (6 pages, 465,344 bytes, IEEE double-blind format)
    ```
 
-6. **Whitespace & Diff Verification**:
+6. **Submission Reproducibility Package**:
+   ```bash
+   tar -czvf /tmp/vulture_ai_reproducibility.tar.gz \
+       --exclude-vcs \
+       --exclude='*.pyc' \
+       --exclude='*__pycache__*' \
+       --exclude='*.pytest_cache*' \
+       --exclude='*data/cache*' \
+       --exclude='*data/raw/nmap/*.xml' \
+       --exclude='*paper/*.aux' \
+       --exclude='*paper/*.log' \
+       --exclude='*paper/*.out' \
+       --exclude='*paper/*.bbl' \
+       --exclude='*paper/*.blg' \
+       --exclude='*venv*' \
+       --exclude='*.env' \
+       --exclude='*.tar.gz' \
+       . && mv /tmp/vulture_ai_reproducibility.tar.gz ./vulture_ai_reproducibility.tar.gz
+   # SHA-256: aa68bc6db196e46fcd4ab2895b2f86d842866495a76760ba1b67e15f590bf640 (Size: ~1.8 MB)
+   ```
+
+7. **Whitespace & Diff Verification**:
    ```bash
    git diff --check
    # Outcome: 0 whitespace errors or formatting defects
@@ -156,12 +177,14 @@ Vulture-AI/
 │   ├── IEEEtran.cls                           # Official IEEE conference LaTeX document class
 │   ├── IEEEtran.bst                           # IEEEtran BibTeX bibliography style
 │   ├── manuscript.pdf                         # Compiled 6-page double-blind IEEE conference paper
-│   ├── manuscript.tex                         # Complete LaTeX paper source
+│   ├── manuscript.tex                         # Complete LaTeX paper source (anonymous metadata)
+│   ├── README.md                              # Compilation guide & double-blind transition notes
 │   └── references.bib                         # Verified academic bibliography
 ├── pyproject.toml                             # Modern Python packaging metadata and tool configurations
 ├── pytest.ini                                 # Pytest execution configuration
 ├── README.md                                  # Complete research-grade project README (17 sections)
 ├── requirements.txt                           # Versioned, non-redundant dependencies
+├── requirements-lock.txt                      # Locked dependency versions for exact environment replication
 ├── retrieval.py                               # Structured evidence formatter and lookup engine
 ├── risk_engine.py                             # Deterministic VRS scoring engine and tie-break sorter
 ├── scanner.py                                 # Nmap execution wrapper with allowlist enforcement
@@ -180,6 +203,7 @@ Vulture-AI/
 │   ├── test_scanner.py                        # Target allowlist rejection and timeout tests
 │   └── test_stale_intel.py                    # Cache TTL and stale threat intelligence tests
 ├── threat_intel.py                            # NVD v2.0, FIRST EPSS, and CISA KEV fetchers
+├── vulture_ai_reproducibility.tar.gz          # Standalone clean reproduction archive
 └── vulture_chatbot.py                         # LiteLLM router and Pydantic schema validation envelope
 ```
 
@@ -192,7 +216,7 @@ Vulture-AI/
 2. **Security Contact Configuration**:
    - `SECURITY.md` directs vulnerability reporters to GitHub Security Advisories. If an institutional security email is desired, it should be configured in repository settings.
 3. **Double-Blind Anonymity**:
-   - The manuscript (`paper/manuscript.tex` and `paper/manuscript.pdf`) is currently formatted as double-blind anonymous (`\author{\IEEEauthorblockN{Anonymous Author(s)}}`). Once accepted or when submitting to a single-blind track, real author affiliations should be unmasked.
+   - The manuscript (`paper/manuscript.tex` and `paper/manuscript.pdf`) is currently formatted as double-blind anonymous (`\author{\IEEEauthorblockN{Anonymous Author(s)}}` with PDF author metadata set to `Anonymous Author(s)`). Once accepted or when submitting to a single-blind track, real author affiliations should be unmasked.
 4. **Git Remote Push**:
    - In accordance with safety policies, commits must be pushed manually by the owner:
      ```bash
