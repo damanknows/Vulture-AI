@@ -112,7 +112,7 @@ All tasks were executed under strict peer-review and reproducible-science constr
        --exclude='*.env' \
        --exclude='*.tar.gz' \
        . && mv /tmp/vulture_ai_reproducibility.tar.gz ./vulture_ai_reproducibility.tar.gz
-   # SHA-256: 201e0c39fea5a80243c32feb0b2031cad99e37797426a89f712ffbaa842def97 (Size: ~1.8 MB)
+   # SHA-256: 81a6c62407a0a9cf4f8c743cf7708a0f3f87f1321fa6a0cf02ecac2ca22cd060 (Size: ~1.8 MB)
    ```
 
 7. **Whitespace & Diff Verification**:
