@@ -1,16 +1,16 @@
 {
   "dataset": {
     "file": "data/benchmark/cves.csv",
-    "md5_hash": "ab2b5f1206f7519131d15ada0d71bd8e",
+    "sha256_hash": "27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e",
     "sample_count": 41,
     "timestamp": "2026-10-14T00:00:00Z",
-    "independent_ground_truth": "CISA SSVC Decision Rubric (Act=3, Attend=2, Track=1, Defer=0)"
+    "reference_labeling": "CISA SSVC Decision Rubric (Act=3, Attend=2, Track=1, Defer=0; author-curated heuristic judgments)"
   },
   "metrics": {
-    "ndcg_at_10": "Normalized Discounted Cumulative Gain at K=10 using standard formula sum((2^rel - 1) / log2(i+2)) normalized by IDCG@10.",
-    "precision_at_10": "Fraction of top 10 ranked items meeting relevance threshold (threshold=3 for Act/Emergency; threshold=2 for Actionable).",
-    "recall_at_10": "Fraction of total relevant items retrieved in top 10.",
-    "spearman": "Spearman Rank Correlation Coefficient between predicted ranking and reference priority order."
+    "ndcg_at_k": "Normalized Discounted Cumulative Gain evaluated at K=5, K=10, K=15 using standard formula sum((2^rel - 1) / log2(i+2)) normalized by IDCG@K.",
+    "precision_at_k": "Fraction of top K ranked items meeting relevance threshold (threshold=3 for Act/Emergency; threshold=2 for Actionable).",
+    "recall_at_k": "Fraction of total relevant items retrieved in top K.",
+    "spearman": "Spearman Rank Correlation Coefficient between predicted ranking and reference priority order (mid-rank tie-corrected)."
   },
   "baselines": [
     "CVSS-only",
@@ -20,8 +20,9 @@
     "VRS Proposed (vrs-v1)"
   ],
   "ablations": {
-    "vrs_no_epss": {"w_C": 0.30, "w_E": 0.00, "w_K": 0.25, "w_N": 0.25, "w_A": 0.20},
-    "vrs_no_kev": {"w_C": 0.30, "w_E": 0.25, "w_K": 0.00, "w_N": 0.25, "w_A": 0.20},
-    "vrs_no_context": {"w_C": 0.40, "w_E": 0.30, "w_K": 0.30, "w_N": 0.00, "w_A": 0.00}
+    "vrs_no_epss": {"w_C": 0.3125, "w_E": 0.0, "w_K": 0.25, "w_N": 0.25, "w_A": 0.1875, "use_buckets": true},
+    "vrs_no_kev": {"w_C": 0.3125, "w_E": 0.25, "w_K": 0.0, "w_N": 0.25, "w_A": 0.1875, "use_buckets": true},
+    "vrs_no_context": {"w_C": 0.384616, "w_E": 0.307692, "w_K": 0.307692, "w_N": 0.0, "w_A": 0.0, "use_buckets": true},
+    "vrs_no_buckets": {"w_C": 0.25, "w_E": 0.20, "w_K": 0.20, "w_N": 0.20, "w_A": 0.15, "use_buckets": false}
   }
 }

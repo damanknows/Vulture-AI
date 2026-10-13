@@ -2,17 +2,19 @@
 Vulture-AI Benchmark Dataset Generator & Integrity Validator
 ============================================================
 
-This module manages and verifies the benchmark dataset of 41 real, publicly documented
-vulnerability records used for comparative prioritization experiments.
+This module manages and verifies the benchmark dataset of 39 real, publicly documented
+CVEs and 2 synthetic missing-data edge-case records (41 total) used for comparative
+prioritization experiments.
 
-All records are grounded in authoritative public intelligence sources:
+All real records are grounded in authoritative public intelligence sources:
 - NIST National Vulnerability Database (NVD): CVSS v3.1 base score
 - FIRST.org EPSS API: Live exploit prediction probability
 - CISA Known Exploited Vulnerabilities (KEV) Catalog: Active exploitation status
-- CISA Stakeholder-Specific Vulnerability Categorization (SSVC): Ground-truth decision label
+- CISA Stakeholder-Specific Vulnerability Categorization (SSVC): Reference decision rubric
 
-NOTE: Synthetic vulnerability generation (e.g. CVE-2024-100xx) has been completely retired
-to prevent contaminating the benchmark with ungrounded mock data.
+NOTE: Arbitrary synthetic vulnerability generation (e.g. CVE-2024-100xx) has been retired.
+Two synthetic edge-case records (CVE-2024-99991, CVE-2024-99992) are preserved exclusively
+to test missing-CVSS and missing-EPSS handling policies.
 """
 
 import csv
@@ -138,7 +140,7 @@ def verify_benchmark():
     try:
         records, sha256_hash = load_and_validate_benchmark()
         print(f"File:         {BENCHMARK_CSV_PATH}")
-        print(f"Record Count: {len(records)} verified real public CVEs")
+        print(f"Record Count: {len(records)} records (39 real public CVEs + 2 synthetic missing-data edge cases)")
         print(f"SHA-256 Hash: {sha256_hash}")
         
         # Summary counts
@@ -158,7 +160,7 @@ def verify_benchmark():
         print(f"  - CISA KEV Listed:    {kev_cnt} records")
         print(f"  - Missing CVSS cases: {missing_cvss} (e.g. CVE-2024-99991)")
         print(f"  - Missing EPSS cases: {missing_epss} (e.g. CVE-2024-99992)")
-        print("\nAll integrity checks passed successfully. Zero synthetic CVEs.")
+        print("\nAll integrity checks passed successfully. 39 real CVEs verified; 2 synthetic edge cases accounted for.")
         print("=" * 65)
         return True
     except Exception as e:

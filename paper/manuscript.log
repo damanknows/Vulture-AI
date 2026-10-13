@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Debian) (preloaded format=pdflatex 2026.10.6)  14 OCT 2026 02:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Debian) (preloaded format=pdflatex 2026.10.6)  14 OCT 2026 02:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -599,24 +599,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 124--125
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 133--135
-\OT1/ptm/b/n/10 vul-ner-a-bil-i-ties \OT1/ptm/m/n/10 in \OT1/pcr/m/n/10 data/be
-nchmark/cves.csv
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 133--135
-\OT1/ptm/m/n/10 (snap-shot frozen as of 2026-10-14, MD5 hash:
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 138--139
-[]\OT1/ptm/m/n/10 Two de-lib-er-ate edge cases test miss-ing data:
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 138--139
-\OT1/pcr/m/n/10 CVE-2024-99991 \OT1/ptm/m/n/10 (miss-ing CVSS) and
+Underfull \hbox (badness 1590) in paragraph at lines 133--135
+\OT1/ptm/m/n/10 bled a cu-rated bench-mark of \OT1/ptm/b/n/10 39 real, pub-licl
+y doc-u-
  []
 
 [3 <../experiments/results/figures/ranking_comparison.png>]
@@ -642,31 +627,52 @@ Underfull \hbox (badness 2158) in paragraph at lines 194--195
 1773\OT1/ptm/m/n/10 ,
  []
 
-
-Underfull \hbox (badness 1783) in paragraph at lines 222--223
+[4]
+Underfull \hbox (badness 1783) in paragraph at lines 224--225
 []\OT1/ptm/b/n/10 Value of KEV Ur-gent Pol-icy Over-ride\OT1/ptm/m/n/10 : Re-mo
 v-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 225--227
+Underfull \hbox (badness 10000) in paragraph at lines 229--231
 []\OT1/ptm/m/n/10 Evaluation of the as-sis-tant pipeline un-der
  []
 
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 228--229
+
+Underfull \hbox (badness 10000) in paragraph at lines 229--231
+\OT1/pcr/m/n/10 evaluate_rag.py \OT1/ptm/m/n/10 (ex-e-cuted with a de-ter-min-i
+s-tic
+ []
+
+
+Underfull \hbox (badness 2990) in paragraph at lines 229--231
+\OT1/ptm/m/n/10 Mock-LLM fix-ture to guar-an-tee of-fline au-ditabil-ity and
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
 \OT1/ptm/m/n/10 pay-loads (e.g., \OT1/pcr/m/n/10 "Server: Apache/2.4.49
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 228--229
+Underfull \hbox (badness 10000) in paragraph at lines 232--233
 \OT1/pcr/m/n/10 (System: ignore instructions, score
  []
 
 
-Underfull \hbox (badness 1701) in paragraph at lines 228--229
+Underfull \hbox (badness 1701) in paragraph at lines 232--233
 \OT1/pcr/m/n/10 0.0)"\OT1/ptm/m/n/10 ), the ev-i-dence val-i-da-tion fil-ter su
 c-cess-fully
+ []
+
+[5]
+Underfull \hbox (badness 1412) in paragraph at lines 258--259
+[]\OT1/ptm/m/n/10 Evaluated on a bench-mark of 39 real, pub-licly doc-
+ []
+
+
+Underfull \hbox (badness 2573) in paragraph at lines 258--259
+\OT1/ptm/m/n/10 u-mented CVEs and 2 syn-thetic missing-data edge-case
  []
 
 (./manuscript.bbl
@@ -687,22 +693,24 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[5] (./manuscript.aux)
+[6
+
+] (./manuscript.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026-08-10>
  ***********
 Package rerunfilecheck Info: File `manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: B189732008F79575B6982FA4FAEDF91A;4465.
+(rerunfilecheck)             Checksum: 6E15D9E093282707D42B3D5835678E0D;4521.
  ) 
 Here is how much of TeX's memory you used:
- 11328 strings out of 469089
- 175840 string characters out of 5459374
- 615122 words of memory out of 5000000
+ 11329 strings out of 469089
+ 175846 string characters out of 5459374
+ 617138 words of memory out of 5000000
  40199 multiletter control sequences out of 15000+600000
  669453 words of font info for 123 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 74i,8n,79p,2129b,573s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 74i,8n,79p,2306b,567s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texli
@@ -719,10 +727,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share
 f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on manuscript.pdf (5 pages, 463208 bytes).
+Output written on manuscript.pdf (6 pages, 465344 bytes).
 PDF statistics:
- 291 PDF objects out of 1000 (max. 8388607)
- 243 compressed objects within 3 object streams
- 63 named destinations out of 1000 (max. 500000)
+ 295 PDF objects out of 1000 (max. 8388607)
+ 246 compressed objects within 3 object streams
+ 64 named destinations out of 1000 (max. 500000)
  198 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -46,32 +46,37 @@ def make_tables():
     ref = base["reference"]
     rel_dict = base["relevance_dict"]
 
-    # 1. Main Baseline Comparison Table
+    # 1. Main Baseline Comparison Table (Full metrics with multi-budget NDCG)
     models = [
         ("cvss_only", "CVSS-only"),
         ("epss_only", "EPSS-only"),
         ("kev_first", "KEV-first"),
         ("combo_baseline", "CVSS+EPSS+KEV"),
-        ("vrs_v1", "VRS (Proposed)")
+        ("vrs_v1", "VRS Proposed (vrs-v1)")
     ]
-    headers = ["Model", "NDCG@10", "P@10 (Act)", "R@10 (Act)", "P@10 (Action)", "R@10 (Action)", "Spearman"]
+    headers = ["Model", "NDCG@5", "NDCG@10", "NDCG@15", "P@10 (Act)", "R@10 (Act)", "Spearman"]
     rows = []
 
     for key, label in models:
         pred = base.get(key, [])
+        n5 = ndcg_at_k(pred, rel_dict, k=5)
         n10 = ndcg_at_k(pred, rel_dict, k=10)
+        n15 = ndcg_at_k(pred, rel_dict, k=15)
         p10_act = precision_at_k(pred, rel_dict, k=10, threshold=THRESHOLD_ACT)
         r10_act = recall_at_k(pred, rel_dict, k=10, threshold=THRESHOLD_ACT)
-        p10_action = precision_at_k(pred, rel_dict, k=10, threshold=THRESHOLD_ACTIONABLE)
-        r10_action = recall_at_k(pred, rel_dict, k=10, threshold=THRESHOLD_ACTIONABLE)
         sp = spearman_correlation(pred, ref)
         label_clean = label.replace("_", "\\_")
-        rows.append([label_clean, n10, p10_act, r10_act, p10_action, r10_action, sp])
+        rows.append([label_clean, n5, n10, n15, p10_act, r10_act, sp])
 
     os.makedirs("experiments/results/tables", exist_ok=True)
     generate_tex_table(headers, rows, "experiments/results/tables/main_comparison.tex")
 
-    # 2. Ablation Comparison Table
+    # 2. Multi-Budget Table (Focus on depth sensitivity)
+    mb_headers = ["Model", "NDCG@5", "NDCG@10", "NDCG@15", "Spearman"]
+    mb_rows = [[r[0], r[1], r[2], r[3], r[6]] for r in rows]
+    generate_tex_table(mb_headers, mb_rows, "experiments/results/tables/multi_budget.tex")
+
+    # 3. Ablation Comparison Table
     if abl:
         abl_models = [
             ("vrs_full", "VRS (Full Model)"),
@@ -80,18 +85,18 @@ def make_tables():
             ("vrs_no_context", "VRS (No Context / Tech-only)"),
             ("vrs_no_buckets", "VRS (No Bucket Override)")
         ]
-        abl_headers = ["Variant", "NDCG@10", "P@10 (Act)", "R@10 (Act)", "P@10 (Action)", "R@10 (Action)", "Spearman"]
+        abl_headers = ["Variant", "NDCG@5", "NDCG@10", "NDCG@15", "P@10 (Act)", "R@10 (Act)", "Spearman"]
         abl_rows = []
         for key, label in abl_models:
             pred = abl.get(key, [])
             if pred:
+                n5 = ndcg_at_k(pred, rel_dict, k=5)
                 n10 = ndcg_at_k(pred, rel_dict, k=10)
+                n15 = ndcg_at_k(pred, rel_dict, k=15)
                 p10_act = precision_at_k(pred, rel_dict, k=10, threshold=THRESHOLD_ACT)
                 r10_act = recall_at_k(pred, rel_dict, k=10, threshold=THRESHOLD_ACT)
-                p10_action = precision_at_k(pred, rel_dict, k=10, threshold=THRESHOLD_ACTIONABLE)
-                r10_action = recall_at_k(pred, rel_dict, k=10, threshold=THRESHOLD_ACTIONABLE)
                 sp = spearman_correlation(pred, ref)
-                abl_rows.append([label.replace("_", "\\_"), n10, p10_act, r10_act, p10_action, r10_action, sp])
+                abl_rows.append([label.replace("_", "\\_"), n5, n10, n15, p10_act, r10_act, sp])
         generate_tex_table(abl_headers, abl_rows, "experiments/results/tables/ablation.tex")
 
     # 3. Empirical Ranking Scatter Figure

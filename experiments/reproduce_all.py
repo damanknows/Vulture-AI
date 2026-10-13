@@ -43,7 +43,7 @@ def run_reproducible_pipeline(benchmark_path: str = "data/benchmark/cves.csv"):
     print("\n[Step 1/5] Validating benchmark dataset integrity...")
     records, sha256_hash = load_and_validate_benchmark(benchmark_path)
     print(f"  Benchmark File: {benchmark_path}")
-    print(f"  Verified Rows:  {len(records)} authentic vulnerability records")
+    print(f"  Verified Rows:  {len(records)} records (39 real public CVEs + 2 synthetic missing-data edge cases)")
     print(f"  SHA-256 Hash:   {sha256_hash}")
 
     # 2. Run Baselines
@@ -69,11 +69,17 @@ def run_reproducible_pipeline(benchmark_path: str = "data/benchmark/cves.csv"):
             "filepath": benchmark_path,
             "sha256": sha256_hash,
             "record_count": len(records),
+            "real_cve_count": 39,
+            "synthetic_edge_case_count": 2,
+            "synthetic_records": [
+                "CVE-2024-99991 (missing CVSS edge-case)",
+                "CVE-2024-99992 (missing EPSS edge-case)"
+            ],
             "sources": [
                 "NIST NVD (CVSS v3.1 base score)",
                 "FIRST.org EPSS (Live API probability snapshot)",
                 "CISA KEV Catalog (Active exploitation listing)",
-                "CISA SSVC Decision Rubric (Ordinal reference priorities)"
+                "CISA SSVC Decision Rubric (Ordinal reference priorities; author-curated heuristic judgments)"
             ]
         },
         "environment": {

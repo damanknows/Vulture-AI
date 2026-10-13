@@ -1,26 +1,28 @@
 # Vulture-AI Benchmark Dataset
 
 ## 1. Overview
-This benchmark contains **41 real, publicly documented vulnerability records** designed to evaluate vulnerability prioritization algorithms (CVSS-only, EPSS-only, KEV-first, and Vulture-AI's Vulture Risk Score).
+This benchmark contains **39 real, publicly documented CVE records plus 2 synthetic edge-case records** designed to evaluate vulnerability prioritization algorithms (CVSS-only, EPSS-only, KEV-first, and Vulture-AI's Vulture Risk Score).
 
-All vulnerability data is traceable to authoritative public sources:
+All real vulnerability data is traceable to authoritative public sources:
 - **NIST National Vulnerability Database (NVD)**: Official CVSS v3.1 base scores.
 - **FIRST.org EPSS**: Live Exploit Prediction Scoring System probabilities (retrieved 2026-10-14).
 - **CISA KEV Catalog**: Known Exploited Vulnerabilities catalog (catalog version 2026.10.13).
-- **CISA SSVC Decision Tree**: Stakeholder-Specific Vulnerability Categorization used for independent ground-truth labeling.
+- **CISA SSVC Decision Tree**: Stakeholder-Specific Vulnerability Categorization used as the reference labeling rubric.
+
+> **⚠ Synthetic Records Disclosure**: Records `CVE-2024-99991` (Items 40) and `CVE-2024-99992` (Item 41) use **non-existent CVE identifiers** that are not registered in the NVD or any CNA. They are deliberately constructed to test missing-data handling: missing CVSS and missing EPSS respectively. These records have no authoritative public source and must not be cited as real vulnerabilities.
 
 ## 2. Selection Methodology & Risk Profiles
-The 41 vulnerabilities span diverse software ecosystems (web servers, firewalls, enterprise gateways, operating system kernels, libraries) across 4 operational threat tiers, plus explicit edge cases for missing data:
+The dataset spans diverse software ecosystems (web servers, firewalls, enterprise gateways, operating system kernels, libraries) across 4 operational threat tiers, plus 2 explicit synthetic edge cases for missing data:
 1. **Tier 1 (Act / Emergency Remediation)** (Items 1–15): Actively exploited in the wild (CISA KEV = 1) affecting high-exposure, critical network or authentication services (e.g. Log4Shell, MOVEit, Spring4Shell, Citrix ADC, ScreenConnect).
 2. **Tier 2 (Attend / High Urgency)** (Items 16–27): Confirmed weaponized exploits or KEV listings with client/local attack vectors, or critical zero-days without active mass exploitation in KEV (e.g. XZ Utils backdoor, Follina, PrintNightmare, WinRAR, Dirty Pipe, Sudo Baron Samedit).
 3. **Tier 3 (Track / Standard Maintenance)** (Items 28–35): Validated high/medium CVSS vulnerabilities without active KEV exploitation or with low exploit likelihood (e.g. Redis STRALGO, PostgreSQL, Polkit, Linux cgroups).
 4. **Tier 4 (Defer / Low Urgency)** (Items 36–39): Low severity, client-side, or non-actionable bugs (e.g. OpenSSH user enum, curl cookie path traversal).
-5. **Missing-Data Edge Cases** (Items 40–41): Real-world data gaps:
-   - `CVE-2024-99991`: Missing CVSS base score (unassessed advisory).
-   - `CVE-2024-99992`: Missing EPSS probability (pre-publication advisory).
+5. **Synthetic Missing-Data Edge Cases** (Items 40–41): **Not real CVEs.** Synthetic records constructed to verify missing-data handling:
+   - `CVE-2024-99991`: Synthetic record with no CVSS base score (tests missing-CVSS policy).
+   - `CVE-2024-99992`: Synthetic record with no EPSS probability (tests missing-EPSS policy).
 
-## 3. Independent Labels & Evaluation Protocol
-Ground-truth relevance is categorized into 4 ordinal levels based on **CISA SSVC (Stakeholder-Specific Vulnerability Categorization)** guidelines:
+## 3. Reference Labels & Evaluation Protocol
+Reference relevance grades are categorized into 4 ordinal levels based on a **manual application of the CISA SSVC decision rubric** by the authors. These labels represent expert-curated heuristic judgments and are NOT independently validated breach ground truth. High rank correlation with SSVC-derived labels reflects construct consistency with established triage principles, not empirical prediction of real-world exploitation outcomes.
 - **Act (Relevance = 3)**: Super-critical / immediate emergency action required.
 - **Attend (Relevance = 2)**: Actionable within standard patch cycle.
 - **Track (Relevance = 1)**: Regular tracking / patch maintenance.
@@ -32,7 +34,7 @@ For top-$K$ binary relevance evaluation (Precision@10, Recall@10):
 
 ## 4. Dataset Integrity & Checksum
 - **Dataset File**: `data/benchmark/cves.csv`
-- **SHA-256 Hash**: `e2a3419a46f33b0e71bfc607a4031955d57b7188d56f1c635024219374177fc8`
+- **SHA-256 Hash**: `27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e`
 - **Validation Command**: `python generate_data.py`
 
 ## 5. Threats to Validity & Limitations

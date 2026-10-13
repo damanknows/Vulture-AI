@@ -124,9 +124,25 @@ def compute_all(
         print(f"{name:25} | NDCG@10: {n10:.4f} | P@10 (Act): {p10_act:.4f} | R@10 (Act): {r10_act:.4f} | Spearman: {sp:.4f}")
         table_lines.append(row)
 
+    # Multi-budget table for depth sensitivity
+    mb_headers = ["Model", "NDCG@5", "NDCG@10", "NDCG@15", "Spearman"]
+    mb_header_str = " | ".join(mb_headers)
+    mb_sep_str = " | ".join(["---"] * len(mb_headers))
+    mb_table_lines = [
+        "\n## Multi-Budget NDCG Evaluation (Depth Sensitivity: K=5, 10, 15)",
+        f"| {mb_header_str} |",
+        f"| {mb_sep_str} |"
+    ]
+    for name, res in out_results.items():
+        mb_table_lines.append(
+            f"| {name} | {res['ndcg5']:.4f} | {res['ndcg10']:.4f} | {res['ndcg15']:.4f} | {res['spearman']:.4f} |"
+        )
+
+    full_md_content = "# Vulture-AI Evaluation Metrics\n\n## K=10 Primary Evaluation\n" + "\n".join(table_lines) + "\n" + "\n".join(mb_table_lines) + "\n"
+
     os.makedirs(os.path.dirname(table_out_path), exist_ok=True)
     with open(table_out_path, "w", encoding="utf-8") as f:
-        f.write("\n".join(table_lines) + "\n")
+        f.write(full_md_content)
 
     with open(metrics_out_path, "w", encoding="utf-8") as f:
         json.dump(out_results, f, indent=2)

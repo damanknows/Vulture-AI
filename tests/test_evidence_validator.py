@@ -1,3 +1,10 @@
+"""
+Unit Tests for Evidence Validator
+==================================
+NOTE: Uses mock/synthetic evidence fixtures to deterministically verify
+attribution checking, numeric validation, and injection detection logic.
+"""
+
 import pytest
 from evidence_validator import validate
 
