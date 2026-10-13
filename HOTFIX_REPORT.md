@@ -112,7 +112,7 @@ All tasks were executed under strict peer-review and reproducible-science constr
        --exclude='*.env' \
        --exclude='*.tar.gz' \
        . && mv /tmp/vulture_ai_reproducibility.tar.gz ./vulture_ai_reproducibility.tar.gz
-   # SHA-256: aa68bc6db196e46fcd4ab2895b2f86d842866495a76760ba1b67e15f590bf640 (Size: ~1.8 MB)
+   # SHA-256: 201e0c39fea5a80243c32feb0b2031cad99e37797426a89f712ffbaa842def97 (Size: ~1.8 MB)
    ```
 
 7. **Whitespace & Diff Verification**:
@@ -209,10 +209,10 @@ Vulture-AI/
 
 ---
 
-## 6. Remaining Limitations & Open Actions for Repository Owner
+## 6. Open Actions for Repository Owner
 
-1. **Formal License Selection**:
-   - `LICENSE` currently documents that a formal open-source license has not yet been selected. The repository owner should select an appropriate open-source license (e.g., Apache 2.0 or MIT) before general public release.
+1. **Formal License Applied**:
+   - `LICENSE` has been updated to the official **Apache License 2.0** text, with `pyproject.toml` and `README.md` consistently synchronized.
 2. **Security Contact Configuration**:
    - `SECURITY.md` directs vulnerability reporters to GitHub Security Advisories. If an institutional security email is desired, it should be configured in repository settings.
 3. **Double-Blind Anonymity**:
