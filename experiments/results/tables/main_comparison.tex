@@ -1,13 +1,14 @@
 \begin{table}[h]
 \centering
-\begin{tabular}{cccc}
+\begin{tabular}{lcccccc}
 \hline
-Model & NDCG@10 & NDCG@20 & Spearman \\
+Model & NDCG@10 & P@10 (Act) & R@10 (Act) & P@10 (Action) & R@10 (Action) & Spearman \\
 \hline
-cvss\_only & 0.335 & 0.410 & 0.875 \\
-epss\_only & 0.151 & 0.379 & 0.887 \\
-combo\_baseline & 0.438 & 0.439 & 0.924 \\
-vrs\_v1 & 0.434 & 0.435 & 0.924 \\
+CVSS-only & 0.7563 & 0.6000 & 0.4000 & 1.0000 & 0.3704 & 0.7357 \\
+EPSS-only & 0.9217 & 0.8000 & 0.5333 & 1.0000 & 0.3704 & 0.8237 \\
+KEV-first & 0.7945 & 0.7000 & 0.4667 & 1.0000 & 0.3704 & 0.8247 \\
+CVSS+EPSS+KEV & 0.9513 & 0.9000 & 0.6000 & 1.0000 & 0.3704 & 0.8800 \\
+VRS (Proposed) & 1.0000 & 1.0000 & 0.6667 & 1.0000 & 0.3704 & 0.9488 \\
 \hline
 \end{tabular}
 \end{table}

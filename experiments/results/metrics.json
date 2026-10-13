@@ -1,37 +1,128 @@
 {
   "CVSS-only": {
-    "ndcg5": 0.8777221344374128,
-    "ndcg10": 0.8394962851136104,
-    "spearman": 0.8709193245778611
+    "ndcg5": 0.8062,
+    "precision5_act": 0.8,
+    "recall5_act": 0.2667,
+    "ndcg10": 0.7563,
+    "precision10_act": 0.6,
+    "recall10_act": 0.4,
+    "precision10_actionable": 1.0,
+    "recall10_actionable": 0.3704,
+    "ndcg15": 0.7855,
+    "precision15_act": 0.6667,
+    "recall15_act": 0.6667,
+    "spearman": 0.7357
   },
   "EPSS-only": {
-    "ndcg5": 0.7808192186449511,
-    "ndcg10": 0.7710454182282114,
-    "spearman": 0.8868667917448405
+    "ndcg5": 1.0,
+    "precision5_act": 1.0,
+    "recall5_act": 0.3333,
+    "ndcg10": 0.9217,
+    "precision10_act": 0.8,
+    "recall10_act": 0.5333,
+    "precision10_actionable": 1.0,
+    "recall10_actionable": 0.3704,
+    "ndcg15": 0.8878,
+    "precision15_act": 0.7333,
+    "recall15_act": 0.7333,
+    "spearman": 0.8237
+  },
+  "KEV-first": {
+    "ndcg5": 0.8062,
+    "precision5_act": 0.8,
+    "recall5_act": 0.2667,
+    "ndcg10": 0.7945,
+    "precision10_act": 0.7,
+    "recall10_act": 0.4667,
+    "precision10_actionable": 1.0,
+    "recall10_actionable": 0.3704,
+    "ndcg15": 0.8407,
+    "precision15_act": 0.8,
+    "recall15_act": 0.8,
+    "spearman": 0.8247
   },
   "CVSS+EPSS+KEV": {
-    "ndcg5": 1.0,
-    "ndcg10": 1.0,
-    "spearman": 0.923639774859287
+    "ndcg5": 0.925,
+    "precision5_act": 0.8,
+    "recall5_act": 0.2667,
+    "ndcg10": 0.9513,
+    "precision10_act": 0.9,
+    "recall10_act": 0.6,
+    "precision10_actionable": 1.0,
+    "recall10_actionable": 0.3704,
+    "ndcg15": 0.9373,
+    "precision15_act": 0.8667,
+    "recall15_act": 0.8667,
+    "spearman": 0.88
   },
   "VRS Proposed": {
     "ndcg5": 1.0,
+    "precision5_act": 1.0,
+    "recall5_act": 0.3333,
     "ndcg10": 1.0,
-    "spearman": 0.924015009380863
+    "precision10_act": 1.0,
+    "recall10_act": 0.6667,
+    "precision10_actionable": 1.0,
+    "recall10_actionable": 0.3704,
+    "ndcg15": 1.0,
+    "precision15_act": 1.0,
+    "recall15_act": 1.0,
+    "spearman": 0.9488
   },
-  "VRS No EPSS": {
+  "VRS (No EPSS)": {
     "ndcg5": 1.0,
-    "ndcg10": 0.9621404437403491,
-    "spearman": 0.9082551594746717
+    "precision5_act": 1.0,
+    "recall5_act": 0.3333,
+    "ndcg10": 1.0,
+    "precision10_act": 1.0,
+    "recall10_act": 0.6667,
+    "precision10_actionable": 1.0,
+    "recall10_actionable": 0.3704,
+    "ndcg15": 1.0,
+    "precision15_act": 1.0,
+    "recall15_act": 1.0,
+    "spearman": 0.9575
   },
-  "VRS No KEV": {
+  "VRS (No KEV)": {
     "ndcg5": 1.0,
-    "ndcg10": 0.9552009891550426,
-    "spearman": 0.9311444652908067
+    "precision5_act": 1.0,
+    "recall5_act": 0.3333,
+    "ndcg10": 0.9581,
+    "precision10_act": 0.9,
+    "recall10_act": 0.6,
+    "precision10_actionable": 1.0,
+    "recall10_actionable": 0.3704,
+    "ndcg15": 0.9675,
+    "precision15_act": 0.9333,
+    "recall15_act": 0.9333,
+    "spearman": 0.9451
   },
-  "VRS No Context": {
+  "VRS (No Context)": {
+    "ndcg5": 0.925,
+    "precision5_act": 0.8,
+    "recall5_act": 0.2667,
+    "ndcg10": 0.9513,
+    "precision10_act": 0.9,
+    "recall10_act": 0.6,
+    "precision10_actionable": 1.0,
+    "recall10_actionable": 0.3704,
+    "ndcg15": 0.913,
+    "precision15_act": 0.8,
+    "recall15_act": 0.8,
+    "spearman": 0.8782
+  },
+  "VRS (No Bucket Override)": {
     "ndcg5": 1.0,
-    "ndcg10": 0.9636452638863133,
-    "spearman": 0.9206378986866792
+    "precision5_act": 1.0,
+    "recall5_act": 0.3333,
+    "ndcg10": 1.0,
+    "precision10_act": 1.0,
+    "recall10_act": 0.6667,
+    "precision10_actionable": 1.0,
+    "recall10_actionable": 0.3704,
+    "ndcg15": 1.0,
+    "precision15_act": 1.0,
+    "recall15_act": 1.0,
+    "spearman": 0.9535
   }
 }

@@ -1,14 +1,14 @@
 \begin{table}[h]
 \centering
-\begin{tabular}{ccc}
+\begin{tabular}{lcccccc}
 \hline
-Model & NDCG@10 & Spearman \\
+Variant & NDCG@10 & P@10 (Act) & R@10 (Act) & P@10 (Action) & R@10 (Action) & Spearman \\
 \hline
-vrs\_full & 0.434 & 0.924 \\
-drop\_epss & 0.447 & 0.908 \\
-drop\_kev & 0.434 & 0.924 \\
-drop\_n & 0.440 & 0.918 \\
-drop\_a & 0.512 & 0.932 \\
+VRS (Full Model) & 1.0000 & 1.0000 & 0.6667 & 1.0000 & 0.3704 & 0.9488 \\
+VRS (No EPSS) & 1.0000 & 1.0000 & 0.6667 & 1.0000 & 0.3704 & 0.9575 \\
+VRS (No KEV Weight) & 0.9581 & 0.9000 & 0.6000 & 1.0000 & 0.3704 & 0.9451 \\
+VRS (No Context / Tech-only) & 0.9513 & 0.9000 & 0.6000 & 1.0000 & 0.3704 & 0.8782 \\
+VRS (No Bucket Override) & 1.0000 & 1.0000 & 0.6667 & 1.0000 & 0.3704 & 0.9535 \\
 \hline
 \end{tabular}
 \end{table}

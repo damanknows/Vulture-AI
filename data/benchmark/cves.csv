@@ -1,41 +1,42 @@
-cve_id,cvss,epss,kev,exposure,asset_criticality,reference_priority,source_timestamp,label_source
-CVE-2024-10001,8.9,0.61,1,0.78,0.61,1,2026-10-09,Expert Rubric (Tier 1)
-CVE-2024-10002,9.2,0.864,1,0.97,0.54,2,2026-10-09,Expert Rubric (Tier 1)
-CVE-2024-10003,8.3,0.612,1,0.77,0.75,3,2026-10-09,Expert Rubric (Tier 1)
-CVE-2024-10004,7.1,0.678,1,0.89,0.77,4,2026-10-09,Expert Rubric (Tier 1)
-CVE-2024-10005,7.7,0.83,1,0.94,0.5,5,2026-10-09,Expert Rubric (Tier 1)
-CVE-2024-10006,9.4,0.872,1,0.8,0.58,6,2026-10-09,Expert Rubric (Tier 1)
-CVE-2024-10007,9.9,0.731,1,0.73,0.55,7,2026-10-09,Expert Rubric (Tier 1)
-CVE-2024-10008,9.5,0.835,1,0.94,0.86,8,2026-10-09,Expert Rubric (Tier 1)
-CVE-2024-10009,8.6,0.98,1,0.81,0.78,9,2026-10-09,Expert Rubric (Tier 1)
-CVE-2024-10010,9.5,0.841,1,0.96,0.79,10,2026-10-09,Expert Rubric (Tier 1)
-CVE-2023-20011,7.7,0.816,0,0.54,0.34,11,2026-10-09,Expert Rubric (Tier 2)
-CVE-2023-20012,8.1,0.931,0,0.63,0.72,12,2026-10-09,Expert Rubric (Tier 2)
-CVE-2023-20013,7.6,0.862,0,0.53,0.77,13,2026-10-09,Expert Rubric (Tier 2)
-CVE-2023-20014,7.5,0.895,0,0.76,0.38,14,2026-10-09,Expert Rubric (Tier 2)
-CVE-2023-20015,9.8,0.208,1,0.74,0.41,15,2026-10-09,Expert Rubric (Tier 2)
-CVE-2023-20016,9.3,0.437,1,0.51,0.32,16,2026-10-09,Expert Rubric (Tier 2)
-CVE-2023-20017,7.2,0.26,1,0.86,0.58,17,2026-10-09,Expert Rubric (Tier 2)
-CVE-2023-20018,8.5,0.185,1,0.84,0.62,18,2026-10-09,Expert Rubric (Tier 2)
-CVE-2023-20019,7.7,0.847,0,0.68,0.43,19,2026-10-09,Expert Rubric (Tier 2)
-CVE-2023-20020,8.2,0.459,1,0.51,0.8,20,2026-10-09,Expert Rubric (Tier 2)
-CVE-2022-30021,5.5,0.018,0,0.52,0.14,21,2026-10-09,Expert Rubric (Tier 3)
-CVE-2022-30022,5.9,0.081,0,0.71,0.13,22,2026-10-09,Expert Rubric (Tier 3)
-CVE-2022-30023,5.1,0.1,0,0.76,0.49,23,2026-10-09,Expert Rubric (Tier 3)
-CVE-2022-30024,6.6,0.011,0,0.86,0.37,24,2026-10-09,Expert Rubric (Tier 3)
-CVE-2022-30025,5.6,0.034,0,0.82,0.14,25,2026-10-09,Expert Rubric (Tier 3)
-CVE-2022-30026,5.3,0.051,0,0.98,0.45,26,2026-10-09,Expert Rubric (Tier 3)
-CVE-2022-30027,4.8,0.055,0,0.59,0.47,27,2026-10-09,Expert Rubric (Tier 3)
-CVE-2022-30028,6.6,0.037,0,0.82,0.34,28,2026-10-09,Expert Rubric (Tier 3)
-CVE-2022-30029,4.5,0.079,0,0.77,0.41,29,2026-10-09,Expert Rubric (Tier 3)
-CVE-2022-30030,5.6,0.01,0,0.66,0.11,30,2026-10-09,Expert Rubric (Tier 3)
-CVE-2021-40031,3.8,0.009,0,0.33,0.09,31,2026-10-09,Expert Rubric (Tier 4)
-CVE-2021-40032,1.2,0.009,0,0.38,0.03,32,2026-10-09,Expert Rubric (Tier 4)
-CVE-2021-40033,2.5,0.002,0,0.3,0.23,33,2026-10-09,Expert Rubric (Tier 4)
-CVE-2021-40034,1.4,0.005,0,0.22,0.08,34,2026-10-09,Expert Rubric (Tier 4)
-CVE-2021-40035,3.6,0.005,0,0.08,0.16,35,2026-10-09,Expert Rubric (Tier 4)
-CVE-2021-40036,3.2,0.003,0,0.12,0.3,36,2026-10-09,Expert Rubric (Tier 4)
-CVE-2021-40037,2.9,0.005,0,0.21,0.04,37,2026-10-09,Expert Rubric (Tier 4)
-CVE-2021-40038,1.7,0.004,0,0.24,0.07,38,2026-10-09,Expert Rubric (Tier 4)
-CVE-2021-40039,1.7,0.002,0,0.25,0.07,39,2026-10-09,Expert Rubric (Tier 4)
-CVE-2021-40040,3.7,0.009,0,0.03,0.07,40,2026-10-09,Expert Rubric (Tier 4)
+cve_id,cvss,epss,kev,exposure,asset_criticality,reference_priority,independent_label,source_timestamp,source_reference,description
+CVE-2021-44228,10.0,0.99999,1,1.0,1.0,1,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2021-44228,Apache Log4j2 JNDI RCE (Log4Shell)
+CVE-2023-34362,9.8,0.99934,1,1.0,1.0,2,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2023-34362,Progress MOVEit Transfer SQLi RCE
+CVE-2024-1709,10.0,0.9998,1,1.0,1.0,3,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2024-1709,ConnectWise ScreenConnect Authentication Bypass
+CVE-2023-20198,10.0,0.99571,1,1.0,1.0,4,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2023-20198,Cisco IOS XE Web UI Privilege Escalation
+CVE-2023-3519,9.8,0.99749,1,1.0,1.0,5,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2023-3519,Citrix ADC and NetScaler Gateway RCE
+CVE-2021-41773,7.5,0.99992,1,1.0,0.9,6,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2021-41773,Apache HTTP Server 2.4.49 Path Traversal and RCE
+CVE-2022-22965,9.8,0.99638,1,1.0,0.9,7,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2022-22965,Spring Framework RCE (Spring4Shell)
+CVE-2023-46805,8.2,0.99986,1,1.0,0.9,8,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2023-46805,Ivanti Connect Secure Authentication Bypass
+CVE-2024-21413,9.8,0.9466,1,0.8,0.9,9,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2024-21413,Microsoft Outlook Moniker RCE (#MonikerLink)
+CVE-2022-1388,9.8,0.99954,1,1.0,0.9,10,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2022-1388,F5 BIG-IP iControl REST Auth Bypass RCE
+CVE-2021-26855,9.8,0.99996,1,1.0,0.9,11,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2021-26855,Microsoft Exchange Server Pre-auth SSRF (ProxyLogon)
+CVE-2019-11510,10.0,0.99999,1,1.0,0.9,12,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2019-11510,Pulse Connect Secure VPN Arbitrary File Read
+CVE-2017-0144,8.1,0.9923,1,0.9,0.9,13,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2017-0144,SMBv1 Remote Code Execution (EternalBlue)
+CVE-2020-1472,10.0,0.99389,1,0.8,1.0,14,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2020-1472,Microsoft Netlogon Privilege Escalation (Zerologon)
+CVE-2023-23397,9.8,0.97159,1,0.8,0.9,15,Act,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2023-23397,Microsoft Outlook NTLM Credential Theft Priv Esc
+CVE-2024-3094,10.0,0.90461,0,1.0,1.0,16,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2024-3094,XZ Utils Upstream Supply Chain Backdoor
+CVE-2022-30190,7.8,0.99163,1,0.7,0.7,17,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2022-30190,Microsoft Windows MSDT Code Execution (Follina)
+CVE-2021-34527,8.8,0.99792,1,0.6,0.8,18,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2021-34527,Windows Print Spooler RCE (PrintNightmare)
+CVE-2023-38831,7.8,0.99815,1,0.6,0.6,19,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2023-38831,WinRAR Processing Code Execution
+CVE-2022-1292,9.8,0.82612,1,0.6,0.7,20,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2022-1292,OpenSSL c_rehash Script Command Injection
+CVE-2015-3306,10.0,0.99497,1,0.8,0.6,21,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2015-3306,ProFTPD mod_copy Command Execution
+CVE-2019-15846,9.8,0.35736,1,0.8,0.7,22,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2019-15846,Exim Mail Server Buffer Overflow RCE
+CVE-2020-0601,8.1,0.89436,1,0.6,0.7,23,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2020-0601,Windows CryptoAPI Spoofing (CurveBall)
+CVE-2021-3156,7.8,0.99962,1,0.3,0.8,24,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2021-3156,Sudo Heap-based Buffer Overflow (Baron Samedit)
+CVE-2022-0847,7.8,0.92795,1,0.3,0.8,25,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2022-0847,Linux Kernel Arbitrary File Overwrite (Dirty Pipe)
+CVE-2023-28252,7.8,0.48973,1,0.3,0.7,26,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2023-28252,Windows Common Log File System (CLFS) Elevation
+CVE-2022-22978,9.8,0.12351,0,0.7,0.7,27,Attend,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2022-22978,Spring Security RegexRequestMatcher Auth Bypass
+CVE-2021-32625,7.8,0.0414,0,0.5,0.6,28,Track,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2021-32625,Redis STRALGO LCS Integer Overflow
+CVE-2022-1552,8.8,0.1597,0,0.4,0.7,29,Track,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2022-1552,PostgreSQL pg_signal_backend Privilege Escalation
+CVE-2022-23710,7.5,0.00771,0,0.5,0.6,30,Track,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2022-23710,Elasticsearch Heap Out-of-Bounds Read DoS
+CVE-2021-23017,7.7,0.53461,0,0.7,0.7,31,Track,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2021-23017,nginx DNS Resolver 1-byte Memory Overwrite
+CVE-2021-3560,7.8,0.23708,0,0.2,0.6,32,Track,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2021-3560,Polkit Local Privilege Escalation
+CVE-2022-0492,7.0,0.05528,0,0.3,0.6,33,Track,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2022-0492,Linux Kernel cgroups Release Agent Escape
+CVE-2023-2640,7.8,0.15199,0,0.3,0.6,34,Track,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2023-2640,Ubuntu OverlayFS Local Privilege Escalation
+CVE-2020-13935,7.5,0.86608,0,0.6,0.5,35,Track,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2020-13935,Apache Tomcat WebSocket Denial of Service
+CVE-2018-15473,5.3,0.98631,0,0.6,0.4,36,Defer,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2018-15473,OpenSSH User Enumeration Timing Oracle
+CVE-2021-33037,5.3,0.74667,0,0.5,0.4,37,Defer,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2021-33037,Apache Tomcat HTTP Request Smuggling
+CVE-2021-22947,5.9,0.03009,0,0.3,0.3,38,Defer,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2021-22947,curl Server Protocol Command Injection STARTTLS
+CVE-2023-38546,3.7,0.05956,0,0.2,0.2,39,Defer,2026-10-14T00:00:00Z,https://nvd.nist.gov/vuln/detail/CVE-2023-38546,curl Cookie Injection via Control Code Path
+CVE-2024-99991,,,0,0.5,0.5,40,Defer,2026-10-14T00:00:00Z,https://cve.org/CVERecord?id=CVE-2024-99991,Unassessed Security Advisory (Missing CVSS)
+CVE-2024-99992,6.5,,0,0.5,0.5,41,Defer,2026-10-14T00:00:00Z,https://cve.org/CVERecord?id=CVE-2024-99992,Zero-Day Pre-publication Advisory (Missing EPSS)

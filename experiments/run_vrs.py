@@ -7,7 +7,7 @@ from risk_engine import rank_findings
 from experiments.run_baselines import load_benchmark
 
 def run_vrs():
-    findings, ref_ranking = load_benchmark("data/benchmark/cves.csv")
+    findings, ref_ranking, _ = load_benchmark("data/benchmark/cves.csv")
     
     config_path = "experiments/configs/vrs_v1.json"
     with open(config_path, "r") as f:
