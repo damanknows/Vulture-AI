@@ -12,7 +12,7 @@
 
 This independent audit evaluated the experimental methodology, ground-truth label derivation, metric implementations, feature ablations, and manuscript reproducibility of the Vulture-AI vulnerability prioritization system.
 
-The core algorithm—the Vulture Risk Score (VRS)—is a mathematically deterministic, transparent linear weighting model ($w_C=0.25, w_E=0.20, w_K=0.20, w_N=0.20, w_A=0.15$) with an urgent bucket override for CISA Known Exploited Vulnerabilities (KEV). The engineering implementation is structurally sound: all 48 active unit/integration tests pass, the pipeline executes deterministically via `python experiments/reproduce_all.py`, and the benchmark hash is validated by SHA-256 (`e2a3419a46f33b0e71bfc607a4031955d57b7188d56f1c635024219374177fc8`).
+The core algorithm—the Vulture Risk Score (VRS)—is a mathematically deterministic, transparent linear weighting model ($w_C=0.25, w_E=0.20, w_K=0.20, w_N=0.20, w_A=0.15$) with an urgent bucket override for CISA Known Exploited Vulnerabilities (KEV). The engineering implementation is structurally sound: all 48 active unit/integration tests pass, the pipeline executes deterministically via `python experiments/reproduce_all.py`, and the benchmark hash is validated by SHA-256 (`27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e`).
 
 However, from an academic peer-review standpoint, the experimental methodology contains critical methodological limitations and construct dependencies that must be transparently addressed prior to camera-ready publication:
 
@@ -164,7 +164,7 @@ The ranking metrics in `experiments/metrics.py` were audited against formal math
 2. **Determinism**: 100% deterministic; zero stochastic components in scoring or tie-breaking.
 3. **Manuscript Alignment**:
    - Table 1 (Main Comparison) and Table 2 (Ablation) in `paper/manuscript.tex` match `metrics.json` exactly.
-   - `paper/manuscript.pdf` compiles cleanly (5 pages) with no broken references.
+   - `paper/manuscript.pdf` compiles cleanly (6 pages) with no broken references.
 
 ---
 

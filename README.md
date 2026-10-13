@@ -3,7 +3,7 @@
 [![Tests](https://github.com/damanknows/Vulture-AI/actions/workflows/tests.yml/badge.svg)](https://github.com/damanknows/Vulture-AI/actions/workflows/tests.yml)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue)](https://www.python.org/)
 [![Benchmark Checksum](https://img.shields.io/badge/SHA--256-27979cc0-green)](data/benchmark/cves.csv)
-[![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-lightgrey)](LICENSE)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 An open, evidence-grounded vulnerability assessment and prioritization framework that couples real network observations with authoritative threat intelligence (NIST NVD, FIRST EPSS, CISA KEV) and a deterministic scoring heuristic: the **Vulture Risk Score (VRS)**. Quantitative prioritization is strictly decoupled from an accompanying Retrieval-Augmented Generation (RAG) assistant governed by Pydantic schemas and deterministic evidence validation.
 
@@ -152,7 +152,7 @@ python app.py
 
 ## 9. Demo Mode versus Real Scanning
 
-* **Demo / Benchmark Mode**: Evaluates prioritization heuristics offline using `data/benchmark/cves.csv`. Requires zero network access, zero Nmap privileges, and zero API keys.
+* **Demo / Benchmark Mode**: Evaluates prioritization heuristics offline using `data/benchmark/cves.csv` (39 real public CVEs + 2 synthetic missing-data edge-case records). Requires zero network access, zero Nmap privileges, and zero API keys.
 * **Real Scanning Mode**: Initiated via `POST /api/scans`. Executes `nmap -sV` against authorized targets on localhost or internal test environments. Requires Nmap installed in the system PATH.
 
 ---
@@ -177,8 +177,8 @@ The benchmark dataset (`data/benchmark/cves.csv`, SHA-256: `27979cc0029e3d383dc4
 * **39 Verified Public CVEs**: Sourced from NIST NVD, FIRST EPSS API, and CISA KEV (snapshot frozen 2026-10-14).
 * **2 Synthetic Missing-Data Edge Cases**: `CVE-2024-99991` (missing CVSS) and `CVE-2024-99992` (missing EPSS) use non-existent identifiers to verify edge-case fallback logic.
 
-**Construct Circularity / Heuristic Alignment Disclosure**:
-Reference priorities (1–41) and relevance grades (3=Act, 2=Attend, 1=Track, 0=Defer) were assigned by the authors following the **CISA SSVC Decision Tree**. Because SSVC triage relies on exploitation likelihood (KEV, EPSS) and exposure ($N$)—the same features evaluated by VRS—high ranking performance demonstrates **construct consistency with established triage principles**, not predictive proof of breach prevention. See [`docs/limitations.md`](docs/limitations.md) for full disclosure.
+**Author-Curated Reference Labels (Not Independent Ground Truth)**:
+Reference priorities (1–41) and relevance grades (3=Act, 2=Attend, 1=Track, 0=Defer) are **author-curated reference labels based on a manual application of the CISA SSVC decision tree rubric**, NOT independently validated breach ground truth or analyst telemetry. Because SSVC triage relies on exploitation likelihood (KEV, EPSS) and exposure ($N$)—the same features evaluated by VRS—high ranking performance demonstrates **construct consistency / heuristic alignment with established triage principles**, not predictive proof of breach prevention. Independent analyst validation and breach-prediction telemetry are documented as future work. See [`docs/limitations.md`](docs/limitations.md) for full disclosure.
 
 ---
 
@@ -266,3 +266,9 @@ If you use this benchmark dataset or scoring heuristic in your research, please 
 }
 ```
 See [`CITATION.cff`](CITATION.cff) for machine-readable citation metadata.
+
+---
+
+## 18. License
+
+This project is licensed under the Apache License 2.0. See the [`LICENSE`](LICENSE) file for the full license text.

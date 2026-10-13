@@ -8,7 +8,7 @@ version = "0.2.0"
 description = "Context-Aware Vulnerability Prioritization with Guardrailed Retrieval-Augmented Generation"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "All Rights Reserved - See LICENSE" }
+license = { text = "Apache-2.0" }
 authors = [
     { name = "Vulture-AI Research Authors" }
 ]
@@ -27,6 +27,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.14",
+    "License :: OSI Approved :: Apache Software License",
     "Topic :: Security",
     "Intended Audience :: Science/Research"
 ]
