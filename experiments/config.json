@@ -1,13 +1,24 @@
 {
   "dataset": {
     "file": "data/benchmark/cves.csv",
-    "md5_hash": "aff86523f247ec55cf26a12263cfe60e",
-    "sample_count": 40
+    "md5_hash": "ab2b5f1206f7519131d15ada0d71bd8e",
+    "sample_count": 41,
+    "timestamp": "2026-10-14T00:00:00Z",
+    "independent_ground_truth": "CISA SSVC Decision Rubric (Act=3, Attend=2, Track=1, Defer=0)"
   },
   "metrics": {
-    "ndcg": "Computes Normalized Discounted Cumulative Gain at K using relevance tiers (0-3). Uses standard exponential numerator (2^rel - 1) / log2(i+2).",
-    "spearman": "Computes Spearman Rank Correlation Coefficient across strictly ordered 1D lists."
+    "ndcg_at_10": "Normalized Discounted Cumulative Gain at K=10 using standard formula sum((2^rel - 1) / log2(i+2)) normalized by IDCG@10.",
+    "precision_at_10": "Fraction of top 10 ranked items meeting relevance threshold (threshold=3 for Act/Emergency; threshold=2 for Actionable).",
+    "recall_at_10": "Fraction of total relevant items retrieved in top 10.",
+    "spearman": "Spearman Rank Correlation Coefficient between predicted ranking and reference priority order."
   },
+  "baselines": [
+    "CVSS-only",
+    "EPSS-only",
+    "KEV-first",
+    "CVSS+EPSS+KEV",
+    "VRS Proposed (vrs-v1)"
+  ],
   "ablations": {
     "vrs_no_epss": {"w_C": 0.30, "w_E": 0.00, "w_K": 0.25, "w_N": 0.25, "w_A": 0.20},
     "vrs_no_kev": {"w_C": 0.30, "w_E": 0.25, "w_K": 0.00, "w_N": 0.25, "w_A": 0.20},

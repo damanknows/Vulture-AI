@@ -186,6 +186,14 @@ def compute_cvss_epss_kev(finding: dict) -> float:
     score = 100 * ( (1/3) * C + (1/3) * E + (1/3) * K )
     return round(score, 2)
 
+def compute_kev_first(finding: dict) -> float:
+    """Baseline: KEV listed gets 100.0, else 0.0 + normalized CVSS."""
+    cvss = _extract_max_metric(finding, "cvss_score")
+    kev = _extract_max_metric(finding, "kev_listed")
+    k_val = 100.0 if kev else 0.0
+    c_val = cvss if cvss is not None else 0.0
+    return round(k_val + c_val, 2)
+
 def rank_findings(findings: list, weights: dict = None, policies: dict = None) -> list:
     scored_findings = []
     for f in findings:

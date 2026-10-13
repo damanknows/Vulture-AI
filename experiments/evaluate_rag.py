@@ -32,7 +32,7 @@ def mock_completion(*args, **kwargs):
 litellm.completion = mock_completion
 
 def evaluate_rag():
-    findings, _ = load_benchmark("data/benchmark/cves.csv")
+    findings, _, _ = load_benchmark("data/benchmark/cves.csv")
     sample = random.sample(findings, min(5, len(findings)))
     
     results = []
