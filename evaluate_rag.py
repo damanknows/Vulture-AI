@@ -1,7 +1,17 @@
+"""
+Vulture-AI Deterministic RAG Assistant Guardrail Evaluation
+===========================================================
+
+NOTE: Uses a deterministic MockLLM fixture (mock_completion) to verify schema
+parsing, evidence attribution, and guardrail validation deterministically
+without requiring external API calls or incurring nondeterministic generation.
+Does not measure empirical hallucination rates against frontier models.
+"""
+
 import json
 from vulture_chatbot import chat_with_validation
 
-# A tiny deterministic mock of litellm for evaluation without requiring a real LLM
+# A deterministic mock of litellm for offline guardrail evaluation
 def mock_completion(model, messages, **kwargs):
     # Determine mode based on evidence provided in messages
     content = messages[1]["content"]

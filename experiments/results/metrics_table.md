@@ -1,3 +1,6 @@
+# Vulture-AI Evaluation Metrics
+
+## K=10 Primary Evaluation
 | Model | NDCG@10 | P@10 (Act) | R@10 (Act) | P@10 (Actionable) | R@10 (Actionable) | Spearman |
 | --- | --- | --- | --- | --- | --- | --- |
 | CVSS-only | 0.7563 | 0.6000 | 0.4000 | 1.0000 | 0.3704 | 0.7357 |
@@ -9,3 +12,16 @@
 | VRS (No KEV) | 0.9581 | 0.9000 | 0.6000 | 1.0000 | 0.3704 | 0.9451 |
 | VRS (No Context) | 0.9513 | 0.9000 | 0.6000 | 1.0000 | 0.3704 | 0.8782 |
 | VRS (No Bucket Override) | 1.0000 | 1.0000 | 0.6667 | 1.0000 | 0.3704 | 0.9535 |
+
+## Multi-Budget NDCG Evaluation (Depth Sensitivity: K=5, 10, 15)
+| Model | NDCG@5 | NDCG@10 | NDCG@15 | Spearman |
+| --- | --- | --- | --- | --- |
+| CVSS-only | 0.8062 | 0.7563 | 0.7855 | 0.7357 |
+| EPSS-only | 1.0000 | 0.9217 | 0.8878 | 0.8237 |
+| KEV-first | 0.8062 | 0.7945 | 0.8407 | 0.8247 |
+| CVSS+EPSS+KEV | 0.9250 | 0.9513 | 0.9373 | 0.8800 |
+| VRS Proposed | 1.0000 | 1.0000 | 1.0000 | 0.9488 |
+| VRS (No EPSS) | 1.0000 | 1.0000 | 1.0000 | 0.9575 |
+| VRS (No KEV) | 1.0000 | 0.9581 | 0.9675 | 0.9451 |
+| VRS (No Context) | 0.9250 | 0.9513 | 0.9130 | 0.8782 |
+| VRS (No Bucket Override) | 1.0000 | 1.0000 | 1.0000 | 0.9535 |

@@ -1,14 +1,20 @@
 {
-  "execution_timestamp_utc": "2026-10-13T20:39:41.577161+00:00",
+  "execution_timestamp_utc": "2026-10-13T21:21:46.388084+00:00",
   "benchmark_provenance": {
     "filepath": "data/benchmark/cves.csv",
-    "sha256": "e2a3419a46f33b0e71bfc607a4031955d57b7188d56f1c635024219374177fc8",
+    "sha256": "27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e",
     "record_count": 41,
+    "real_cve_count": 39,
+    "synthetic_edge_case_count": 2,
+    "synthetic_records": [
+      "CVE-2024-99991 (missing CVSS edge-case)",
+      "CVE-2024-99992 (missing EPSS edge-case)"
+    ],
     "sources": [
       "NIST NVD (CVSS v3.1 base score)",
       "FIRST.org EPSS (Live API probability snapshot)",
       "CISA KEV Catalog (Active exploitation listing)",
-      "CISA SSVC Decision Rubric (Ordinal reference priorities)"
+      "CISA SSVC Decision Rubric (Ordinal reference priorities; author-curated heuristic judgments)"
     ]
   },
   "environment": {

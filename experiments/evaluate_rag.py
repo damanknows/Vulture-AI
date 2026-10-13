@@ -1,7 +1,19 @@
+"""
+Offline Deterministic RAG Guardrail Evaluation
+==============================================
+NOTE: Uses MockLLM (mock_completion) to verify schema parsing, evidence
+attribution, and guardrail validation deterministically without live LLM calls.
+Does not measure empirical hallucination rates against frontier models.
+"""
+
 import json
 import os
 import sys
 import random
+
+# Enforce deterministic random seed for reproducible sampling
+RANDOM_SEED = 42
+random.seed(RANDOM_SEED)
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 # mock first
@@ -14,7 +26,7 @@ sys.modules["litellm"] = litellm_mock
 from vulture_chatbot import chat_with_validation
 from experiments.run_baselines import load_benchmark
 
-# Mock litellm to avoid network calls during evaluation
+# Mock litellm to avoid external network calls during offline evaluation
 class MockLLM:
     def __init__(self, content):
         self.choices = [self]
@@ -32,6 +44,8 @@ def mock_completion(*args, **kwargs):
 litellm.completion = mock_completion
 
 def evaluate_rag():
+    # Set fixed seed for deterministic evaluation
+    random.seed(RANDOM_SEED)
     findings, _, _ = load_benchmark("data/benchmark/cves.csv")
     sample = random.sample(findings, min(5, len(findings)))
     
