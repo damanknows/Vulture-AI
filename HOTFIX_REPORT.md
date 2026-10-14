@@ -73,7 +73,7 @@ All tasks were executed under strict peer-review and reproducible-science constr
 2. **Automated Test Suite**:
    ```bash
    pytest -v
-   # Outcome: 55 passed, 1 skipped (test_full_pipeline skipped; requires network/root nmap)
+   # Outcome: 80 passed, 1 skipped (test_full_pipeline skipped; requires network/root nmap)
    ```
 
 3. **End-to-End Reproducibility Pipeline**:

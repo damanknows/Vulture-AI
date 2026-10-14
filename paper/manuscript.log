@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Debian) (preloaded format=pdflatex 2026.10.6)  14 OCT 2026 04:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Debian) (preloaded format=pdflatex 2026.10.6)  14 OCT 2026 05:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -503,105 +503,160 @@ Underfull \hbox (badness 1910) in paragraph at lines 59--60
 -pir-i-cal
  []
 
-<../experiments/results/figures/ranking_comparison.png, id=140, 650.43pt x 361.
+<../experiments/results/figures/ranking_comparison.png, id=144, 650.43pt x 361.
 35pt>
 File: ../experiments/results/figures/ranking_comparison.png Graphic file (type 
 png)
 <use ../experiments/results/figures/ranking_comparison.png>
 Package pdftex.def Info: ../experiments/results/figures/ranking_comparison.png 
  used on input line 77.
-(pdftex.def)             Requested size: 474.71906pt x 263.7392pt.
+(pdftex.def)             Requested size: 438.61438pt x 128.03477pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--86
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
 []\OT1/ptm/b/n/10 Target Au-tho-riza-tion and Ob-ser-va-tion\OT1/ptm/m/n/10 :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--86
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
 \OT1/ptm/m/n/10 En-forces a strict server-side al-lowlist
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 85--86
+Underfull \hbox (badness 10000) in paragraph at lines 87--88
 \OT1/ptm/m/n/10 (\OT1/pcr/m/n/10 scanner.py:is_target_allowed\OT1/ptm/m/n/10 ) 
 to block
  []
 
 
-Underfull \hbox (badness 6364) in paragraph at lines 85--86
+Underfull \hbox (badness 6364) in paragraph at lines 87--88
 \OT1/ptm/m/n/10 unau-tho-rized prob-ing. Net-work dis-cov-ery in-vokes
  []
 
 
-Underfull \hbox (badness 4792) in paragraph at lines 85--86
+Underfull \hbox (badness 4792) in paragraph at lines 87--88
 \OT1/ptm/m/n/10 un-priv-i-leged Nmap ver-sion de-tec-tion (\OT1/pcr/m/n/10 nmap
  -sV
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
 []\OT1/ptm/b/n/10 CPE For-mu-la-tion and Threat In-tel-li-gence
  []
 
 
-Underfull \hbox (badness 4108) in paragraph at lines 86--87
+Underfull \hbox (badness 4108) in paragraph at lines 88--89
 \OT1/ptm/b/n/10 En-rich-ment\OT1/ptm/m/n/10 : Nor-mal-izes raw ban-ner strings 
 into
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 86--87
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
 \OT1/ptm/m/n/10 (\OT1/pcr/m/n/10 cve_matcher.py\OT1/ptm/m/n/10 ). Queries the N
 IST NVD
  []
 
 
-Underfull \hbox (badness 3148) in paragraph at lines 86--87
+Underfull \hbox (badness 3148) in paragraph at lines 88--89
 \OT1/ptm/m/n/10 API 2.0 with disk-backed caching, FIRST EPSS
  []
 
 
-Underfull \hbox (badness 1874) in paragraph at lines 86--87
+Underfull \hbox (badness 1874) in paragraph at lines 88--89
 \OT1/ptm/m/n/10 API, and CISA KEV feeds, pop-u-lat-ing struc-tured
  []
 
 
-Underfull \hbox (badness 1888) in paragraph at lines 110--111
+Underfull \hbox (badness 1888) in paragraph at lines 112--113
 []\OT1/ptm/m/n/10 If CVSS is miss-ing, the record can-not be scored
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 119--120
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
 []\OT1/ptm/m/n/10 Priority Bucket: $[] \OML/cmm/m/it/10 > [] >
  []
 
-[2]
-Underfull \hbox (badness 10000) in paragraph at lines 129--131
+
+Underfull \hbox (badness 10000) in paragraph at lines 131--133
 []\OT1/ptm/b/n/10 Evidence Val-i-da-tion Fil-ter\OT1/ptm/m/n/10 : Im-ple-mented
  in
  []
 
 
-Underfull \hbox (badness 2495) in paragraph at lines 129--131
+Underfull \hbox (badness 2495) in paragraph at lines 131--133
 \OT1/pcr/m/n/10 evidence_validator.py\OT1/ptm/m/n/10 , the val-ida-tor in-spect
 s
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 131--132
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
 []\OT1/ptm/m/it/10 Injection De-tec-tion\OT1/ptm/m/n/10 : Scans re-trieved con-
 tent
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 131--132
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
 \OT1/ptm/m/n/10 for jail-break pat-terns (\OT1/pcr/m/n/10 ignore previous
  []
 
 
-Underfull \hbox (badness 1590) in paragraph at lines 140--142
-\OT1/ptm/m/n/10 bled a cu-rated bench-mark of \OT1/ptm/b/n/10 39 real, pub-licl
-y doc-u-
+Underfull \hbox (badness 1571) in paragraph at lines 144--145
+\OT1/ptm/m/n/10 (snap-shot frozen as of 2026-10-14, SHA-256 pre-
+ []
+
+
+Underfull \hbox (badness 2884) in paragraph at lines 144--145
+\OT1/ptm/m/n/10 fix: \OT1/pcr/m/n/10 27979cc0029e\OT1/ptm/m/n/10 ). The two syn
+-thetic records
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--146
+[]\OT1/ptm/b/n/10 Expanded Cor-pus ($\OML/cmm/m/it/10 N \OT1/cmr/m/n/10 = 500$\
+OT1/ptm/b/n/10 )\OT1/ptm/m/n/10 : To stress-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--146
+\OT1/ptm/m/n/10 test pri-or-i-ti-za-tion un-der re-al-is-tic en-ter-prise
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--146
+\OT1/ptm/m/n/10 back-log scales, we con-structed an ex-panded
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--146
+\OT1/pcr/m/n/10 data/benchmark/cves_500.csv \OT1/ptm/m/n/10 (SHA-256
+ []
+
+
+Underfull \hbox (badness 6775) in paragraph at lines 145--146
+\OT1/ptm/m/n/10 pre-fix: \OT1/pcr/m/n/10 009c8566f1fd\OT1/ptm/m/n/10 , zero syn
+-thetic records).
+ []
+
+
+Underfull \hbox (badness 7759) in paragraph at lines 145--146
+\OT1/ptm/m/n/10 ref-er-ence bench-mark and adds 461 real CVEs
+ []
+
+
+Underfull \hbox (badness 2478) in paragraph at lines 145--146
+\OT1/ptm/m/n/10 de-ter-min-is-ti-cally sam-pled ($[] \OT1/cmr/m/n/10 = 42$\OT1/
+ptm/m/n/10 ) from the
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--146
+\OT1/ptm/m/n/10 of-fi-cial \OT1/pcr/m/n/10 CVEProject/cvelistV5 \OT1/ptm/m/n/10
+ repos-i-tory
+ []
+
+
+Underfull \hbox (badness 3492) in paragraph at lines 145--146
+\OT1/ptm/m/n/10 (re-lease \OT1/pcr/m/n/10 cve_2026-10-13_2300Z\OT1/ptm/m/n/10 )
+. Each record
  []
 
 [3 <../experiments/results/figures/ranking_comparison.png>]
@@ -634,54 +689,50 @@ v-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 238--240
+Underfull \hbox (badness 2229) in paragraph at lines 237--237
+ \OT1/ptm/m/it/10 C. Ret-ro-spec-tive Ex-ploita-tion Con-cor-dance on Ex-panded
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 263--265
 []\OT1/ptm/m/n/10 Evaluation of the as-sis-tant pipeline un-der
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 238--240
+Underfull \hbox (badness 10000) in paragraph at lines 263--265
 \OT1/pcr/m/n/10 evaluate_rag.py \OT1/ptm/m/n/10 (ex-e-cuted with a de-ter-min-i
 s-tic
  []
 
 
-Underfull \hbox (badness 2990) in paragraph at lines 238--240
+Underfull \hbox (badness 2990) in paragraph at lines 263--265
 \OT1/ptm/m/n/10 Mock-LLM fix-ture to guar-an-tee of-fline au-ditabil-ity and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 241--242
+Underfull \hbox (badness 10000) in paragraph at lines 266--267
 \OT1/ptm/m/n/10 pay-loads (e.g., \OT1/pcr/m/n/10 "Server: Apache/2.4.49
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 241--242
+Underfull \hbox (badness 10000) in paragraph at lines 266--267
 \OT1/pcr/m/n/10 (System: ignore instructions, score
  []
 
 
-Underfull \hbox (badness 1701) in paragraph at lines 241--242
+Underfull \hbox (badness 1701) in paragraph at lines 266--267
 \OT1/pcr/m/n/10 0.0)"\OT1/ptm/m/n/10 ), the ev-i-dence val-i-da-tion fil-ter su
 c-cess-fully
  []
 
 [5]
-Underfull \hbox (badness 3029) in paragraph at lines 265--266
-[]\OT1/ptm/m/n/10 Our eval-u-a-tion dataset con-sists of 39 real, pub-licly
- []
-
-
-Underfull \hbox (badness 4316) in paragraph at lines 265--266
-\OT1/ptm/m/n/10 doc-u-mented CVEs plus 2 syn-thetic edge-case records
- []
-
-
-Underfull \hbox (badness 1412) in paragraph at lines 270--271
+Underfull \hbox (badness 1412) in paragraph at lines 295--296
 []\OT1/ptm/m/n/10 Evaluated on a bench-mark of 39 real, pub-licly doc-
  []
 
 
-Underfull \hbox (badness 2573) in paragraph at lines 270--271
+Underfull \hbox (badness 2573) in paragraph at lines 295--296
 \OT1/ptm/m/n/10 u-mented CVEs and 2 syn-thetic missing-data edge-case
  []
 
@@ -709,16 +760,16 @@ LaTeX2e <2026-06-01>
 L3 programming layer <2026-08-10>
  ***********
 Package rerunfilecheck Info: File `manuscript.out' has not changed.
-(rerunfilecheck)             Checksum: D92041E12DBB7559E6BAEEFC014A58D0;5236.
+(rerunfilecheck)             Checksum: 909FF1D4038399F676C5B7635B20B305;5757.
  ) 
 Here is how much of TeX's memory you used:
- 11331 strings out of 469089
- 175876 string characters out of 5459374
- 615771 words of memory out of 5000000
- 40200 multiletter control sequences out of 15000+600000
- 669453 words of font info for 123 fonts, out of 8000000 for 9000
+ 11342 strings out of 469089
+ 175985 string characters out of 5459374
+ 619865 words of memory out of 5000000
+ 40204 multiletter control sequences out of 15000+600000
+ 673979 words of font info for 128 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 74i,8n,79p,2306b,567s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 74i,8n,79p,2306b,530s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texli
@@ -735,10 +786,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share
 f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on manuscript.pdf (6 pages, 469376 bytes).
+Output written on manuscript.pdf (6 pages, 472650 bytes).
 PDF statistics:
- 299 PDF objects out of 1000 (max. 8388607)
- 250 compressed objects within 3 object streams
- 65 named destinations out of 1000 (max. 500000)
- 206 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 309 PDF objects out of 1000 (max. 8388607)
+ 260 compressed objects within 3 object streams
+ 69 named destinations out of 1000 (max. 500000)
+ 214 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -55,7 +55,7 @@ To address these challenges, we present \textbf{Vulture-AI}, an open, context-aw
 
 This work investigates three central research questions:
 \begin{itemize}
-    \item \textbf{RQ1 (Ranking Quality)}: How effectively does multi-factor risk scoring (VRS) prioritize emergency remediation actions compared to conventional single-metric baselines (CVSS-only, EPSS-only) and binary exploitation heuristics (KEV-first)?
+    \item \textbf{RQ1 (Prioritization Quality and Scale)}: How effectively does multi-factor risk scoring (VRS) prioritize emergency remediation actions compared to conventional baselines (CVSS-only, EPSS-only, KEV-first) across curated benchmarks ($N=41$) and expanded real-world backlog scales ($N=500$)?
     \item \textbf{RQ2 (Feature Sensitivity)}: What is the empirical marginal contribution of exploitation telemetry (EPSS, KEV) and environmental deployment context (exposure, asset criticality) to the prioritization quality?
     \item \textbf{RQ3 (Evidence Grounding and Injection Resilience)}: Can a deterministic validation layer eliminate metric hallucinations and neutralize indirect prompt injections in network observation banners without degrading explanation utility?
 \end{itemize}
@@ -74,9 +74,11 @@ Retrieval-Augmented Generation (RAG) \cite{lewis2020rag} grounds generative lang
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.92\textwidth]{../experiments/results/figures/ranking_comparison.png}
+\includegraphics[width=0.85\textwidth,height=4.5cm]{../experiments/results/figures/ranking_comparison.png}
+\vspace{-2mm}
 \caption{Empirical ranking comparisons across CVSS-only, EPSS-only, and Vulture-AI (VRS) relative to the CISA SSVC-derived reference priority on the 41-record benchmark ($N=41$). VRS achieves strong monotonic alignment with operational emergency priorities.}
 \label{fig:ranking_comparison}
+\vspace{-3mm}
 \end{figure*}
 
 \subsection{System Architecture}
@@ -136,17 +138,15 @@ To prevent LLM unreliability, Vulture-AI implements three architectural constrai
 
 \section{Experimental Setup}
 
-\subsection{Benchmark Dataset}
-To eliminate reliance on fabricated records, we assembled a curated benchmark of \textbf{39 real, publicly documented CVEs plus 2 synthetic edge-case records} (41 total) in \texttt{data/benchmark/cves.csv} (snapshot frozen as of 2026-10-14, SHA-256 prefix: \texttt{27979cc0029e}; full hash in manifest). The records span web servers, enterprise gateways, firewalls, mail servers, kernel subsystems, and client libraries.
-\begin{itemize}
-    \item CVSS base scores are verified from official NIST NVD v2.0 records.
-    \item EPSS probabilities are queried live from the FIRST.org EPSS API.
-    \item Exploitation flags reflect the CISA KEV catalog (version 2026.10.13).
-    \item Two \textbf{synthetic} edge-case records test missing-data handling: \texttt{CVE-2024-99991} (non-existent ID; missing CVSS) and \texttt{CVE-2024-99992} (non-existent ID; missing EPSS). These IDs are not registered in the NVD and must not be cited as real vulnerabilities.
-\end{itemize}
+\subsection{Curated Benchmark and Expanded Corpus}
+We conduct evaluations across two complementary benchmark scales:
+\begin{enumerate}
+    \item \textbf{Curated Reference Benchmark ($N=41$)}: To evaluate fine-grained decision alignment, we curated \textbf{39 real, publicly documented CVEs plus 2 synthetic edge-case records} in \texttt{data/benchmark/cves.csv} (snapshot frozen as of 2026-10-14, SHA-256 prefix: \texttt{27979cc0029e}). The two synthetic records (\texttt{CVE-2024-99991}, \texttt{CVE-2024-99992}) test missing CVSS and missing EPSS handling.
+    \item \textbf{Expanded Corpus ($N=500$)}: To stress-test prioritization under realistic enterprise backlog scales, we constructed an expanded benchmark of \textbf{500 unique, real public CVEs} in \texttt{data/benchmark/cves\_500.csv} (SHA-256 prefix: \texttt{009c8566f1fd}, zero synthetic records). This dataset preserves all 39 real CVEs from the reference benchmark and adds 461 real CVEs deterministically sampled ($\text{seed}=42$) from the official \texttt{CVEProject/cvelistV5} repository (release \texttt{cve\_2026-10-13\_2300Z}). Each record incorporates CNA-verified CVSS base scores, FIRST EPSS live cache, and CISA KEV status (catalog version 2026.10.13), with 25 confirmed active exploits ($5.0\%$, aligning with empirical base rates \cite{jacobs2021epss}).
+\end{enumerate}
 
 \subsection{Reference Labeling via SSVC-Inspired Rubric}
-To provide an interpretable reference ranking, relevance grades were manually assigned by the authors following the CISA SSVC decision rubric \cite{spring2020ssvc}. \textbf{These labels represent author-curated heuristic judgments, not independently validated analyst assessments or breach ground truth.} (In the benchmark CSV file, the column retains the legacy identifier \texttt{independent\_label} for backward compatibility with early prototype code; this indicates the reference rubric tier rather than independent external telemetry). Because SSVC decisions are informed by KEV status, EPSS, and exposure—the same inputs used by VRS—high metric scores reflect construct consistency (alignment with SSVC triage principles) rather than independent empirical evidence of breach prevention. Independent analyst validation and empirical incident correlation remain as future work. Reference priorities and relevance grades are mapped as follows:
+To provide an interpretable reference ranking, relevance grades were manually assigned by the authors following the CISA SSVC decision rubric \cite{spring2020ssvc} \textbf{exclusively for the 39 original real CVE records}. \textbf{These labels represent author-curated heuristic judgments, not independently validated analyst assessments or breach ground truth.} (In the benchmark CSV file, the column retains the legacy identifier \texttt{independent\_label} for backward compatibility; this indicates the reference rubric tier rather than external telemetry). The 461 newly sampled records in the 500-CVE corpus are explicitly designated \texttt{unlabeled} to prevent label hallucination. SSVC ranking alignment is evaluated strictly on the 39 labeled records, while KEV recall and precision across backlogs are evaluated across all 500 real CVEs. Reference priorities and relevance grades for the 39 labeled records are mapped as follows:
 \begin{itemize}
     \item \textbf{Act (Relevance = 3, 15 records)}: Immediate emergency remediation. Confirmed mass exploitation in KEV on network-accessible perimeter assets (e.g., Log4Shell, MOVEit, ScreenConnect, Cisco IOS XE, Citrix ADC, Apache 2.4.49, Spring4Shell).
     \item \textbf{Attend (Relevance = 2, 12 records)}: High urgency. Public weaponized exploit or KEV listing with local/client vectors, or critical zero-days without KEV confirmation (e.g., XZ Utils backdoor, Follina, PrintNightmare, WinRAR, Dirty Pipe).
@@ -234,6 +234,31 @@ VRS (No Bucket Override)  & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 0.6667 & 0.9535 
 
 \textbf{Analysis of EPSS Ablation Dynamics}: Counterintuitively, removing EPSS (\texttt{VRS No EPSS}) yields a slight increase in Spearman rank correlation ($\rho = 0.9575$ vs.\ $0.9488$). This occurs because EPSS reflects rolling 30-day exploitation probability, heavily weighting high-volume automated reconnaissance and brute-force scanning (e.g., OpenSSH user enumeration \texttt{CVE-2018-15473}, $\text{EPSS} = 0.9863$). Under SSVC triage, low-impact reconnaissance bugs are categorized as \textit{Defer} (reference priority 36). EPSS pulls such vulnerabilities higher in ranking. Ablating EPSS allows CVSS technical impact and exposure to penalize these low-impact vulnerabilities, placing them closer to the bottom and slightly improving monotonic rank alignment ($\rho = 0.9575$) with the SSVC rubric. Crucially, this improvement is an artifact of alignment with our specific SSVC-inspired reference rubric; it does not indicate that EPSS is unhelpful in practice, where it provides vital early-warning signals for uncataloged weaponization. In both variants, the binary KEV override maintains emergency precision ($\text{P@10} = 1.0000$).
 
+\subsection{\texorpdfstring{Retrospective Exploitation Concordance on Expanded Backlog ($N=500$)}{Retrospective Exploitation Concordance on Expanded Backlog (N=500)}}
+To assess performance at enterprise triage scales, Table \ref{tab:kev500} reports retrospective concordance against CISA KEV on the 500-CVE backlog ($N_{\text{KEV}}=25$).
+
+\begin{table}[h]
+\centering
+\caption{Retrospective CISA KEV Concordance on 500-CVE Backlog ($N_{\text{KEV}}=25$)}
+\label{tab:kev500}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Method} & \textbf{P@10} & \textbf{R@10} & \textbf{P@20} & \textbf{R@20} & \textbf{P@25} & \textbf{R@25} \\
+\midrule
+CVSS-only           & 0.7000 & 0.2800 & 0.5500 & 0.4400 & 0.4400 & 0.4400 \\
+EPSS-only           & 1.0000 & 0.4000 & 0.9500 & 0.7600 & 0.8800 & 0.8800 \\
+KEV-first           & 1.0000 & 0.4000 & 1.0000 & 0.8000 & 1.0000 & 1.0000 \\
+Combined Baseline   & 1.0000 & 0.4000 & 1.0000 & 0.8000 & 1.0000 & 1.0000 \\
+\textbf{VRS Proposed (vrs-v1)} & \textbf{1.0000} & \textbf{0.4000} & \textbf{1.0000} & \textbf{0.8000} & \textbf{1.0000} & \textbf{1.0000} \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\textbf{Failure Modes of CVSS at Scale}: Under a 500-finding backlog, CVSS-only prioritization deteriorates severely: its recall at depth 25 reaches only 44.0\% (11/25 exploits captured), failing to prioritize 14 actively weaponized vulnerabilities in its top 25 recommendations. In contrast, threat-intelligence-aware scoring (VRS Proposed, Combined Baseline, and KEV-first) achieves 100\% recall at depth 25 (25/25 exploits captured), surfacing all known exploited vulnerabilities in the first 25 positions. EPSS-only reaches 88.0\% recall (22/25).
+\textit{Ceiling Effect and Disclaimers}: VRS Proposed, Combined Baseline, and KEV-first achieve identical precision and recall for depths $K \le 25$ because all three prioritize KEV-listed items into the top tier; VRS does not claim superiority over EPSS-only or the Combined baseline at these cutoffs. Furthermore, this evaluation evaluates retrospective ranking concordance against the frozen KEV catalog snapshot (2026.10.13), not forward temporal prediction, and unlisted status denotes unobserved in federal reporting rather than confirmed non-exploitation.
+
 \subsection{Evidence Grounding and Injection Resilience (RQ3)}
 Evaluation of the assistant pipeline under \texttt{evaluate\_rag.py} (executed with a deterministic MockLLM fixture to guarantee offline auditability and reproducible CI execution) verified that:
 \begin{enumerate}
@@ -246,7 +271,7 @@ Evaluation of the assistant pipeline under \texttt{evaluate\_rag.py} (executed w
 \subsection{Distinction of Completed vs. Proposed Work}
 To maintain scientific transparency:
 \begin{itemize}
-    \item \textbf{Completed Work}: Full implementation of real Nmap XML parsing, allowlist security, NVD v2.0/EPSS/KEV enrichment, the deterministic VRS risk engine, the Pydantic RAG pipeline, the evidence validator, and the 41-CVE empirical benchmark.
+    \item \textbf{Completed Work}: Full implementation of real Nmap XML parsing, allowlist security, NVD v2.0/EPSS/KEV enrichment, the deterministic VRS risk engine, the Pydantic RAG pipeline, the evidence validator, and both the 41-CVE and 500-CVE empirical benchmarks.
     \item \textbf{Proposed / Pending Work}: Distributed asynchronous background task queues (e.g., Celery/Redis) for continuous subnet scanning, automated vector database embeddings (currently using exact and keyword retrieval fallbacks), and multi-operator human-in-the-loop qualitative clinical SOC trials are identified as future engineering roadmap items.
 \end{itemize}
 
@@ -262,7 +287,7 @@ A critical threat to comparative baseline validity is information asymmetry. Bas
 The empirical evaluation of our generative assistant (RQ3) was performed using a deterministic MockLLM fixture rather than live frontier LLMs (e.g., GPT-4 or Claude 3.5). While MockLLM execution guarantees fully reproducible offline testing, zero floating-point hallucination, and deterministic pattern matching for known prompt injection signatures, it does not assess generative semantic reasoning or resistance against adaptive, multi-turn, or multilingual jailbreak strategies. Live-model evaluation remains an open direction for future red-teaming.
 
 \subsection{External and Construct Validity}
-Our evaluation dataset consists of 39 real, publicly documented CVEs plus 2 synthetic edge-case records that test missing-data handling (\texttt{CVE-2024-99991} and \texttt{CVE-2024-99992}). While diverse, $N=41$ represents a sample size that limits claims of broad statistical generalizability across the entire NVD corpus ($>$250,000 CVEs). Furthermore, EPSS probabilities model a rolling 30-day forecast and drift continuously; replicating the benchmark at a future date without using our frozen snapshot will introduce slight numerical variance. Finally, absence from the CISA KEV catalog confirms only that exploitation has not been observed and cataloged by federal reporting channels; it does not guarantee that a vulnerability has never been targeted in covert or proprietary adversary operations.
+Our evaluation incorporates a curated benchmark of 39 real CVEs plus 2 synthetic edge-case records for SSVC construct alignment, alongside an expanded corpus of 500 real public CVEs for backlog scale analysis. While $N=500$ reflects realistic queue volumes with 25 active KEV exploits, comprehensive longitudinal evaluation across millions of software deployments remains ongoing. Furthermore, EPSS probabilities model a rolling 30-day forecast and drift continuously; replicating the benchmark at a future date without using our frozen snapshot will introduce slight numerical variance. Finally, absence from the CISA KEV catalog confirms only that exploitation has not been observed and cataloged by federal reporting channels; it does not guarantee that a vulnerability has never been targeted in covert or proprietary adversary operations.
 
 \section{Conclusion}
 This paper presented Vulture-AI, an evidence-grounded framework for automated vulnerability analysis and prioritization. By strictly decoupling quantitative risk scoring from generative narrative assistance, Vulture-AI resolves the twin challenges of CVSS alert fatigue and LLM hallucination. The proposed Vulture Risk Score (VRS) integrates normalized CVSS severity, FIRST EPSS probabilities, CISA KEV catalog indicators, and environmental context with a deterministic tie-breaking hierarchy.
