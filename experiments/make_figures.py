@@ -86,11 +86,6 @@ def generate_ranking_and_recall_figure():
     ax2.grid(True, linestyle=':', alpha=0.55)
     ax2.legend(loc="lower right", fontsize=7.5, framealpha=0.9)
 
-    # Footnote note inside ax2 for policy concordance disclosure
-    ax2.text(0.03, 0.65, "*Threat-aware policies directly incorporate KEV;\nperfect R@25 is an expected structural ceiling.",
-             transform=ax2.transAxes, fontsize=7.0, style='italic',
-             bbox=dict(boxstyle="round,pad=0.3", fc="#f8f9fa", ec="#cccccc", lw=0.8, alpha=0.9))
-
     plt.tight_layout()
 
     pdf_out = os.path.join(figures_dir, "ranking_and_recall.pdf")
