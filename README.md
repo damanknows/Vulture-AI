@@ -192,8 +192,7 @@ To stress-test prioritization dynamics across realistic enterprise vulnerability
 * **Base Dataset**: `data/benchmark/cves_500.csv` (SHA-256: `009c8566f1fdc4ed38b453deb351025019adac1942c5c5c2c52c822f856129ef`)
 * **Enriched Dataset**: `data/benchmark/cves_500_enriched.csv` (SHA-256: `24dc74c14d4fd36ec3c3cd023cbd68072a454195ec37bacb368fe5955efe9517`)
 * **Provenance Manifest**: `data/benchmark/cves_500_manifest.json`
-* **Composition**: Preserves all 39 original real CVEs plus 461 real CVEs deterministically sampled (`seed=42`) from the official `CVEProject/cvelistV5` repository (release `cve_2026-10-13_2300Z`). Excludes synthetic records entirely (0 synthetic records).
-* **Threat Telemetry**: Grounded with official CVE List V5 CVSS base scores, FIRST.org live EPSS queries, and the CISA KEV catalog (version `2026.10.13`). Exactly 25 of 500 records are confirmed in CISA KEV ($5.0\%$, matching real-world empirical exploitation rates).
+* **Threat Telemetry**: Grounded with official CVE List V5 CVSS base scores, FIRST.org cached EPSS probabilities (score date: `2026-10-13`), and the CISA KEV catalog (version `2026.10.13`). The 500-CVE evaluation corpus combines 39 curated reference vulnerabilities, of which 25 are listed in CISA KEV, with 461 deterministically sampled published CVEs from a restricted 2023–2024 source domain (`cves/2023/0xxx` and `cves/2024/0xxx`). None of the 461 added records matched the KEV catalog snapshot used in this experiment. The resulting aggregate KEV proportion of 25/500 (5.0%) is a property of this constructed dataset and must not be interpreted as a natural exploitation prevalence estimate. Absence from CISA KEV indicates unobserved in federal civilian reporting, NOT confirmed non-exploitation.
 * **Label Boundary**: The 461 new CVEs are explicitly marked `unlabeled`. No synthetic or heuristic SSVC labels are fabricated.
 
 ---

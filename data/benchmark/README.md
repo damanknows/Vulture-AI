@@ -85,12 +85,12 @@ To stress-test vulnerability prioritization across realistic enterprise backlog 
 
 ### 7.1 Sampling Methodology & Grounded Telemetry
 1. **Preservation of Baseline**: All 39 real CVE records from the original 41-record benchmark are preserved in full. The 2 synthetic test records (`CVE-2024-99991`, `CVE-2024-99992`) are excluded from the 500 count to maintain zero synthetic contamination.
-2. **Deterministic Sampling**: 461 additional real CVEs were deterministically sampled (`seed=42`) from the official `CVEProject/cvelistV5` repository (release tag `cve_2026-10-13_2300Z`, candidate pool: 1,369 published records from 2023–2024).
-3. **Verifiable Threat Telemetry**:
+2. **Deterministic Sampling**: 461 additional real CVEs were deterministically sampled (`seed=42`) from the official `CVEProject/cvelistV5` repository (release tag `cve_2026-10-13_2300Z`, restricted to subdirectories `cves/2023/0xxx` and `cves/2024/0xxx`, from a candidate pool of 1,369 published records with CNA CVSS base scores).
+3. **Threat Telemetry**:
    - **CVSS base scores**: Extracted from official CNA metric blocks in CVE List V5.
-   - **EPSS probabilities**: Queried and cached directly from FIRST.org EPSS API (`https://api.first.org/data/v1/epss`).
-   - **CISA KEV catalog**: Matched against official KEV catalog (version `2026.10.13`, 1,741 entries).
-4. **Empirical Exploitation Distribution**: Exactly 25 of the 500 CVEs are listed in CISA KEV ($25/500 = 5.0\%$), matching published empirical exploitation rates in real-world software catalogs (~4–5%).
+   - **EPSS probabilities**: Sourced from a local cache (`data/external/epss_cache_500.json`, score date: `2026-10-13`) retrieved from the FIRST.org EPSS API.
+   - **CISA KEV catalog**: Matched against official KEV catalog snapshot (version `2026.10.13`, 1,741 entries).
+4. **Dataset Construction & KEV Proportion**: The 500-CVE evaluation corpus combines 39 curated reference vulnerabilities, of which 25 are listed in CISA KEV, with 461 deterministically sampled published CVEs from a restricted 2023–2024 source domain. None of the 461 added records matched the KEV catalog snapshot used in this experiment. The resulting aggregate KEV proportion of 25/500 (5.0%) is a property of this constructed dataset and must not be interpreted as a natural exploitation prevalence estimate. Absence from the CISA KEV catalog indicates unobserved in federal civilian reporting channels, NOT confirmed non-exploitation.
 
 ### 7.2 Label Boundary & Scientific Guardrails
 - **Author-curated SSVC labels**: Preserved strictly on the 39 original real CVEs.
