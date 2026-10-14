@@ -23,7 +23,8 @@
 
 \bibitem{nvd2023}
 {National Institute of Standards and Technology}, ``{National Vulnerability
-  Database (NVD)},'' \url{https://nvd.nist.gov/}, 2026.
+  Database (NVD)},'' 2026, [Online]. Available: \url{https://nvd.nist.gov/}.
+  [Accessed: Oct. 14, 2026].
 
 \bibitem{first2019cvss}
 \BIBentryALTinterwordspacing
@@ -50,8 +51,10 @@ J.~Jacobs, S.~Romanosky, B.~Edwards, M.~Roytman, and I.~Adjerid, ``{Exploit
   \url{https://www.cisa.gov/binding-operational-directive-22-01}, 2021.
 
 \bibitem{cisa2023kev}
-------, ``{Known Exploited Vulnerabilities Catalog},''
-  \url{https://www.cisa.gov/known-exploited-vulnerabilities-catalog}, 2026.
+------, ``{Known Exploited Vulnerabilities Catalog},'' 2026, [Online].
+  Available:
+  \url{https://www.cisa.gov/known-exploited-vulnerabilities-catalog}.
+  [Accessed: Oct. 14, 2026].
 
 \bibitem{spring2020ssvc}
 J.~M. Spring, E.~Hatlebakke, A.~Householder, A.~Manion, and D.~Shick,

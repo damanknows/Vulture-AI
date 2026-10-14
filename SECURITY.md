@@ -9,10 +9,9 @@ The Vulture-AI project takes software security seriously. Because this project c
 If you identify a security vulnerability in Vulture-AI (e.g., an unauthorized scanning bypass, injection filter flaw, or input validation bug):
 
 1. **Do not** file a public GitHub issue.
-2. Please report the issue privately through **GitHub Private Vulnerability Reporting** via the repository Security tab at:
-   https://github.com/damanknows/Vulture-AI/security/advisories/new
-3. Alternatively, contact the repository maintainer directly through their verified GitHub profile:
-   https://github.com/damanknows
+2. Please report the issue privately through the peer-review platform or anonymous repository security channel at:
+   https://anonymous.4open.science/r/Vulture-AI
+3. Alternatively, contact the authors via the double-blind submission portal.
 
 *Note: A dedicated security contact email address has not yet been configured in the repository settings. Please utilize GitHub Security Advisories for encrypted, private reporting.*
 

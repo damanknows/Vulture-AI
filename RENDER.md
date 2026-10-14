@@ -8,10 +8,10 @@ This guide explains how to deploy **Vulture AI** (FastAPI Backend + React Vite T
 
 Render Blueprints use the [`render.yaml`](./render.yaml) file in the root of the repository to provision and configure the service automatically.
 
-1. **Push your repository** to GitHub (already synced to `https://github.com/damanknows/Vulture-AI`).
+1. **Push your repository** to GitHub.
 2. Log in to [Render Dashboard](https://dashboard.render.com).
 3. Click **New +** → **Blueprint**.
-4. Select your **`damanknows/Vulture-AI`** repository.
+4. Select your **`Vulture-AI`** repository.
 5. Render will automatically read `render.yaml` and configure the **`vulture-ai`** Web Service.
 6. (Optional) Set the `NVD_API_KEY` secret variable if you have one.
 7. Click **Apply**.
@@ -24,7 +24,7 @@ Render Blueprints use the [`render.yaml`](./render.yaml) file in the root of the
 If you prefer to configure the Web Service manually:
 
 1. In Render Dashboard, click **New +** → **Web Service**.
-2. Connect your GitHub repository: `https://github.com/damanknows/Vulture-AI`.
+2. Connect your GitHub repository (`Vulture-AI`).
 3. Configure the following settings:
    - **Name:** `vulture-ai`
    - **Language / Runtime:** `Docker`

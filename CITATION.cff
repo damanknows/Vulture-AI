@@ -3,8 +3,8 @@ message: "If you use this benchmark dataset, scoring heuristic, or codebase in y
 title: "Vulture-AI: Context-Aware Vulnerability Prioritization with Guardrailed Retrieval-Augmented Generation"
 version: 0.2.0
 date-released: 2026-10-14
-url: "https://github.com/damanknows/Vulture-AI"
-repository-code: "https://github.com/damanknows/Vulture-AI"
+url: "https://anonymous.4open.science/r/Vulture-AI"
+repository-code: "https://anonymous.4open.science/r/Vulture-AI"
 keywords:
   - "vulnerability-prioritization"
   - "cvss"
@@ -15,7 +15,7 @@ keywords:
   - "prompt-injection"
 authors:
   - name: "Vulture-AI Research Authors"
-    website: "https://github.com/damanknows/Vulture-AI"
+    website: "https://anonymous.4open.science/r/Vulture-AI"
 preferred-citation:
   type: conference-paper
   title: "Vulture-AI: Context-Aware Vulnerability Prioritization with Guardrailed Retrieval-Augmented Generation"

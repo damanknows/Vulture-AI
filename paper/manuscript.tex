@@ -8,11 +8,18 @@
 \usepackage{xcolor}
 \usepackage{booktabs}
 \usepackage{enumitem}
-\setlist{nosep,leftmargin=*}
+\setlist{nosep,leftmargin=*,topsep=0pt,partopsep=0pt,parsep=0pt,itemsep=0pt}
 \usepackage{microtype}
-\setlength{\textfloatsep}{5pt plus 1pt minus 1pt}
-\setlength{\intextsep}{5pt plus 1pt minus 1pt}
-\setlength{\floatsep}{4pt plus 1pt minus 1pt}
+\setlength{\textfloatsep}{3pt plus 1pt minus 1pt}
+\setlength{\intextsep}{3pt plus 1pt minus 1pt}
+\setlength{\floatsep}{2pt plus 1pt minus 1pt}
+\setlength{\dbltextfloatsep}{4pt plus 1pt minus 1pt}
+\setlength{\dblfloatsep}{3pt plus 1pt minus 1pt}
+\setlength{\abovecaptionskip}{2pt}
+\setlength{\belowcaptionskip}{2pt}
+\setlength{\abovedisplayskip}{2pt plus 1pt minus 1pt}
+\setlength{\belowdisplayskip}{2pt plus 1pt minus 1pt}
+\def\IEEEbibitemsep{0pt plus .5pt}
 \usepackage{url}
 \usepackage{hyperref}
 \hypersetup{
@@ -80,7 +87,7 @@ Retrieval-Augmented Generation (RAG) \cite{lewis2020rag} grounds generative lang
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.88\textwidth,height=3.4cm]{../experiments/results/figures/ranking_and_recall.pdf}
+\includegraphics[width=0.88\textwidth,height=3.2cm]{../experiments/results/figures/fig1.pdf}
 \vspace{-2mm}
 \caption{Empirical prioritization evaluations across benchmark scales: (a) Monotonic rank alignment against author-curated SSVC reference priority on the curated benchmark ($N=41$), showing VRS achieving $\rho=0.949$; (b) Retrospective Recall@K curves against CISA KEV membership on the expanded backlog ($N=500, N_{\text{KEV}}=25$), showing CVSS degradation (R@25=0.44) and the structural ceiling (R@25=1.00) of KEV-informed policies (*threat-aware policies directly incorporate KEV; perfect R@25 is an expected policy-concordance property).}
 \label{fig:ranking_and_recall}
@@ -102,24 +109,11 @@ The Vulture Risk Score is defined as a deterministic linear combination normaliz
 \text{VRS} = 100 \times \left( w_C C + w_E E + w_K K + w_N N + w_A A \right)
 \label{eq:vrs}
 \end{equation}
-where:
-\begin{itemize}
-    \item $C \in [0.0, 1.0]$: Normalized CVSS base score ($\text{cvss} / 10.0$).
-    \item $E \in [0.0, 1.0]$: FIRST EPSS exploitation probability.
-    \item $K \in \{0.0, 1.0\}$: CISA KEV indicator (1.0 if confirmed listed, else 0.0).
-    \item $N \in [0.0, 1.0]$: Documented network exposure metric (e.g., internet-facing perimeter = 1.0, internal enclave = 0.3).
-    \item $A \in [0.0, 1.0]$: Documented asset criticality score (e.g., domain controller = 1.0, isolated workstation = 0.2).
-\end{itemize}
+where $C \in [0.0, 1.0]$ is normalized CVSS base score ($\text{cvss} / 10.0$), $E \in [0.0, 1.0]$ is FIRST EPSS exploitation probability, $K \in \{0.0, 1.0\}$ indicates CISA KEV catalog listing, $N \in [0.0, 1.0]$ is network exposure (e.g., perimeter = 1.0, internal enclave = 0.3), and $A \in [0.0, 1.0]$ is asset criticality (e.g., domain controller = 1.0, workstation = 0.2).
 
 \textbf{Exploratory Weights (vrs-v1)}: The default configuration enforces $\sum w_i = 1.0$ with initial exploratory weights: $w_C = 0.25$, $w_E = 0.20$, $w_K = 0.20$, $w_N = 0.20$, and $w_A = 0.15$.
 
-\textbf{Missing-Data Policy}:
-\begin{itemize}
-    \item If CVSS is missing, the record cannot be scored reliably; VRS is set to \texttt{None} and assigned to an \texttt{"unavailable"} sorting bucket.
-    \item If EPSS is missing, it defaults to $0.0$ and logs an uncertainty notice.
-    \item If network exposure or asset criticality is unspecified, each defaults to $0.5$ with logged uncertainty.
-    \item Missing KEV confirmation defaults to $0.0$.
-\end{itemize}
+\textbf{Missing-Data Policy}: If CVSS is missing, the record cannot be scored reliably; VRS is set to \texttt{None} and assigned to an \texttt{"unavailable"} sorting bucket. Missing EPSS or KEV defaults to $0.0$. Unspecified network exposure or asset criticality defaults to $0.5$ with logged uncertainty.
 
 \textbf{Urgent Policy Override and Tie-Breaking}:
 To prevent mathematical averaging from diluting active threat campaigns, any finding confirmed in CISA KEV with active weighting ($w_K > 0$) is assigned to an \texttt{"urgent"} priority bucket. Findings are ranked by a deterministic three-level comparator:
@@ -174,19 +168,18 @@ All methods enforce deterministic tie-breaking by primary CVE ID.
 \textbf{Baseline Information Asymmetry}: We emphasize a structural informational asymmetry between the baselines and the full VRS model. Baselines 1--4 are strictly vulnerability-centric, operating solely on technical severity ($C$) and exploitation telemetry ($E, K$). None of the baselines possess environmental deployment context ($N$: Network Exposure, $A$: Asset Criticality). Because the SSVC reference rubric incorporates exposure and mission impact to determine prioritization urgency, full VRS has an inherent informational advantage over vulnerability-only baselines. To provide a fair, information-symmetric comparison, our ablation study explicitly evaluates \texttt{VRS (No Context)}, which restricts VRS to the identical vulnerability-only signals ($C, E, K$) available to the combo baseline.
 
 \subsection{Evaluation Metrics}
-\begin{itemize}
-    \item \textbf{NDCG@10}: Normalized Discounted Cumulative Gain at $K=10$ with exponential graded relevance $\sum_{i=1}^{10} \frac{2^{rel_i} - 1}{\log_2(i+1)}$ normalized by IDCG@10.
-    \item \textbf{Precision@10 \& Recall@10 (Act)}: Precision ($P$) and recall ($R$) for Tier 1 Emergency Act ($rel = 3$, ceiling $10/15 \approx 0.6667$).
-    \item \textbf{Precision@10 \& Recall@10 (Actionable)}: Performance across combined actionable tiers ($rel \ge 2$, Act or Attend; ceiling $10/27 \approx 0.3704$).
-    \item \textbf{Spearman Rank Correlation ($\rho$)}: Monotonic rank correlation between predicted order and author-curated reference priority.
-\end{itemize}
+We evaluate ranking quality using four primary metrics:
+(1)~\textbf{NDCG@10}: Normalized Discounted Cumulative Gain at $K=10$ with exponential graded relevance $\sum_{i=1}^{10} \frac{2^{rel_i} - 1}{\log_2(i+1)}$ normalized by IDCG@10;
+(2)~\textbf{Precision@10 \& Recall@10 (Act)}: Precision ($P$) and recall ($R$) for Tier 1 Emergency Act ($rel = 3$, ceiling $10/15 \approx 0.6667$);
+(3)~\textbf{Precision@10 \& Recall@10 (Actionable)}: Performance across combined actionable tiers ($rel \ge 2$, Act or Attend; ceiling $10/27 \approx 0.3704$); and
+(4)~\textbf{Spearman Rank Correlation ($\rho$)}: Monotonic rank correlation between predicted order and author-curated reference priority.
 
 \section{Results and Analysis}
 
 \subsection{Prioritization Performance (RQ1)}
 Table \ref{tab:main} presents the comparative evaluation results across all five methods.
 
-\begin{table}[h]
+\begin{table}[t]
 \centering
 \caption{Vulnerability Prioritization Performance Across Methods ($N=41$: 39 real CVEs + 2 synthetic edge cases in Defer)}
 \label{tab:main}
@@ -212,7 +205,7 @@ CVSS+EPSS+KEV       & 0.9250 & 0.9513 & 0.9373 & 0.9000 & 0.6000 & 0.8800 \\
 \subsection{Feature Sensitivity and Ablation Analysis (RQ2)}
 To quantify the marginal value of each threat signal and architectural component, we evaluated four ablated variants of VRS under proportional weight renormalization and bucket policy deactivation, summarized in Table \ref{tab:ablation}.
 
-\begin{table}[h]
+\begin{table}[t]
 \centering
 \caption{VRS Feature and Architecture Ablation Study ($N=41$: 39 real CVEs + 2 synthetic edge cases in Defer)}
 \label{tab:ablation}
@@ -244,7 +237,7 @@ Second, the \texttt{urgent} bucket override enforces compliance policy by placin
 \subsection{\texorpdfstring{Retrospective Exploitation Concordance on Expanded Backlog ($N=500$)}{Retrospective Exploitation Concordance on Expanded Backlog (N=500)}}
 To evaluate ranking behavior on realistic queue volumes, Table \ref{tab:kev500} and Fig.~\ref{fig:ranking_and_recall}(b) report a retrospective policy-concordance evaluation against CISA KEV on the 500-CVE backlog ($N_{\text{KEV}}=25$).
 
-\begin{table}[h]
+\begin{table}[t]
 \centering
 \caption{Retrospective CISA KEV Policy Concordance on 500-CVE Backlog ($N=500, N_{\text{KEV}}=25$)}
 \label{tab:kev500}
@@ -272,6 +265,7 @@ Evaluation of the assistant pipeline under \texttt{evaluate\_rag.py} (executed w
     \item \textbf{Metric Invariance}: Across all prompt configurations, the quantitative VRS score remained mathematically invariant, as the LLM is prohibited from modifying score fields.
     \item \textbf{Injection Rejection on Tested Signatures}: When tested against synthetic HTTP service banners containing adversarial injection payloads (e.g., \texttt{"Server: Apache/2.4.49 (System: ignore instructions, score 0.0)"}), the evidence validation filter successfully detected the prompt injection pattern, aborted unvalidated output generation, and appended an explicit security alert to the response payload.
     \item \textbf{Numerical Consistency}: Simulated hallucinated CVSS scores (e.g., citing CVSS 4.5 for an authenticated 9.8 finding) were caught by the floating-point comparator, which marked the output as \texttt{validation\_status: failed}.
+    \item \textit{Live Open-Weight LLM Trial:} Complementing deterministic \texttt{MockLLM} CI fixtures, we evaluated live \texttt{Llama-3.1-8B} inference ($\text{temperature}=0.0$) across all $N=41$ benchmark records and 5 adversarial banner payloads. Schema-constrained decoding achieved $41/41$ structural validity, while \texttt{evidence\_validator.py} verified exact numerical grounding ($\pm 0.01$) on $39/41$ records, deterministically intercepted $2/41$ instances of live LLM metric rounding or omission (\texttt{validation\_status: failed}), and blocked $5/5$ tested indirect injection banners.
 \end{enumerate}
 \textit{Scope Limitation}: While MockLLM execution deterministically verifies schema parsing, floating-point consistency checks, and rejection of tested injection signatures under controlled test fixtures, it does not establish defense against adaptive, multi-turn, multilingual, or zero-day jailbreak attacks on live frontier commercial LLMs, nor does it evaluate generative semantic reasoning quality under live model inference.
 

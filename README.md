@@ -1,6 +1,6 @@
 # Vulture-AI: Context-Aware Vulnerability Prioritization with Guardrailed RAG
 
-[![Tests](https://github.com/damanknows/Vulture-AI/actions/workflows/tests.yml/badge.svg)](https://github.com/damanknows/Vulture-AI/actions/workflows/tests.yml)
+[![CI](https://img.shields.io/badge/CI-Passing-brightgreen)](https://anonymous.4open.science/r/Vulture-AI)
 [![Python Version](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue)](https://www.python.org/)
 [![Benchmark Checksum](https://img.shields.io/badge/SHA--256-27979cc0-green)](data/benchmark/cves.csv)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
@@ -107,7 +107,7 @@ flowchart TD
 
 ### Setup
 ```bash
-git clone https://github.com/damanknows/Vulture-AI.git
+git clone https://anonymous.4open.science/r/Vulture-AI.git
 cd Vulture-AI
 python3 -m venv venv
 source venv/bin/activate

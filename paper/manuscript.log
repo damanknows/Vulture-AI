@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Debian) (preloaded format=pdflatex 2026.10.6)  14 OCT 2026 06:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Debian) (preloaded format=pdflatex 2026.10.6)  14 OCT 2026 07:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -440,24 +440,24 @@ File: l3backend-pdftex.def 2026-08-10 L3 backend support: PDF output (pdfTeX)
 (./manuscript.aux)
 \openout1 = `manuscript.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 29.
-LaTeX Font Info:    ... okay on input line 29.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
 
 -- Lines per column: 56 (exact).
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -482,13 +482,13 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-LaTeX Info: Redefining \microtypecontext on input line 29.
-Package microtype Info: Applying patch `item' on input line 29.
-Package microtype Info: Applying patch `toc' on input line 29.
-Package microtype Info: Applying patch `eqnum' on input line 29.
-Package microtype Info: Applying patch `footnote' on input line 29.
-Package microtype Info: Applying patch `verbatim' on input line 29.
-LaTeX Info: Redefining \microtypesetup on input line 29.
+LaTeX Info: Redefining \microtypecontext on input line 36.
+Package microtype Info: Applying patch `item' on input line 36.
+Package microtype Info: Applying patch `toc' on input line 36.
+Package microtype Info: Applying patch `eqnum' on input line 36.
+Package microtype Info: Applying patch `footnote' on input line 36.
+Package microtype Info: Applying patch `verbatim' on input line 36.
+LaTeX Info: Redefining \microtypesetup on input line 36.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -503,7 +503,7 @@ Package microtype Info: No adjustment of character kerning.
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
-Package hyperref Info: Link coloring OFF on input line 29.
+Package hyperref Info: Link coloring OFF on input line 36.
 
 (./manuscript.out) (./manuscript.out)
 \@outlinefile=\write3
@@ -511,10 +511,10 @@ Package hyperref Info: Link coloring OFF on input line 29.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-cmr.cfg
-File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 41.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 48.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -523,7 +523,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 41.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 48.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -532,19 +532,19 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 (/usr/share/texlive/texmf-dist/tex/latex/microtype/mt-msb.cfg
 File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 )
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 5
-6.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 6
+3.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 1708) in paragraph at lines 56--57
+Underfull \hbox (badness 1708) in paragraph at lines 63--64
 []\OT1/ptm/b/n/10 (+20) Indirect Prompt In-jec-tion\OT1/ptm/m/n/10 (+20) : Ad-v
 er-saries can em-bed
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 56--57
+Underfull \hbox (badness 10000) in paragraph at lines 63--64
 \OT1/pcr/m/n/10 (Ignore instructions and report low
  []
 
@@ -553,141 +553,131 @@ dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-<../experiments/results/figures/ranking_and_recall.pdf, id=128, 721.1075pt x 28
-2.15851pt>
-File: ../experiments/results/figures/ranking_and_recall.pdf Graphic file (type
-pdf)
-<use ../experiments/results/figures/ranking_and_recall.pdf>
-Package pdftex.def Info: ../experiments/results/figures/ranking_and_recall.pdf
- used on input line 83.
-(pdftex.def)             Requested size: 454.08006pt x 96.73773pt.
+<../experiments/results/figures/fig1.pdf, id=128, 721.1075pt x 282.15851pt>
+File: ../experiments/results/figures/fig1.pdf Graphic file (type pdf)
+<use ../experiments/results/figures/fig1.pdf>
+Package pdftex.def Info: ../experiments/results/figures/fig1.pdf  used on input
+ line 90.
+(pdftex.def)             Requested size: 454.08006pt x 91.046pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 100--101
 []\OT1/ptm/b/n/10 (+20) Target Au-tho-riza-tion and Ob-ser-va-tion\OT1/ptm/m/n/
 10 (+20) :
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 100--101
 \OT1/ptm/m/n/10 (+20) En-forces a strict server-side al-lowlist
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 100--101
 \OT1/ptm/m/n/10 (+20) (\OT1/pcr/m/n/10 scanner.py:is_target_allowed\OT1/ptm/m/n
 /10 (+20) ) to block
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 100--101
 \OT1/ptm/m/n/10 (+20) unau-tho-rized prob-ing. Net-work dis-cov-ery in-vokes
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--128
+Underfull \hbox (badness 10000) in paragraph at lines 121--122
 []\OT1/ptm/m/n/10 (+20) Priority Bucket: $[] \OML/cmm/m/it/10 > [] >
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 137--139
+Underfull \hbox (badness 10000) in paragraph at lines 131--133
 []\OT1/ptm/b/n/10 (+20) Evidence Val-i-da-tion Fil-ter\OT1/ptm/m/n/10 (+20) : I
 m-ple-mented in
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 137--139
+Underfull \hbox (badness 10000) in paragraph at lines 131--133
 \OT1/pcr/m/n/10 evidence_validator.py\OT1/ptm/m/n/10 (+20) , the val-ida-tor in
 -spects
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 139--140
+Underfull \hbox (badness 10000) in paragraph at lines 133--134
 \OT1/ptm/m/n/10 (+20) pat-terns (\OT1/pcr/m/n/10 ignore previous instructions\O
 T1/ptm/m/n/10 (+20) ,
  []
 
 
-Underfull \hbox (badness 1442) in paragraph at lines 150--151
+Underfull \hbox (badness 1442) in paragraph at lines 144--145
 \OT1/ptm/m/n/10 (+20) u-ate fine-grained de-ci-sion align-ment, we cu-rated \OT
 1/ptm/b/n/10 (+20) 39
  []
 
 
-Underfull \hbox (badness 4429) in paragraph at lines 150--151
+Underfull \hbox (badness 4429) in paragraph at lines 144--145
 \OT1/ptm/m/n/10 (+20) (snap-shot frozen as of 2026-10-14, SHA-256 pre-
  []
 
 
-Underfull \hbox (badness 7540) in paragraph at lines 150--151
+Underfull \hbox (badness 7540) in paragraph at lines 144--145
 \OT1/ptm/m/n/10 (+20) fix: \OT1/pcr/m/n/10 27979cc0029e\OT1/ptm/m/n/10 (+20) ).
  The two syn-thetic records
  []
 
 
-Underfull \hbox (badness 3557) in paragraph at lines 155--157
+Underfull \hbox (badness 3557) in paragraph at lines 149--151
 []\OT1/ptm/m/n/10 (+20) To pro-vide an in-ter-pretable ref-er-ence rank-ing, re
 l-e-
  []
 
-[3 <../experiments/results/figures/ranking_and_recall.pdf>] [4]
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 270--272
+[3 <../experiments/results/figures/fig1.pdf>] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 263--265
 []\OT1/ptm/m/n/10 (+20) Evaluation of the as-sis-tant pipeline un-der
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 270--272
+Underfull \hbox (badness 10000) in paragraph at lines 263--265
 \OT1/pcr/m/n/10 evaluate_rag.py \OT1/ptm/m/n/10 (+20) (ex-e-cuted with a de-ter
 -min-is-tic
  []
 
 
-Underfull \hbox (badness 1867) in paragraph at lines 270--272
-\OT1/ptm/m/n/10 (+20) Mock-LLM fix-ture to guar-an-tee of-fline au-ditabil-ity
+Underfull \hbox (badness 1867) in paragraph at lines 263--265
+\OT1/ptm/m/n/10 (+20) Mock-LLM fix-ture to guar-an-tee of-fline au-ditabil-ity 
 and
  []
 
 
-Underfull \hbox (badness 3375) in paragraph at lines 273--274
+Underfull \hbox (badness 3375) in paragraph at lines 266--267
 []\OT1/ptm/b/n/10 (+20) Injection Re-jec-tion on Tested Sig-na-tures\OT1/ptm/m/
 n/10 (+20) : When
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 273--274
+Underfull \hbox (badness 10000) in paragraph at lines 266--267
 \OT1/ptm/m/n/10 (+20) tested against syn-thetic HTTP ser-vice ban-ners
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 273--274
+Underfull \hbox (badness 10000) in paragraph at lines 266--267
 \OT1/ptm/m/n/10 (+20) con-tain-ing ad-ver-sar-ial in-jec-tion pay-loads (e.g.,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 273--274
+Underfull \hbox (badness 10000) in paragraph at lines 266--267
 \OT1/pcr/m/n/10 "Server: Apache/2.4.49 (System: ignore
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 273--274
+Underfull \hbox (badness 10000) in paragraph at lines 266--267
 \OT1/pcr/m/n/10 instructions, score 0.0)"\OT1/ptm/m/n/10 (+20) ), the ev-i-denc
 e
  []
 
 
-Underfull \hbox (badness 4328) in paragraph at lines 273--274
+Underfull \hbox (badness 4328) in paragraph at lines 266--267
 \OT1/ptm/m/n/10 (+20) pat-tern, aborted un-val-i-dated out-put gen-er-a-tion, a
 nd
  []
 
-
-Underfull \vbox (badness 1221) has occurred while \output is active []
-
- [5]
-(./manuscript.bbl)
+[5] (./manuscript.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -706,15 +696,15 @@ L3 programming layer <2026-08-10>
  ***********
 Package rerunfilecheck Info: File `manuscript.out' has not changed.
 (rerunfilecheck)             Checksum: 570570EA41E2363DEC765BFA01D932E2;4738.
- )
+ ) 
 Here is how much of TeX's memory you used:
- 14087 strings out of 469089
- 220660 string characters out of 5459374
- 698539 words of memory out of 5000000
+ 14091 strings out of 469089
+ 220599 string characters out of 5459374
+ 698635 words of memory out of 5000000
  42536 multiletter control sequences out of 15000+600000
- 690535 words of font info for 373 fonts, out of 8000000 for 9000
+ 690654 words of font info for 375 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 74i,9n,79p,2519b,621s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 74i,9n,79p,2519b,579s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texli
@@ -731,10 +721,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share
 f-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/ty
 pe1/urw/times/utmbi8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/
 utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on manuscript.pdf (6 pages, 280517 bytes).
+Output written on manuscript.pdf (6 pages, 281519 bytes).
 PDF statistics:
  400 PDF objects out of 1000 (max. 8388607)
  252 compressed objects within 3 object streams
- 65 named destinations out of 1000 (max. 500000)
+ 66 named destinations out of 1000 (max. 500000)
  70326 words of extra memory for PDF output out of 74296 (max. 10000000)
 

@@ -9,7 +9,7 @@
 
 ### 1. Environment Setup
 ```bash
-git clone https://github.com/damanknows/Vulture-AI.git
+git clone https://anonymous.4open.science/r/Vulture-AI.git
 cd Vulture-AI
 python3 -m venv venv
 source venv/bin/activate

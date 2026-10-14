@@ -90,10 +90,14 @@ def generate_ranking_and_recall_figure():
 
     pdf_out = os.path.join(figures_dir, "ranking_and_recall.pdf")
     png_out = os.path.join(figures_dir, "ranking_and_recall.png")
-    plt.savefig(pdf_out, bbox_inches="tight")
+    fig1_pdf = os.path.join(figures_dir, "fig1.pdf")
+    fig1_png = os.path.join(figures_dir, "fig1.png")
+    plt.savefig(pdf_out, bbox_inches="tight", dpi=300)
     plt.savefig(png_out, bbox_inches="tight", dpi=300)
+    plt.savefig(fig1_pdf, bbox_inches="tight", dpi=300)
+    plt.savefig(fig1_png, bbox_inches="tight", dpi=300)
     plt.close()
-    print(f"Generated figures:\n  {pdf_out}\n  {png_out}")
+    print(f"Generated figures:\n  {pdf_out}\n  {png_out}\n  {fig1_pdf}\n  {fig1_png}")
 
 if __name__ == "__main__":
     generate_ranking_and_recall_figure()

@@ -3,7 +3,7 @@
 **Auditor:** Senior Cybersecurity Research & Evaluation Engineer  
 **Date:** 2026-10-14  
 **Target Venue:** 7th International Conference on Computing and Informatics (ICCI 2026)  
-**Target Repository:** [Vulture-AI](https://github.com/damanknows/Vulture-AI)  
+**Target Repository:** [Vulture-AI](https://anonymous.4open.science/r/Vulture-AI)  
 **Evaluation Target:** 41-CVE Public Benchmark & Reproducible Pipeline (`research-v2`)
 
 ---
