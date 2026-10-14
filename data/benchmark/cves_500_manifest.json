@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "benchmark_name": "Vulture-AI Expanded Benchmark (500 Real CVEs)",
+    "benchmark_version": "2.0-500",
+    "generation_timestamp_utc": "2026-10-14T00:09:20.883892+00:00",
+    "generator_script": "experiments/generate_benchmark_500.py",
+    "deterministic_seed": 42
+  },
+  "population_summary": {
+    "total_records": 500,
+    "unique_cve_ids_count": 500,
+    "synthetic_records_count": 0,
+    "preserved_original_real_cves": 39,
+    "newly_sampled_real_cves": 461,
+    "cisa_kev_listed_count": 25,
+    "cisa_kev_unlisted_count": 475,
+    "ssvc_labeled_count": 39,
+    "unlabeled_count": 461
+  },
+  "score_distributions": {
+    "cvss": {
+      "count": 500,
+      "min": 2.0,
+      "max": 10.0,
+      "mean": 6.381
+    },
+    "epss": {
+      "count": 500,
+      "min": 0.00098,
+      "max": 0.99999,
+      "mean": 0.06838
+    }
+  },
+  "artifacts": {
+    "base_csv": {
+      "path": "data/benchmark/cves_500.csv",
+      "sha256": "009c8566f1fdc4ed38b453deb351025019adac1942c5c5c2c52c822f856129ef",
+      "records": 500
+    },
+    "enriched_csv": {
+      "path": "data/benchmark/cves_500_enriched.csv",
+      "sha256": "24dc74c14d4fd36ec3c3cd023cbd68072a454195ec37bacb368fe5955efe9517",
+      "records": 500
+    },
+    "original_benchmark_preserved": {
+      "path": "data/benchmark/cves.csv",
+      "sha256": "27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e",
+      "records": 41
+    }
+  },
+  "provenance_sources": {
+    "cvelist_v5": {
+      "repository": "https://github.com/CVEProject/cvelistV5",
+      "release_tag": "cve_2026-10-13_2300Z",
+      "subdirectories_used": [
+        "cves/2023/0xxx",
+        "cves/2024/0xxx"
+      ],
+      "candidate_pool_size": 1369,
+      "selection_method": "Deterministic random sampling without replacement (seed=42)"
+    },
+    "first_epss": {
+      "endpoint": "https://api.first.org/data/v1/epss",
+      "cache_file": "data/external/epss_cache_500.json",
+      "total_cached": 461
+    },
+    "cisa_kev": {
+      "cache_file": "data/external/known_exploited_vulnerabilities.json",
+      "catalog_version": "2026.10.13",
+      "date_released": "2026-10-13T19:10:43.6568Z",
+      "sha256": "136904f12e4c6762e526352e3a67ed7b28cd21b4d82bed9c91719ff2e94f2f28"
+    }
+  },
+  "scientific_disclaimers": {
+    "label_boundary": "Author-curated SSVC reference labels exist exclusively for the 39 original real CVE records. The 461 newly sampled records are explicitly unlabeled to prevent label hallucination. SSVC alignment metrics (NDCG, Spearman) are computed strictly over the 39 labeled records.",
+    "retrospective_nature": "Evaluation of CISA KEV concordance across all 500 CVEs is a retrospective association study against the retrieved catalog snapshot (2026.10.13), not a forward prospective predictive trial.",
+    "feature_overlap": "The VRS model directly takes KEV status as an input feature and policy override. Strong concordance with KEV inclusion at top ranks is partially an expected structural result."
+  }
+}

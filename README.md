@@ -131,6 +131,10 @@ pytest -v
 ### 3. Reproduce All Experimental Results
 ```bash
 python experiments/reproduce_all.py
+# Run CISA KEV enrichment on 41-record benchmark:
+python experiments/enrich_benchmark_kev.py
+# Run 500-CVE expanded benchmark generation & evaluation:
+python experiments/generate_benchmark_500.py
 ```
 
 ### 4. Start Local Development Server
@@ -173,20 +177,31 @@ $$\text{VRS} = 100 \times \left( 0.25 \cdot C + 0.20 \cdot E + 0.20 \cdot K + 0.
 
 ## 11. Dataset Provenance and Limitations
 
-The benchmark dataset (`data/benchmark/cves.csv`, SHA-256: `27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e`) contains **41 total records**:
+The repository provides two benchmark tiers designed to evaluate prioritization heuristics across distinct experimental questions:
+
+### 11.1 Original Reference Benchmark (41 Records, SSVC-Grounded)
+The reference benchmark (`data/benchmark/cves.csv`, SHA-256: `27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e`) contains **41 total records**:
 * **39 Verified Public CVEs**: Sourced from NIST NVD, FIRST EPSS API, and CISA KEV (snapshot frozen 2026-10-14).
 * **2 Synthetic Missing-Data Edge Cases**: `CVE-2024-99991` (missing CVSS) and `CVE-2024-99992` (missing EPSS) use non-existent identifiers to verify edge-case fallback logic.
 
 **Author-Curated Reference Labels (Not Independent Ground Truth)**:
 Reference priorities (1–41) and relevance grades (3=Act, 2=Attend, 1=Track, 0=Defer) are **author-curated reference labels based on a manual application of the CISA SSVC decision tree rubric**, NOT independently validated breach ground truth or analyst telemetry. Because SSVC triage relies on exploitation likelihood (KEV, EPSS) and exposure ($N$)—the same features evaluated by VRS—high ranking performance demonstrates **construct consistency / heuristic alignment with established triage principles**, not predictive proof of breach prevention. Independent analyst validation and breach-prediction telemetry are documented as future work. See [`docs/limitations.md`](docs/limitations.md) for full disclosure.
 
+### 11.2 Expanded Research Benchmark (500 Real CVE Records, v2.0-500)
+To stress-test prioritization dynamics across realistic enterprise vulnerability volumes, the repository includes an expanded corpus of **exactly 500 unique, real public CVEs**:
+* **Base Dataset**: `data/benchmark/cves_500.csv` (SHA-256: `009c8566f1fdc4ed38b453deb351025019adac1942c5c5c2c52c822f856129ef`)
+* **Enriched Dataset**: `data/benchmark/cves_500_enriched.csv` (SHA-256: `24dc74c14d4fd36ec3c3cd023cbd68072a454195ec37bacb368fe5955efe9517`)
+* **Provenance Manifest**: `data/benchmark/cves_500_manifest.json`
+* **Threat Telemetry**: Grounded with official CVE List V5 CVSS base scores, FIRST.org cached EPSS probabilities (score date: `2026-10-13`), and the CISA KEV catalog (version `2026.10.13`). The 500-CVE evaluation corpus combines 39 curated reference vulnerabilities, of which 25 are listed in CISA KEV, with 461 deterministically sampled published CVEs from a restricted 2023–2024 source domain (`cves/2023/0xxx` and `cves/2024/0xxx`). None of the 461 added records matched the KEV catalog snapshot used in this experiment. The resulting aggregate KEV proportion of 25/500 (5.0%) is a property of this constructed dataset and must not be interpreted as a natural exploitation prevalence estimate. Absence from CISA KEV indicates unobserved in federal civilian reporting, NOT confirmed non-exploitation.
+* **Label Boundary**: The 461 new CVEs are explicitly marked `unlabeled`. No synthetic or heuristic SSVC labels are fabricated.
+
 ---
 
 ## 12. Benchmark Results
 
+### 12.1 Primary Comparison at $K=10$ (41-Record SSVC Benchmark)
 *Exact generated results from `experiments/results/metrics.json` against the 41-record benchmark:*
 
-### Primary Comparison at $K=10$
 | Model | NDCG@10 | P@10 (Act) | R@10 (Act) | P@10 (Actionable) | R@10 (Actionable) | Spearman ($\rho$) |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|
 | **CVSS-only** | 0.7563 | 0.6000 | 0.4000 | 1.0000 | 0.3704 | 0.7357 |
@@ -195,7 +210,7 @@ Reference priorities (1–41) and relevance grades (3=Act, 2=Attend, 1=Track, 0=
 | **CVSS+EPSS+KEV** | 0.9513 | 0.9000 | 0.6000 | 1.0000 | 0.3704 | 0.8800 |
 | **VRS Proposed (vrs-v1)** | **1.0000** | **1.0000** | **0.6667** | **1.0000** | **0.3704** | **0.9488** |
 
-### Multi-Budget Depth Sensitivity ($K \in \{5, 10, 15\}$)
+### 12.2 Multi-Budget Depth Sensitivity ($K \in \{5, 10, 15\}$)
 | Model | NDCG@5 | NDCG@10 | NDCG@15 | Spearman ($\rho$) |
 |:---|:---:|:---:|:---:|:---:|
 | CVSS-only | 0.8062 | 0.7563 | 0.7855 | 0.7357 |
@@ -207,6 +222,25 @@ Reference priorities (1–41) and relevance grades (3=Act, 2=Attend, 1=Track, 0=
 | VRS (No KEV) | 1.0000 | 0.9581 | 0.9675 | 0.9451 |
 | VRS (No Context) | 0.9250 | 0.9513 | 0.9130 | 0.8782 |
 | VRS (No Bucket Override) | 1.0000 | 1.0000 | 1.0000 | 0.9535 |
+
+### 12.3 Retrospective CISA KEV Concordance Across 500 Real CVEs ($N_{\text{KEV}}=25$)
+*Exact generated results from `experiments/results/expanded_500_table.md` across a 500-vulnerability backlog:*
+
+| Prioritization Method | Precision@5 | Recall@5 | Precision@10 | Recall@10 | Precision@15 | Recall@15 | Precision@20 | Recall@20 | Precision@25 | Recall@25 |
+|:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| **CVSS-only** | 1.0000 (5/5) | 0.2000 (5/25) | 0.7000 (7/10) | 0.2800 (7/25) | 0.7333 (11/15) | 0.4400 (11/25) | 0.5500 (11/20) | 0.4400 (11/25) | 0.4400 (11/25) | 0.4400 (11/25) |
+| **EPSS-only** | 1.0000 (5/5) | 0.2000 (5/25) | 1.0000 (10/10) | 0.4000 (10/25) | 1.0000 (15/15) | 0.6000 (15/25) | 0.9500 (19/20) | 0.7600 (19/25) | 0.8800 (22/25) | 0.8800 (22/25) |
+| **KEV-first** | 1.0000 (5/5) | 0.2000 (5/25) | 1.0000 (10/10) | 0.4000 (10/25) | 1.0000 (15/15) | 0.6000 (15/25) | 1.0000 (20/20) | 0.8000 (20/25) | 1.0000 (25/25) | 1.0000 (25/25) |
+| **Combined Baseline** | 1.0000 (5/5) | 0.2000 (5/25) | 1.0000 (10/10) | 0.4000 (10/25) | 1.0000 (15/15) | 0.6000 (15/25) | 1.0000 (20/20) | 0.8000 (20/25) | 1.0000 (25/25) | 1.0000 (25/25) |
+| **VRS Proposed (vrs-v1)** | 1.0000 (5/5) | 0.2000 (5/25) | 1.0000 (10/10) | 0.4000 (10/25) | 1.0000 (15/15) | 0.6000 (15/25) | 1.0000 (20/20) | 0.8000 (20/25) | 1.0000 (25/25) | 1.0000 (25/25) |
+
+> **Key Empirical Finding**: In a 500-vulnerability backlog, **CVSS-only achieves only 44.0% recall at depth 25** (11/25 exploits captured), failing to prioritize 14 actively weaponized vulnerabilities. Threat-intelligence-aware scoring (**VRS Proposed**, **Combined Baseline**, and **KEV-first**) achieves **100% recall at depth 25** (25/25 exploits captured), surfacing all known exploited vulnerabilities in the first 25 positions.
+>
+> **Methodological Disclaimers**:
+> 1. *Tied Performance*: VRS Proposed, Combined Baseline, and KEV-first achieve identical precision and recall for depths $K \le 25$ because all three prioritize KEV-listed items into the top tier. VRS does not claim superiority over EPSS-only or the Combined baseline at these cutoffs.
+> 2. *Retrospective Check vs. Forward Prediction*: Ranking concordance is evaluated against the CISA KEV snapshot frozen on 2026-10-13, not forward predictive ability.
+> 3. *Absence != Non-Exploitation*: Absence from CISA KEV indicates unobserved in federal civilian reporting, NOT confirmed non-exploitation.
+> 4. *No Fabricated Labels*: The 461 newly sampled CVEs do not have manual SSVC labels. SSVC correlation metrics apply strictly to the 39 original labeled records.
 
 ---
 
@@ -232,9 +266,9 @@ Detailed environment versions, hash signatures, and configuration settings are s
 
 ## 15. Tests and Known Limitations
 
-* **Automated Tests**: 55 unit/benchmark tests pass cleanly (`pytest -v`). 1 integration test is skipped by default as it requires live root Nmap execution.
+* **Automated Tests**: 80 unit/benchmark tests pass cleanly (`pytest -v`). 1 integration test is skipped by default as it requires live root Nmap execution.
 * **MockLLM Offline Fixture**: The RAG evaluation (`evaluate_rag.py`) uses a deterministic mock fixture to verify schema and guardrail behavior offline. Live red-teaming on commercial foundation models is planned for future work.
-* **Sample Size**: $N=41$ limits claims of broad statistical generalizability across the entire NVD corpus.
+* **Sample Size**: While expanded to $N=500$ real CVEs with 25 active KEV exploits, comprehensive longitudinal evaluation across millions of software deployments remains ongoing.
 
 ---
 

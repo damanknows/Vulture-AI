@@ -29,3 +29,4 @@ venv/
 Thumbs.db
 data/raw/*
 !data/raw/.gitkeep
+data/external/cvelistV5*

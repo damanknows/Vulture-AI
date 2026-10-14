@@ -23,25 +23,25 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}The Vulture Risk Score (VRS)}{2}{subsection.3.2}\protected@file@percent }
 \newlabel{eq:vrs}{{1}{2}{The Vulture Risk Score (VRS)}{equation.1}{}}
 \citation{spring2020ssvc}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Empirical ranking comparisons across CVSS-only, EPSS-only, and Vulture-AI (VRS) relative to the CISA SSVC-derived reference priority on the 41-record benchmark ($N=41$). VRS achieves strong monotonic alignment with operational emergency priorities.}}{3}{figure.1}\protected@file@percent }
-\newlabel{fig:ranking_comparison}{{1}{3}{Empirical ranking comparisons across CVSS-only, EPSS-only, and Vulture-AI (VRS) relative to the CISA SSVC-derived reference priority on the 41-record benchmark ($N=41$). VRS achieves strong monotonic alignment with operational emergency priorities}{figure.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Empirical prioritization evaluations across benchmark scales: (a) Monotonic rank alignment against author-curated SSVC reference priority on the curated benchmark ($N=41$), showing VRS achieving $\rho =0.949$; (b) Retrospective Recall@K curves against CISA KEV membership on the expanded backlog ($N=500, N_{\text  {KEV}}=25$), showing CVSS degradation (R@25=0.44) and the structural ceiling (R@25=1.00) of KEV-informed policies (*threat-aware policies directly incorporate KEV; perfect R@25 is an expected policy-concordance property).}}{3}{figure.1}\protected@file@percent }
+\newlabel{fig:ranking_and_recall}{{1}{3}{Empirical prioritization evaluations across benchmark scales: (a) Monotonic rank alignment against author-curated SSVC reference priority on the curated benchmark ($N=41$), showing VRS achieving $\rho =0.949$; (b) Retrospective Recall@K curves against CISA KEV membership on the expanded backlog ($N=500, N_{\text {KEV}}=25$), showing CVSS degradation (R@25=0.44) and the structural ceiling (R@25=1.00) of KEV-informed policies (*threat-aware policies directly incorporate KEV; perfect R@25 is an expected policy-concordance property)}{figure.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Guardrailed RAG Security Assistant}{3}{subsection.3.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {IV}Experimental Setup}{3}{section.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Benchmark Dataset}{3}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Curated Benchmark and Expanded Corpus}{3}{subsection.4.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Reference Labeling via SSVC-Inspired Rubric}{3}{subsection.4.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Evaluated Baselines and Information Asymmetry}{4}{subsection.4.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-D}}Evaluation Metrics}{4}{subsection.4.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {V}Results and Analysis}{4}{section.5}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Prioritization Performance (RQ1)}{4}{subsection.5.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Vulnerability Prioritization Performance Across Methods ($N=41$)}}{4}{table.1}\protected@file@percent }
-\newlabel{tab:main}{{I}{4}{Vulnerability Prioritization Performance Across Methods ($N=41$)}{table.1}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Feature Sensitivity and Ablation Analysis (RQ2)}{5}{subsection.5.2}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces VRS Feature and Architecture Ablation Study ($N=41$)}}{5}{table.2}\protected@file@percent }
-\newlabel{tab:ablation}{{II}{5}{VRS Feature and Architecture Ablation Study ($N=41$)}{table.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Evidence Grounding and Injection Resilience (RQ3)}{5}{subsection.5.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-D}}Distinction of Completed vs. Proposed Work}{5}{subsection.5.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Threats to Validity}{5}{section.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Internal Validity and Construct Circularity}{5}{subsection.6.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Vulnerability Prioritization Performance Across Methods ($N=41$: 39 real CVEs + 2 synthetic edge cases in Defer)}}{4}{table.1}\protected@file@percent }
+\newlabel{tab:main}{{I}{4}{Vulnerability Prioritization Performance Across Methods ($N=41$: 39 real CVEs + 2 synthetic edge cases in Defer)}{table.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Feature Sensitivity and Ablation Analysis (RQ2)}{4}{subsection.5.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces VRS Feature and Architecture Ablation Study ($N=41$: 39 real CVEs + 2 synthetic edge cases in Defer)}}{4}{table.2}\protected@file@percent }
+\newlabel{tab:ablation}{{II}{4}{VRS Feature and Architecture Ablation Study ($N=41$: 39 real CVEs + 2 synthetic edge cases in Defer)}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Retrospective Exploitation Concordance on Expanded Backlog ($N=500$)}{5}{subsection.5.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Retrospective CISA KEV Policy Concordance on 500-CVE Backlog ($N=500, N_{\text  {KEV}}=25$)}}{5}{table.3}\protected@file@percent }
+\newlabel{tab:kev500}{{III}{5}{Retrospective CISA KEV Policy Concordance on 500-CVE Backlog ($N=500, N_{\text {KEV}}=25$)}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-D}}Evidence Grounding and Injection Resilience (RQ3)}{5}{subsection.5.4}\protected@file@percent }
 \bibstyle{IEEEtran}
 \bibdata{references}
 \bibcite{nvd2023}{1}
@@ -53,9 +53,8 @@
 \bibcite{spring2020ssvc}{7}
 \bibcite{greshake2023prompt}{8}
 \bibcite{lewis2020rag}{9}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Baseline Information Asymmetry}{6}{subsection.6.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}MockLLM Evaluation Scope and Guardrail Limits}{6}{subsection.6.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-D}}External and Construct Validity}{6}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-E}}Distinction of Completed vs. Proposed Work}{6}{subsection.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Threats to Validity}{6}{section.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{6}{section.7}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{References}{6}{section*.1}\protected@file@percent }
 \gdef \@abspage@last{6}

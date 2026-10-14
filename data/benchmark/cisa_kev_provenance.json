@@ -1,0 +1,112 @@
+{
+  "metadata": {
+    "title": "Vulture-AI Benchmark CISA KEV Enrichment Provenance",
+    "processing_timestamp_utc": "2026-10-13T23:42:06.248010+00:00",
+    "script": "experiments/enrich_benchmark_kev.py"
+  },
+  "cisa_kev_feed": {
+    "official_feed_url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+    "local_cache_path": "data/external/known_exploited_vulnerabilities.json",
+    "local_cache_modified_utc": "2026-10-13T23:24:47.382855+00:00",
+    "source_mode": "cached_local_file",
+    "catalog_title": "CISA Catalog of Known Exploited Vulnerabilities",
+    "catalog_version": "2026.10.13",
+    "catalog_date_released": "2026-10-13T19:10:43.6568Z",
+    "catalog_vulnerabilities_count": 1741,
+    "sha256_checksum": "136904f12e4c6762e526352e3a67ed7b28cd21b4d82bed9c91719ff2e94f2f28"
+  },
+  "benchmark_source": {
+    "source_file": "data/benchmark/cves.csv",
+    "sha256_checksum": "27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e",
+    "record_count": 41,
+    "identifier_column": "cve_id"
+  },
+  "enriched_benchmark": {
+    "target_file": "data/benchmark/cves_enriched.csv",
+    "sha256_checksum": "666e040f01a491e58a9bf345a81e0a74d9deca1591f72f800872c5336bab9ff7",
+    "record_count": 41,
+    "added_columns": [
+      "is_synthetic",
+      "cisa_kev_listed",
+      "cisa_kev_status",
+      "cisa_kev_date_added",
+      "cisa_kev_due_date",
+      "cisa_kev_required_action",
+      "cisa_kev_source_url",
+      "cisa_kev_vulnerability_name",
+      "cisa_kev_notes"
+    ],
+    "field_semantics": {
+      "is_synthetic": "Boolean indicator distinguishing synthetic missing-data edge cases from real CVEs.",
+      "cisa_kev_listed": "Boolean flag indicating presence in the CISA KEV catalog (or 'N/A (synthetic)').",
+      "cisa_kev_status": "Categorical status: 'listed', 'not_listed_or_unknown', or 'synthetic_excluded'.",
+      "cisa_kev_date_added": "CISA KEV catalog dateAdded attribute under BOD 22-01 mandates.",
+      "cisa_kev_due_date": "CISA KEV catalog dueDate attribute for federal civilian agencies.",
+      "cisa_kev_required_action": "CISA KEV catalog requiredAction remediation requirement.",
+      "cisa_kev_source_url": "Primary HTTP/HTTPS advisory or reference URL parsed and validated from KEV catalog references.",
+      "cisa_kev_vulnerability_name": "Official CISA KEV catalog vulnerabilityName attribute.",
+      "cisa_kev_notes": "Official CISA KEV catalog notes attribute containing vendor advisories and directives."
+    }
+  },
+  "matching_statistics": {
+    "total_benchmark_records": 41,
+    "real_cve_records": 39,
+    "synthetic_records_count": 2,
+    "real_matched_in_cisa_kev": 25,
+    "real_unmatched_in_cisa_kev": 14,
+    "matched_cve_ids": [
+      "CVE-2015-3306",
+      "CVE-2017-0144",
+      "CVE-2019-11510",
+      "CVE-2020-0601",
+      "CVE-2020-1472",
+      "CVE-2021-26855",
+      "CVE-2021-3156",
+      "CVE-2021-34527",
+      "CVE-2021-3560",
+      "CVE-2021-41773",
+      "CVE-2021-44228",
+      "CVE-2022-0492",
+      "CVE-2022-0847",
+      "CVE-2022-1388",
+      "CVE-2022-22965",
+      "CVE-2022-30190",
+      "CVE-2023-20198",
+      "CVE-2023-23397",
+      "CVE-2023-28252",
+      "CVE-2023-34362",
+      "CVE-2023-3519",
+      "CVE-2023-38831",
+      "CVE-2023-46805",
+      "CVE-2024-1709",
+      "CVE-2024-21413"
+    ],
+    "unmatched_cve_ids": [
+      "CVE-2018-15473",
+      "CVE-2019-15846",
+      "CVE-2020-13935",
+      "CVE-2021-22947",
+      "CVE-2021-23017",
+      "CVE-2021-32625",
+      "CVE-2021-33037",
+      "CVE-2022-1292",
+      "CVE-2022-1552",
+      "CVE-2022-22978",
+      "CVE-2022-23710",
+      "CVE-2023-2640",
+      "CVE-2023-38546",
+      "CVE-2024-3094"
+    ],
+    "synthetic_cve_ids": [
+      "CVE-2024-99991",
+      "CVE-2024-99992"
+    ]
+  },
+  "scientific_disclaimers": {
+    "retrospective_nature": "This evaluation is a retrospective concordance study against the CISA KEV catalog snapshot (version 2026.10.13), NOT a temporal predictive trial. Baseline scores and VRS were not temporally reconstructed using point-in-time snapshots prior to exploitation.",
+    "information_overlap_disclosure": "The VRS model includes a KEV indicator component (K in {0, 1}) and emergency bucket override in its input schema. Consequently, the high concordance observed between VRS rankings and CISA KEV inclusion partially reflects direct feature input rather than pure independent predictive forecasting.",
+    "catalog_absence_interpretation": "Absence from the CISA KEV catalog indicates that a vulnerability has not been observed and cataloged by CISA federal reporting channels as of the catalog release date (2026-10-13T19:10:43.6568Z). It MUST NOT be interpreted as confirmed non-exploitation or as a negative ground-truth label.",
+    "catalog_date_interpretation": "The 'dateAdded' attribute denotes the administrative date CISA added the CVE to the Known Exploited Vulnerabilities catalog under BOD 22-01 mandates. It MUST NOT be interpreted as the date of first weaponization or initial in-the-wild exploitation by adversaries.",
+    "synthetic_records_policy": "Records CVE-2024-99991 and CVE-2024-99992 are non-existent identifiers created strictly to test missing-data engine behaviors. They are explicitly excluded from all empirical real-world outcome evaluations."
+  }
+}
