@@ -1,0 +1,48 @@
+{
+  "source": "experiments/revision/sensitivity/results.json",
+  "reference_config": "original",
+  "n_records": 41,
+  "n_perturbations": 5,
+  "per_configuration": {
+    "equal": {
+      "spearman_rho": 0.999,
+      "kendall_tau": 0.9878,
+      "top10_overlap": 10,
+      "top10_overlap_fraction": 1.0
+    },
+    "cvss_heavy": {
+      "spearman_rho": 0.9918,
+      "kendall_tau": 0.9415,
+      "top10_overlap": 10,
+      "top10_overlap_fraction": 1.0
+    },
+    "epss_heavy": {
+      "spearman_rho": 0.9946,
+      "kendall_tau": 0.9561,
+      "top10_overlap": 10,
+      "top10_overlap_fraction": 1.0
+    },
+    "context_heavy": {
+      "spearman_rho": 0.997,
+      "kendall_tau": 0.9756,
+      "top10_overlap": 10,
+      "top10_overlap_fraction": 1.0
+    },
+    "exposure_heavy": {
+      "spearman_rho": 0.9915,
+      "kendall_tau": 0.9488,
+      "top10_overlap": 10,
+      "top10_overlap_fraction": 1.0
+    }
+  },
+  "aggregate": {
+    "spearman_rho_min": 0.9915,
+    "spearman_rho_max": 0.999,
+    "spearman_rho_mean": 0.9948,
+    "kendall_tau_min": 0.9415,
+    "kendall_tau_max": 0.9878,
+    "kendall_tau_mean": 0.962,
+    "top10_overlap_min": 10,
+    "top10_overlap_max": 10
+  }
+}

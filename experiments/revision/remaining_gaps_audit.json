@@ -1,0 +1,232 @@
+{
+  "remaining_gaps": {
+    "explanation_quality": {
+      "status": "NOT_AVAILABLE",
+      "n_rows": 0,
+      "reason": "explanation_evaluation.csv contains header only (0 human or judge ratings)."
+    },
+    "ssvc_and_cvss4_on_41cve": {
+      "status": "NOT_AVAILABLE",
+      "reason": "cves.csv lacks required SSVC/CVSS v4.0 columns: ['automatable', 'cvss_v4', 'mission_prevalence']"
+    },
+    "cpe_nmap_matching_accuracy": {
+      "status": "NOT_AVAILABLE",
+      "reason": "No labelled Nmap-XML-to-CVE ground-truth corpus exists in data/."
+    },
+    "live_llm_guardrail": {
+      "status": "NOT_AVAILABLE",
+      "reason": "No live Ollama server reachable at localhost:11434 in this environment."
+    }
+  },
+  "manuscript_consistency_audit": {
+    "all_checked_metrics_match": true,
+    "n_checks": 41,
+    "checks": [
+      {
+        "label": "teob.CVSS-only.ndcg@10",
+        "expected": "0.0317",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS-only.precision@10",
+        "expected": "0.0317",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS-only.recall@10",
+        "expected": "0.0289",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS-only.recall@50",
+        "expected": "0.1443",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS-only.recall@100",
+        "expected": "0.2148",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS-only.average_precision",
+        "expected": "0.0259",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.EPSS-only.ndcg@10",
+        "expected": "0.0948",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.EPSS-only.precision@10",
+        "expected": "0.1000",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.EPSS-only.recall@10",
+        "expected": "0.0909",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.EPSS-only.recall@50",
+        "expected": "0.1818",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.EPSS-only.recall@100",
+        "expected": "0.1818",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.EPSS-only.average_precision",
+        "expected": "0.0449",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.KEV-first.ndcg@10",
+        "expected": "0.0317",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.KEV-first.precision@10",
+        "expected": "0.0317",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.KEV-first.recall@10",
+        "expected": "0.0289",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.KEV-first.recall@50",
+        "expected": "0.1443",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.KEV-first.recall@100",
+        "expected": "0.2148",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.KEV-first.average_precision",
+        "expected": "0.0259",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS+EPSS+KEV.ndcg@10",
+        "expected": "0.1795",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS+EPSS+KEV.precision@10",
+        "expected": "0.2000",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS+EPSS+KEV.recall@10",
+        "expected": "0.1818",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS+EPSS+KEV.recall@50",
+        "expected": "0.3636",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS+EPSS+KEV.recall@100",
+        "expected": "0.3636",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.CVSS+EPSS+KEV.average_precision",
+        "expected": "0.0928",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.VRS (default context=0.5).ndcg@10",
+        "expected": "0.2083",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.VRS (default context=0.5).precision@10",
+        "expected": "0.2000",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.VRS (default context=0.5).recall@10",
+        "expected": "0.1818",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.VRS (default context=0.5).recall@50",
+        "expected": "0.3636",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.VRS (default context=0.5).recall@100",
+        "expected": "0.3636",
+        "present_in_tex": true
+      },
+      {
+        "label": "teob.VRS (default context=0.5).average_precision",
+        "expected": "0.1104",
+        "present_in_tex": true
+      },
+      {
+        "label": "41cve.vrs.ndcg10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "41cve.vrs.spearman",
+        "expected": "0.9488",
+        "present_in_tex": true
+      },
+      {
+        "label": "sensitivity.rho_min",
+        "expected": "0.9915",
+        "present_in_tex": true
+      },
+      {
+        "label": "sensitivity.rho_max",
+        "expected": "0.9990",
+        "present_in_tex": true
+      },
+      {
+        "label": "sensitivity.tau_min",
+        "expected": "0.9415",
+        "present_in_tex": true
+      },
+      {
+        "label": "sensitivity.tau_max",
+        "expected": "0.9878",
+        "present_in_tex": true
+      },
+      {
+        "label": "guardrail.TP",
+        "expected": "9",
+        "present_in_tex": true
+      },
+      {
+        "label": "guardrail.FN",
+        "expected": "16",
+        "present_in_tex": true
+      },
+      {
+        "label": "guardrail.FP",
+        "expected": "7",
+        "present_in_tex": true
+      },
+      {
+        "label": "guardrail.TN",
+        "expected": "16",
+        "present_in_tex": true
+      },
+      {
+        "label": "integrity.passed",
+        "expected": "5 / 5",
+        "present_in_tex": true
+      }
+    ]
+  }
+}
