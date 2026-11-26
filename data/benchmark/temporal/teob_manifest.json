@@ -1,0 +1,48 @@
+{
+  "benchmark": "TEOB",
+  "version": "1.1.0",
+  "cutoff_date": "2026-07-01",
+  "cutoff_timestamp_utc": "2026-07-01T00:00:00+00:00",
+  "observation_horizon_days": 90,
+  "horizon_end_date": "2026-09-29",
+  "output_csv": "data/benchmark/temporal/teob_2026-07-01_90d.csv",
+  "output_sha256": "94c7b4cab13daccb5dbe3abdebe6bf4d17f7643bfe0036316dfb792359e07794",
+  "inputs": {
+    "nvd_cohort": {
+      "path": "data/benchmark/temporal/cache/nvd_pub_2026-06-01_to_2026-07-01.json",
+      "sha256": "4b5f498866eb236be82952446547be0986cb6591e788b049b9e286fe30692079"
+    },
+    "nvd_history": {
+      "path": "data/benchmark/temporal/cache/nvd_cvss_history_post_2026-07-01.json",
+      "sha256": "378848f33e38029c1fae66177e6b28bd346eda76d3e24e22faa358c8d82d88f4"
+    },
+    "epss_snapshot": {
+      "path": "data/benchmark/temporal/cache/epss_2026-07-01.json",
+      "sha256": "9fcdb844a599b3fd08abaa0677b506fb3f2f823f59ad383e25f6dae68165981d"
+    },
+    "cisa_kev": {
+      "path": "data/external/known_exploited_vulnerabilities.json",
+      "sha256": "136904f12e4c6762e526352e3a67ed7b28cd21b4d82bed9c91719ff2e94f2f28"
+    }
+  },
+  "stats": {
+    "nvd_total": 8001,
+    "excluded_duplicate": 0,
+    "excluded_rejected": 59,
+    "excluded_post_cutoff_published": 0,
+    "excluded_invalid_published": 0,
+    "excluded_kev_at_cutoff": 15,
+    "eligible_total": 7927,
+    "positives_within_horizon": 11,
+    "negatives_not_observed": 7916,
+    "cvss_status_counts": {
+      "no_post_cutoff_cvss_change": 5704,
+      "missing_in_nvd": 518,
+      "reconstructed_from_cvehistory": 156,
+      "added_after_cutoff_excluded": 726,
+      "unchanged_since_cutoff": 823
+    },
+    "epss_available": 7927,
+    "epss_missing": 0
+  }
+}

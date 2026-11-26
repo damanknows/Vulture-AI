@@ -1,0 +1,321 @@
+{
+  "dataset": "data/benchmark/temporal/teob_2026-07-01_90d.csv",
+  "n_eligible": 7927,
+  "n_positives_90d_kev": 11,
+  "n_negatives": 7916,
+  "positive_rate": 0.001388,
+  "feature_coverage": {
+    "cvss_available": 6683,
+    "cvss_missing": 1244,
+    "epss_available": 7927,
+    "epss_missing": 0,
+    "cvss_status_counts": {
+      "no_post_cutoff_cvss_change": 5704,
+      "unchanged_since_cutoff": 823,
+      "reconstructed_from_cvehistory": 156,
+      "missing_in_nvd": 518,
+      "added_after_cutoff_excluded": 726
+    }
+  },
+  "tie_summary": {
+    "CVSS-only": {
+      "n_unique_blocks": 80,
+      "largest_tie_block": 1244,
+      "top_block_size": 63
+    },
+    "EPSS-only": {
+      "n_unique_blocks": 824,
+      "largest_tie_block": 96,
+      "top_block_size": 1
+    },
+    "KEV-first": {
+      "n_unique_blocks": 79,
+      "largest_tie_block": 1248,
+      "top_block_size": 63
+    },
+    "CVSS+EPSS+KEV": {
+      "n_unique_blocks": 3766,
+      "largest_tie_block": 1244,
+      "top_block_size": 1
+    },
+    "VRS (default context=0.5)": {
+      "n_unique_blocks": 3765,
+      "largest_tie_block": 1244,
+      "top_block_size": 1
+    }
+  },
+  "methodology_notes": {
+    "ranking_precision": "Unrounded float64 scores used for sorting; display rounded to 4 decimals.",
+    "tie_handling": "Exact analytical expected metrics over uniform random permutations within tied score blocks.",
+    "bootstrap": "Paired stratified bootstrap (n_boot=1000, n_valid=1000, seed=20261127); resamples positive and negative CVEs separately with replacement using identical indices across methods; 95% percentile CIs.",
+    "context_note": "No independent historical context; EPSS x Context omitted; VRS uses N=0.5, A=0.5 defaults."
+  },
+  "metrics": {
+    "CVSS-only": {
+      "ndcg@10": 0.0317,
+      "precision@10": 0.0317,
+      "recall@10": 0.0289,
+      "recall@50": 0.1443,
+      "recall@100": 0.2148,
+      "average_precision": 0.0259
+    },
+    "EPSS-only": {
+      "ndcg@10": 0.0948,
+      "precision@10": 0.1,
+      "recall@10": 0.0909,
+      "recall@50": 0.1818,
+      "recall@100": 0.1818,
+      "average_precision": 0.0449
+    },
+    "KEV-first": {
+      "ndcg@10": 0.0317,
+      "precision@10": 0.0317,
+      "recall@10": 0.0289,
+      "recall@50": 0.1443,
+      "recall@100": 0.2148,
+      "average_precision": 0.0259
+    },
+    "CVSS+EPSS+KEV": {
+      "ndcg@10": 0.1795,
+      "precision@10": 0.2,
+      "recall@10": 0.1818,
+      "recall@50": 0.3636,
+      "recall@100": 0.3636,
+      "average_precision": 0.0928
+    },
+    "VRS (default context=0.5)": {
+      "ndcg@10": 0.2083,
+      "precision@10": 0.2,
+      "recall@10": 0.1818,
+      "recall@50": 0.3636,
+      "recall@100": 0.3636,
+      "average_precision": 0.1104
+    }
+  },
+  "paired_stratified_bootstrap_vrs_minus_baseline": {
+    "CVSS-only": {
+      "ndcg@10": {
+        "observed_diff": 0.1765,
+        "ci_95": [
+          -0.0484,
+          0.4737
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "precision@10": {
+        "observed_diff": 0.1683,
+        "ci_95": [
+          -0.0484,
+          0.4
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "recall@10": {
+        "observed_diff": 0.153,
+        "ci_95": [
+          -0.044,
+          0.3636
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "recall@50": {
+        "observed_diff": 0.2193,
+        "ci_95": [
+          0.0152,
+          0.4684
+        ],
+        "n_valid": 1000,
+        "significant_95": true
+      },
+      "recall@100": {
+        "observed_diff": 0.1488,
+        "ci_95": [
+          -0.0644,
+          0.4202
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "average_precision": {
+        "observed_diff": 0.0845,
+        "ci_95": [
+          -0.0029,
+          0.3204
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      }
+    },
+    "EPSS-only": {
+      "ndcg@10": {
+        "observed_diff": 0.1135,
+        "ci_95": [
+          0.0,
+          0.2593
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "precision@10": {
+        "observed_diff": 0.1,
+        "ci_95": [
+          0.0,
+          0.3
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "recall@10": {
+        "observed_diff": 0.0909,
+        "ci_95": [
+          0.0,
+          0.2727
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "recall@50": {
+        "observed_diff": 0.1818,
+        "ci_95": [
+          0.0,
+          0.4545
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "recall@100": {
+        "observed_diff": 0.1818,
+        "ci_95": [
+          0.0,
+          0.4545
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "average_precision": {
+        "observed_diff": 0.0655,
+        "ci_95": [
+          0.0089,
+          0.1982
+        ],
+        "n_valid": 1000,
+        "significant_95": true
+      }
+    },
+    "KEV-first": {
+      "ndcg@10": {
+        "observed_diff": 0.1765,
+        "ci_95": [
+          -0.0484,
+          0.4737
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "precision@10": {
+        "observed_diff": 0.1683,
+        "ci_95": [
+          -0.0484,
+          0.4
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "recall@10": {
+        "observed_diff": 0.153,
+        "ci_95": [
+          -0.044,
+          0.3636
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "recall@50": {
+        "observed_diff": 0.2193,
+        "ci_95": [
+          0.0152,
+          0.4684
+        ],
+        "n_valid": 1000,
+        "significant_95": true
+      },
+      "recall@100": {
+        "observed_diff": 0.1488,
+        "ci_95": [
+          -0.0644,
+          0.4202
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "average_precision": {
+        "observed_diff": 0.0845,
+        "ci_95": [
+          -0.0029,
+          0.3204
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      }
+    },
+    "CVSS+EPSS+KEV": {
+      "ndcg@10": {
+        "observed_diff": 0.0288,
+        "ci_95": [
+          0.0,
+          0.1541
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "precision@10": {
+        "observed_diff": 0.0,
+        "ci_95": [
+          0.0,
+          0.0
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "recall@10": {
+        "observed_diff": 0.0,
+        "ci_95": [
+          0.0,
+          0.0
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "recall@50": {
+        "observed_diff": 0.0,
+        "ci_95": [
+          0.0,
+          0.0
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "recall@100": {
+        "observed_diff": 0.0,
+        "ci_95": [
+          0.0,
+          0.0
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      },
+      "average_precision": {
+        "observed_diff": 0.0177,
+        "ci_95": [
+          0.0,
+          0.1084
+        ],
+        "n_valid": 1000,
+        "significant_95": false
+      }
+    }
+  }
+}
