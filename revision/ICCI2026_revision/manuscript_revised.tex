@@ -79,13 +79,13 @@ We group related work by the question each line of work addresses. Our compariso
 \subsection{CVSS, EPSS, KEV, and vulnerability intelligence}
 CVSS v3.1 defines Base, Temporal, and Environmental metric groups, and the Environmental group captures controls and the importance of the affected system when the consumer applies it \cite{first2019cvss}. CVSS v4.0 renames and extends these groups, adds Attack Requirements and a Supplemental group that does not change the score, and keeps Threat and Environmental values under consumer control \cite{first2023cvss4}. Context is therefore present in CVSS as an optional layer. VRS differs in that it treats exposure and criticality as first-class inputs and in that it adds exploitation evidence to a single score.
 
-EPSS is a daily probability of exploitation activity in the next 30 days \cite{first2024epss}. FIRST reports that its model is validated on held-out data, and that CVSS severity is only slightly better than random for predicting exploitation \cite{first2024epss}. The methodology paper for EPSS is cited as Jacobs et al.\ \cite{jacobs2021epss}; we were not able to confirm its publication venue, so the citation should be checked before final submission. KEV is a catalog of observed exploitation with remediation deadlines under federal directive, and the directive establishing it has since been superseded \cite{cisa2021bod, cisa2024kev}.
+EPSS is a daily probability of exploitation activity in the next 30 days \cite{first2024epss}. FIRST reports that its model is validated on held-out data, and that CVSS severity is only slightly better than random for predicting exploitation \cite{first2024epss}. The foundational methodology paper for EPSS is Jacobs et al.\ \cite{jacobs2021epss}. KEV is a catalog of observed exploitation with remediation deadlines under federal directive, and the directive establishing it has since been superseded \cite{cisa2021bod, cisa2024kev}.
 
 \subsection{Context-aware prioritization}
 Context-aware prioritization is the most direct relative of VRS. Environmental CVSS metrics are the standard mechanism for it \cite{first2019cvss, first2023cvss4}. SSVC uses mission prevalence and public well-being impact as decision inputs \cite{spring2020ssvc, cisa2024ssvc}. Our contribution in this area is a simple linear combination of context with exploitation evidence, which we compare against context-free baselines. We did not locate a verified primary source for a separate context-aware enterprise prioritization method, and we do not cite one.
 
 \subsection{SSVC and decision-based prioritization}
-SSVC maps exploitation status, technical impact, automatability, mission prevalence, and public well-being impact to Track, Track*, Attend, or Act \cite{cisa2024ssvc, spring2020ssvc}. The CISA page verifies the decision inputs and outcomes; the author list and report number for \cite{spring2020ssvc} were not confirmed from the SEI record and must be checked before submission. CISA's own tree closely follows the SEI Coordinator tree. VRS is not an implementation of SSVC. It is a continuous score with a binary KEV bucket, and its reference labels are SSVC-inspired judgments made by the authors. We did not evaluate VRS against an SSVC decision tree, so the question of whether the continuous score adds value over the tree remains open.
+SSVC maps exploitation status, technical impact, automatability, mission prevalence, and public well-being impact to Track, Track*, Attend, or Act \cite{cisa2024ssvc, spring2020ssvc}. CISA's own tree closely follows the SEI Coordinator tree \cite{spring2020ssvc}. VRS is not an implementation of SSVC. It is a continuous score with a binary KEV bucket, and its reference labels are SSVC-inspired judgments made by the authors. We did not evaluate VRS against an SSVC decision tree, so the question of whether the continuous score adds value over the tree remains open.
 
 \subsection{ML and LLM-assisted vulnerability triage}
 EPSS is itself a learned model for exploitation probability \cite{first2024epss}. We did not locate a verified primary source for a learned or LLM-based triage system to use as a baseline, and the present evaluation does not compare against one. The LLM component of Vulture-AI is used for explanation only; its accuracy as a triage system is not measured.
@@ -161,7 +161,7 @@ The experiments use Python with NumPy 2.4.6 and SciPy 1.17.1 (the versions in \t
 \end{figure}
 
 \subsection{Prioritization on the reference benchmark (RQ1)}
-Tables~\ref{tab:main}--\ref{tab:ablation}, Fig.~\ref{fig:ranking_and_recall}(a), and Table~\ref{tab:context} all use benchmark~v1 (SHA prefix \texttt{27979cc0}). Benchmark~v2 (\texttt{2b78d7c2}) corrects four KEV flags (see Section~\ref{sec:threats}); v2 results have not been incorporated into these tables. The context-baseline comparisons in this section therefore use the same v1 data as Table~\ref{tab:main}.
+Tables~\ref{tab:main}--\ref{tab:ablation}, Fig.~\ref{fig:ranking_and_recall}(a), and Table~\ref{tab:context} all use benchmark~v1 (SHA prefix \texttt{27979cc0}). Benchmark~v2 (\texttt{2b78d7c2}) corrects four KEV flags (see Section~\ref{sec:threats}); because the v2~run (\texttt{paired\_corrected\_v2.csv}) does not include \texttt{NDCG@5}, \texttt{NDCG@15}, ablations, or the 500-CVE concordance, we retain v1~headline tables here for completeness and reproducibility. On v2, VRS attains NDCG@10 of 1.0000 and Spearman $\rho$ of 0.9317 (versus 0.9488 on v1), and its paired Spearman difference against EPSS$\times$Context ($\rho = 0.9334$) is $-0.002$ ($[-0.070, 0.059]$). The context-baseline comparisons in this section use the same v1~data as Table~\ref{tab:main}.
 
 \begin{table}[t]
 \centering
@@ -222,7 +222,7 @@ Table~\ref{tab:context} compares VRS with four baselines that also use asset con
 \midrule
 EPSS$\times$Exposure         & 1.0000 & 0.6667 & 0.8909 \\
 Exposure$\times$Criticality  & 0.9552 & 0.6000 & 0.8951 \\
-Context-Enhanced CVSS        & 0.9458 & 0.6000 & 0.9243 \\
+Context-Enhanced CVSS        & 0.9458 & 0.6000 & 0.9244 \\
 EPSS$\times$Context          & 1.0000 & 0.6667 & 0.9334 \\
 VRS (vrs-v1)                 & 1.0000 & 0.6667 & 0.9488 \\
 \bottomrule
@@ -230,7 +230,7 @@ VRS (vrs-v1)                 & 1.0000 & 0.6667 & 0.9488 \\
 }
 \end{table}
 
-The simple context baselines are competitive. EPSS$\times$Context achieves a Spearman of 0.9334, which is close to VRS's 0.9488. The paired intervals for VRS against these baselines are not reported in the main text, because we did not compute them as a separate table in this revision; the Phase 3 output contains only the four original baselines. VRS therefore does not show a demonstrated advantage over EPSS$\times$Context on this benchmark.
+The simple context baselines are competitive. EPSS$\times$Context achieves a Spearman of 0.9334, which is close to VRS's 0.9488. In the Phase~3 paired bootstrap output (\texttt{paired\_comparisons.csv}), all four context-aware baselines have 95\% paired intervals against VRS that include zero on both NDCG@10 and Spearman (for example, VRS minus EPSS$\times$Context gives $+0.000$ $[0.000, 0.074]$ on NDCG@10 and $+0.015$ $[-0.038, 0.080]$ on Spearman). VRS therefore does not show a demonstrated advantage over EPSS$\times$Context on this benchmark.
 
 \subsection{Weight sensitivity}
 We evaluated VRS under six weight configurations (Phase 2): the default, an equal-weight setting, a CVSS-heavy setting, an EPSS-heavy setting, a context-heavy setting, and an exposure-heavy setting. The configurations are listed in \texttt{experiments/revision/sensitivity/configurations.json}. All six configurations produce the same top-10 set as the default configuration (10 of 10 overlap in each case, from \texttt{results.json}). This shows top-10 membership is stable across these perturbations on this benchmark. We did not compute a rank-correlation summary (for example Spearman or Kendall across the full 41-record order) in this revision, so the stability of the full ordering is not reported. The weights remain exploratory.
@@ -313,6 +313,7 @@ We simulated five payloads through the real \texttt{chat\_with\_validation} path
 \centering
 \caption{Score-integrity simulation (5 payloads). The authoritative score was never changed by any payload. Source: \texttt{experiments/revision/guardrail/score\_integrity.json}; the unmodified result was obtained by running the same harness against the repository version before the Phase 4 change.}
 \label{tab:integrity}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lcc}
 \toprule
 \textbf{Payload} & \textbf{Unmodified} & \textbf{With floor} \\
@@ -325,7 +326,8 @@ S05: unexpected priority field   & pass            & pass \\
 \midrule
 Total                            & 2 / 5           & 5 / 5 \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{table}
 
 The score was never corrupted. Every response carried the authoritative value. The defect was in the priority field: the unmodified assistant displayed \texttt{low} for KEV-listed findings. The floor raises the priority of KEV-listed findings to \texttt{high} and records the override in the uncertainties field. The floor applies only to the urgent bucket. A non-KEV finding can still receive any priority string the model produces. The schema check (10 fixtures) matched the expected verdict in all cases, using a strict validator. The production parser (Pydantic) silently ignores unexpected fields and accepts any string for priority; the strict validator is therefore a stricter standard than production behaviour.
@@ -334,7 +336,7 @@ The score was never corrupted. Every response carried the authoritative value. T
 We did not measure explanation quality. The rubric (factual correctness, evidence consistency, score faithfulness, clarity, each on a 1--5 scale) is implemented as an import module that accepts human or automated ratings, and the rating file contains no rows. No human or automated judge was run. Claims about explanation utility are therefore not supported by this study.
 
 \subsection{Negative and limiting results}
-We report the following results that do not favour the system. VRS does not outperform EPSS$\times$Context on Spearman, and the difference between them is not tested in this revision. The paired NDCG@10 intervals against EPSS-only, KEV-first, and the combination include zero. The guardrail's false-positive rate is 0.30. The KEV concordance on 500 CVEs is identical across three methods. The actionable Precision@10 and Recall@10 do not discriminate between methods on this benchmark. The equal-weight and other weight configurations were not summarised in terms of stability.
+We report the following results that do not favour the system. VRS does not show a demonstrated advantage over EPSS$\times$Context (95\% paired Spearman interval $[-0.038, 0.080]$, which includes zero). The paired NDCG@10 intervals against EPSS-only, KEV-first, and the combination include zero. The guardrail's false-positive rate is 0.30. The KEV concordance on 500 CVEs is identical across three methods. The actionable Precision@10 and Recall@10 do not discriminate between methods on this benchmark. The equal-weight and other weight configurations were not summarised in terms of stability.
 
 \section{Discussion}
 \textbf{Does context add value?} On the author-labelled rubric, yes: removing exposure and criticality reduces Spearman by 0.0706 and brings VRS close to the vulnerability-only combination. This is a measured effect, but the rubric uses the same context as an input, so it measures agreement with the rubric and not operational benefit.
@@ -381,6 +383,7 @@ We presented Vulture-AI, a prototype that combines CVSS, EPSS, KEV status, expos
 
 These results do not establish universal superiority over existing prioritization methods, optimal weights, comprehensive prompt-injection resistance, generalization to enterprise environments, or predictive performance. Independent annotation, a temporal evaluation against disclosure-date data, an SSVC decision-tree baseline, CVSS v4.0 scores, explanation-quality evaluation, and incorporation of v2~benchmark results (which may alter headline values) are required before stronger claims can be made.
 
+\enlargethispage{2\baselineskip}
 \bibliographystyle{IEEEtran}
 \bibliography{references_revised}
 

@@ -66,11 +66,11 @@
 |---|---|---|---|
 | EPSS×Exposure | 1.0000 | 0.6667 | 0.8909 |
 | Exposure×Criticality | 0.9552 | 0.6000 | 0.8951 |
-| Context-Enhanced CVSS | 0.9458 | 0.6000 | 0.9243 |
+| Context-Enhanced CVSS | 0.9458 | 0.6000 | 0.9244 |
 | EPSS×Context | 1.0000 | 0.6667 | 0.9334 |
 | VRS | 1.0000 | 0.6667 | 0.9488 |
 
-Removing context from VRS lowers Spearman from 0.9488 to 0.8782, close to the vulnerability-only combination (0.8800). The context-aware baselines are competitive: EPSS×Context is 0.0154 below VRS on Spearman. We did not compute paired intervals of VRS against these four baselines in this revision; the Phase 3 output covers only the original baselines. VRS therefore shows no demonstrated advantage over EPSS×Context on this benchmark.
+Removing context from VRS lowers Spearman from 0.9488 to 0.8782, close to the vulnerability-only combination (0.8800). The context-aware baselines are competitive: EPSS×Context is 0.0154 below VRS on Spearman. In `experiments/revision/statistics/paired_comparisons.csv`, all four context-aware baselines have 95% paired bootstrap intervals against VRS that include zero on both NDCG@10 and Spearman (for example, VRS minus EPSS×Context gives +0.000 [0.000, 0.074] on NDCG@10 and +0.015 [-0.038, 0.080] on Spearman). VRS therefore shows no demonstrated advantage over EPSS×Context on this benchmark.
 
 **Status: addressed with new baselines, with a negative result disclosed.** The asymmetry is removed. The added baselines match VRS closely, and the manuscript says VRS is not shown to be better.
 

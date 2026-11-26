@@ -115,3 +115,33 @@ No claim in the revised manuscript rests on an unrun experiment.
 ## 9. Bottom line
 
 The revised manuscript now matches the implementation and the saved outputs. Every number in the revised paper traces to a file in the repository, and the claims that depended on missing artifacts were removed rather than kept. Several reviewer concerns are only partly resolved, and two are open (explanation quality and CPE matching). The paper does not claim superiority over the context-aware baselines, does not claim significance, and does not claim generalization or predictive validity. The original manuscript and bibliography are preserved with checksums.
+
+## 10. Final Verification & Editorial Pass (2026-11-27)
+
+### Issues fixed
+1. **Context-Enhanced CVSS Spearman rounding** (`manuscript_revised.tex` Table III, `response_reviewer1.md`): corrected `0.9243` to `0.9244` (matching `0.924390` in `experiments/revision/statistics/paired_comparisons.csv` and `0.9244` in `experiments/revision/statistics/report.md`).
+2. **Context-baseline paired bootstrap intervals** (`manuscript_revised.tex` §V.B and §V.I, `response_reviewer1.md`, `UNRESOLVED.md`): corrected the inaccurate claim that Phase 3 output only covered the four original baselines. `paired_comparisons.csv` (`strategy=plain`) includes all four context-aware baselines, and all four 95% paired intervals against VRS include zero on both NDCG@10 and Spearman (e.g., VRS minus EPSS$\times$Context: `+0.000 [0.000, 0.074]` NDCG@10; `+0.015 [-0.038, 0.080]` Spearman).
+3. **Prior editorial fixes (commit `55fb344`):** consolidated abstract with explicit `(benchmark v1)` label and quantitative results; clarified in §V.A and Conclusion that Tables I–IV, Fig. 1(a), and Table III use benchmark v1 (`27979cc0`), while benchmark v2 (`2b78d7c2`) corrects 4 KEV flags (`KEV_PROVENANCE.md`) and has VRS Spearman `0.9317` in `paired_corrected_v2.csv` (not yet incorporated into headline tables).
+
+### Evidence & verification
+- Verified Table I against `experiments/results/metrics.json` (v1).
+- Verified Table II against `experiments/revision/statistics/paired_comparisons.csv` (`strategy=plain`).
+- Verified Table III against `experiments/revision/statistics/report.md` and `paired_comparisons.csv`.
+- Verified Table V against `experiments/results/expanded_500_table.md`.
+- Verified Table VI & VII against `experiments/revision/guardrail/metrics.json` and `score_integrity.json` (`evaluate_guardrail.py` executed and passed).
+- Verified VRS formula and weights in `risk_engine.py`.
+
+### Tests & compilation status
+- `experiments/revision/guardrail/evaluate_guardrail.py`: ran and passed (60 cases, 48 inspected, TP=9, FN=16, FP=7, TN=16; score integrity 5/5; schema 10/10).
+- `pytest` suite (`PYTHONPATH=. /tmp/venv-vulture/bin/pytest tests/ -m "not integration" -v --tb=short`): **220 passed, 8 failed, 2 deselected** (10.66s). Failures: 5 in `tests/test_scanner.py` (Nmap binary not installed in PATH) and 3 in `tests/test_annotations.py` (`test_invalid_cve_id`, `test_perfect_agreement`, `test_complete_disagreement` — pre-existing failures in annotation tests).
+- `git diff --check`: passed with exit code 0 (no whitespace errors).
+- LaTeX compilation: **compiled via `tectonic 0.15.0`** (`revision/ICCI2026_revision/manuscript_revised.pdf`, **7 pages**, 132,231 bytes). Visual inspection of all 7 pages via `pdftoppm` caught and fixed a `41.87pt` column overflow in Table VII (`tab:integrity`, fixed with `\resizebox{\columnwidth}{!}{...}`), a 3-line reference `[14]` spillover onto page 8 (fixed with `\enlargethispage{2\baselineskip}`), and `{ACM} {CCS}` casing in `[14]`. Figure 1 (`fig1.pdf`) renders crisply on page 4.
+
+### Remaining unresolved limitations & open reviewer concerns
+- **Benchmark v2 not incorporated into headline tables:** [paired_corrected_v2.csv](file:///home/daman/Projects/vulture/experiments/revision/statistics/paired_corrected_v2.csv) (SHA `2b78d7c2`) reports VRS Spearman `0.9317` (vs. `0.9488` on v1) and a negative VRS–EPSS$\times$Context Spearman diff (`-0.0017`). Decision: retain v1 headline tables because v2 outputs lack `NDCG@5`, `NDCG@15`, ablations, and 500-CVE/Fig. 1 regeneration; disclose v2 Spearman and diff explicitly in §V.A.
+- **Explanation quality (Concern 7):** unmeasured (`explanation_evaluation.csv` has 0 rows; requires human raters or a documented judge).
+- **CPE/Nmap matching accuracy (Concern 13):** unmeasured against a labelled set.
+- **Independent annotation (Concern 2):** annotation infrastructure exists, but no independent annotator ratings exist (and 3 unit tests in `tests/test_annotations.py` currently fail).
+- **Temporal evaluation (Concern 9):** retrospective 2026 snapshot only; no disclosure-date reconstruction.
+- **Bibliography verification update:** `jacobs2021epss` (ACM DTRP 2021, DOI `10.1145/3436242`), `spring2020ssvc` (`CMU/SEI-2019-TR-005`, 2019, author `Eric Hatleback`), and `greshake2023indirect` (ACM AISec 2023, pp. 79--90, DOI `10.1145/3605764.3623985`) were verified against publisher records and updated in `references_revised.bib` and `manuscript_revised.tex`. Five legacy entries in `references_revised.bib` remain uncited (`cisa2023kev`, `greshake2023prompt`, `lyon2009nmap`, `mell2006cvss`, `nvd2023`).
+- **PDF generated & visually inspected:** `revision/ICCI2026_revision/manuscript_revised.pdf` (7 pages, zero overfull `\hbox` warnings, `fig1.pdf` verified).
