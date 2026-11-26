@@ -1,0 +1,387 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\setlist{nosep,leftmargin=*,topsep=0pt,partopsep=0pt,parsep=0pt,itemsep=0pt}
+\usepackage{microtype}
+\setlength{\textfloatsep}{3pt plus 1pt minus 1pt}
+\setlength{\intextsep}{3pt plus 1pt minus 1pt}
+\setlength{\floatsep}{2pt plus 1pt minus 1pt}
+\setlength{\dbltextfloatsep}{4pt plus 1pt minus 1pt}
+\setlength{\dblfloatsep}{3pt plus 1pt minus 1pt}
+\setlength{\abovecaptionskip}{2pt}
+\setlength{\belowcaptionskip}{2pt}
+\setlength{\abovedisplayskip}{2pt plus 1pt minus 1pt}
+\setlength{\belowdisplayskip}{2pt plus 1pt minus 1pt}
+\def\IEEEbibitemsep{0pt plus .5pt}
+\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{
+    pdfauthor={Anonymous Author(s)},
+    pdftitle={Vulture-AI: Context-Aware Vulnerability Prioritization with Guardrailed Retrieval-Augmented Generation},
+    pdfsubject={IEEE ICCI 2026 Double-Blind Submission},
+    pdfkeywords={Vulnerability Prioritization, CVSS, EPSS, CISA KEV, SSVC, RAG, Prompt Injection},
+    hidelinks
+}
+
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\begin{document}
+
+\title{Vulture-AI: Context-Aware Vulnerability Prioritization with Guardrailed Retrieval-Augmented Generation}
+
+\author{\IEEEauthorblockN{Anonymous Author(s)}
+\IEEEauthorblockA{Affiliation Withheld for Double-Blind Review\\
+Contact: contact@anonymous.institution}
+}
+
+\maketitle
+
+\begin{abstract}
+Vulnerability prioritization is hard to automate. CVSS base scores describe intrinsic severity but not observed exploitation or the deployment context of an asset. Language-model assistants can explain such rankings, but they can also alter the numbers they are meant to explain. We present Vulture-AI, a prototype that computes a deterministic priority score, the Vulture Risk Score (VRS), from CVSS, FIRST EPSS, CISA KEV status, network exposure, and asset criticality, and places KEV-listed findings in an urgent bucket. A retrieval-augmented assistant produces the explanation. The authoritative score is recomputed from structured inputs after the model call, and a keyword-based check flags explanations that cite unretrieved CVEs or unsupported numbers. We evaluate on two sets. The first is a 41-record reference benchmark (39 real CVEs and 2 synthetic records) whose relevance grades were assigned by the authors using an SSVC-inspired rubric. The second is a 500-CVE corpus, of which 39 are the same curated records. On the 41-record benchmark, VRS obtains NDCG@10 of 1.0000 and Spearman $\rho$ of 0.9488. Paired bootstrap intervals (2{,}000 resamples) exclude zero for the Spearman difference against CVSS-only, EPSS-only, and the unweighted CVSS+EPSS+KEV combination, but not against KEV-first; for NDCG@10 no difference excludes zero, because VRS is at its ceiling. Removing environmental context reduces $\rho$ to 0.8782, close to the vulnerability-only combination. The score-integrity check passed in all five simulated attacks after we added a KEV priority floor, which corrected a priority downgrade the assistant had otherwise allowed. On a 60-case guardrail corpus, the keyword filter blocks 9 of 25 attack cases and flags 7 of 23 benign cases; it does not cover queries or scan banners. Explanation quality was not measured. The benchmark is small and author-labelled, and the 500-CVE analysis is a retrospective concordance check, not prediction.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Vulnerability Prioritization, CVSS, EPSS, CISA KEV, Retrieval-Augmented Generation, Prompt Injection, Software Security.
+\end{IEEEkeywords}
+
+\section{Introduction}
+Security teams face more vulnerability findings than they can remediate, and the standard severity score does not separate them well. CVSS base scores estimate intrinsic severity under worst-case assumptions \cite{first2019cvss}. The CVSS v4.0 specification states that a base score is not a complete measure of risk, and that threat and environmental information must be supplied by the consumer \cite{first2023cvss4}. In operational settings, the same finding can matter very differently depending on whether it is exploited in the wild and on whether the affected asset is exposed or critical.
+
+Two sources of evidence address parts of this gap. EPSS estimates the probability of observed exploitation within 30 days and is updated daily \cite{first2024epss}. CISA's KEV catalog lists vulnerabilities with reliable evidence of exploitation, and CISA recommends using it as one input to a prioritization framework such as SSVC \cite{cisa2024kev, spring2020ssvc}. Neither source describes the asset. EPSS, according to FIRST, is one component of risk and does not account for environmental context \cite{first2024epss}.
+
+Language-model assistants are a natural way to explain a ranking to an analyst, but they bring two risks to this task. First, a model can state or change numbers it was not given, such as a CVSS value or a priority. Second, retrieved text is untrusted. Indirect prompt injection shows that instructions embedded in data an LLM application retrieves can change its behaviour \cite{greshake2023indirect}. A system that lets the model write the priority has no protection against either risk.
+
+Our design separates the two roles. A deterministic component computes the score from structured inputs. A language model writes the explanation, which is then checked against the retrieved evidence. This paper makes three contributions, each limited to what we implemented and measured:
+\begin{enumerate}
+    \item \textbf{A combined scoring design.} VRS combines CVSS, EPSS, KEV, exposure, and asset criticality in one deterministic weighted sum with a KEV-first bucket and fixed tie-breaking (Section~\ref{sec:method}). The indicators and the weighted-sum form are existing; the contribution is the combination and its evaluation.
+    \item \textbf{A score-integrity boundary.} The authoritative score is recomputed after the model call and never taken from model output. In a stub-LLM harness, a deterministic KEV priority floor corrected a priority downgrade that the unmodified assistant allowed (Section~\ref{sec:integrity}).
+    \item \textbf{An evaluation with explicit scope.} We report rankings on a 41-record benchmark with bootstrap intervals, a 500-CVE retrospective concordance check, a 60-case guardrail corpus, and the limits of each. Explanation quality was not measured.
+\end{enumerate}
+
+This work investigates three research questions:
+\begin{itemize}
+    \item \textbf{RQ1}: How do VRS rankings compare with CVSS-only, EPSS-only, KEV-first, and an unweighted combination on the author-labelled reference benchmark, and how stable are these differences under resampling?
+    \item \textbf{RQ2}: How much do the EPSS, KEV, and environmental-context components contribute, and do simple context baselines explain the gain?
+    \item \textbf{RQ3}: Does the keyword-based guardrail detect the tested injection patterns, and does the score remain invariant to model output?
+\end{itemize}
+
+\section{Related Work}
+We group related work by the question each line of work addresses. Our comparison is summarised in the scope of each paragraph; we do not claim that the systems cited lack features we did not test.
+
+\subsection{CVSS, EPSS, KEV, and vulnerability intelligence}
+CVSS v3.1 defines Base, Temporal, and Environmental metric groups, and the Environmental group captures controls and the importance of the affected system when the consumer applies it \cite{first2019cvss}. CVSS v4.0 renames and extends these groups, adds Attack Requirements and a Supplemental group that does not change the score, and keeps Threat and Environmental values under consumer control \cite{first2023cvss4}. Context is therefore present in CVSS as an optional layer. VRS differs in that it treats exposure and criticality as first-class inputs and in that it adds exploitation evidence to a single score.
+
+EPSS is a daily probability of exploitation activity in the next 30 days \cite{first2024epss}. FIRST reports that its model is validated on held-out data, and that CVSS severity is only slightly better than random for predicting exploitation \cite{first2024epss}. The methodology paper for EPSS is cited as Jacobs et al.\ \cite{jacobs2021epss}; we were not able to confirm its publication venue, so the citation should be checked before final submission. KEV is a catalog of observed exploitation with remediation deadlines under federal directive, and the directive establishing it has since been superseded \cite{cisa2021bod, cisa2024kev}.
+
+\subsection{Context-aware prioritization}
+Context-aware prioritization is the most direct relative of VRS. Environmental CVSS metrics are the standard mechanism for it \cite{first2019cvss, first2023cvss4}. SSVC uses mission prevalence and public well-being impact as decision inputs \cite{spring2020ssvc, cisa2024ssvc}. Our contribution in this area is a simple linear combination of context with exploitation evidence, which we compare against context-free baselines. We did not locate a verified primary source for a separate context-aware enterprise prioritization method, and we do not cite one.
+
+\subsection{SSVC and decision-based prioritization}
+SSVC maps exploitation status, technical impact, automatability, mission prevalence, and public well-being impact to Track, Track*, Attend, or Act \cite{cisa2024ssvc, spring2020ssvc}. The CISA page verifies the decision inputs and outcomes; the author list and report number for \cite{spring2020ssvc} were not confirmed from the SEI record and must be checked before submission. CISA's own tree closely follows the SEI Coordinator tree. VRS is not an implementation of SSVC. It is a continuous score with a binary KEV bucket, and its reference labels are SSVC-inspired judgments made by the authors. We did not evaluate VRS against an SSVC decision tree, so the question of whether the continuous score adds value over the tree remains open.
+
+\subsection{ML and LLM-assisted vulnerability triage}
+EPSS is itself a learned model for exploitation probability \cite{first2024epss}. We did not locate a verified primary source for a learned or LLM-based triage system to use as a baseline, and the present evaluation does not compare against one. The LLM component of Vulture-AI is used for explanation only; its accuracy as a triage system is not measured.
+
+\subsection{RAG security and prompt injection}
+Retrieval-augmented generation grounds a language model in retrieved records \cite{lewis2020rag}. Indirect prompt injection shows that retrieved text can carry instructions that alter the model's behaviour \cite{greshake2023indirect}. A systematic benchmark of attacks and defenses shows that the attack success rate depends strongly on the defense and the model \cite{liu2024formalizing}. Spotlighting marks the provenance of input text so that the model can distinguish instructions from data \cite{hines2024spotlighting}. StruQ separates prompts and data into structured channels and trains a model to follow only the prompt channel \cite{chen2024struq}. SecAlign uses preference optimization to prefer secure over injected outputs \cite{chen2024secalign}. Each of these reports its own evaluation, and none is re-run here. Vulture-AI does not implement any of them. Its guardrail is a deterministic keyword filter over retrieved content. It is simpler and auditable, but Section~\ref{sec:guardrail} shows that it misses paraphrased and obfuscated attacks.
+
+\section{System Architecture}
+\label{sec:arch}
+Vulture-AI has four stages. Every stage is implemented in the repository; we list what each uses.
+
+\textbf{Input and scanning.} The scanner runs Nmap version detection (\texttt{nmap -sV}) against allowlisted targets and records service banners. The matcher normalizes product and version strings and builds CPE~2.3 candidate identifiers. Matching accuracy has not been evaluated against a labelled set (Section~\ref{sec:threats}).
+
+\textbf{Feature extraction.} For each matched CVE the system records the CVSS base score, the EPSS probability from the FIRST API, and a binary KEV flag from the CISA catalog. Asset context (network exposure $N$ and asset criticality $A$) is supplied per finding; it is not derived from the scan.
+
+\textbf{Scoring.} The Vulture Risk Score (Equation~\ref{eq:vrs}) is computed by \texttt{risk\_engine.compute\_vrs}. Findings are sorted into an urgent bucket (KEV-listed), a standard bucket, and an unavailable bucket (no CVSS), then by descending VRS, then by ascending primary CVE identifier.
+
+\textbf{Explanation.} The assistant (\texttt{vulture\_chatbot.chat\_with\_validation}) builds a prompt from the user query and a set of evidence records. Retrieval is exact CVE-identifier lookup or case-insensitive keyword substring matching over the local enriched dataset (\texttt{retrieval.py}). No vector database, embedding model, or external search is used. The model returns JSON, which is parsed into a Pydantic model. The response is then checked by \texttt{evidence\_validator.validate}, and the authoritative VRS and any KEV priority floor are applied (Section~\ref{sec:integrity}).
+
+\section{Methodology}
+\label{sec:method}
+
+\subsection{Vulture Risk Score}
+VRS is a linear combination normalized to $[0, 100]$:
+\begin{equation}
+\text{VRS} = 100 \times \left( w_C C + w_E E + w_K K + w_N N + w_A A \right)
+\label{eq:vrs}
+\end{equation}
+where $C = \text{CVSS}/10 \in [0,1]$; $E \in [0,1]$ is the EPSS probability; $K \in \{0,1\}$ indicates KEV listing; $N \in [0,1]$ is network exposure; and $A \in [0,1]$ is asset criticality. The default weights are $w_C = 0.25$, $w_E = 0.20$, $w_K = 0.20$, $w_N = 0.20$, $w_A = 0.15$, which sum to 1. We describe these as exploratory. They were set by the authors and were not fitted to the benchmark, and we report their sensitivity in Section~\ref{sec:results}.
+
+\subsection{Feature definitions and normalization}
+CVSS, EPSS, and KEV are taken from the sources in Section~\ref{sec:setup}. Exposure and criticality are given on $[0,1]$ scales that the benchmark assigns by archetype (for example, an internet-facing gateway has $N = 1.0$; an internal host has a lower value). These archetype values were assigned by the authors and are not measured from any network. No other normalization is applied; out-of-range values raise an error.
+
+\subsection{Missing data}
+If CVSS is missing, VRS is undefined and the finding is placed in the unavailable bucket. Missing EPSS is treated as $E = 0$. Missing exposure or criticality is treated as $0.5$. Each default is recorded as an uncertainty in the output. These defaults are a policy choice, and their effect has not been measured separately.
+
+\subsection{Override and tie-breaking}
+A finding whose KEV flag is set is assigned to the urgent bucket when $w_K > 0$. Within each bucket, findings are sorted by VRS, and ties are broken by ascending CVE identifier. The KEV bucket is a policy rule, not a weighted contribution. Removing it is evaluated in Section~\ref{sec:results}.
+
+\subsection{Benchmark construction and reference labels}
+The reference benchmark (\texttt{cves.csv}, 41 records) consists of 39 real public CVEs and 2 synthetic edge-case records. The synthetic records (CVE-2024-99991, CVE-2024-99992) have no authoritative source; one lacks CVSS and one lacks EPSS, and they test missing-data handling. Relevance grades were assigned by the authors using an SSVC-inspired rubric: Act (grade 3, 15 records), Attend (grade 2, 12 records), Track (grade 1, 8 records), and Defer (grade 0, 6 records, including both synthetic records). The grades are author judgments. \textbf{They were not produced by independent analysts, and no inter-rater agreement was measured.} The annotation infrastructure described in the repository is ready, but no independent annotator data exists, so agreement statistics are not reported.
+
+The labels and the VRS inputs overlap. The SSVC-inspired rubric uses exploitation status, exposure, and mission impact, and VRS uses the same quantities. A high rank correlation with these labels therefore measures agreement with a rubric that shares the inputs; it is not evidence of predictive accuracy.
+
+\subsection{Baselines}
+We compare VRS with four baselines: CVSS-only (descending CVSS); EPSS-only (descending EPSS); KEV-first (KEV-listed items first, then CVSS); and an unweighted CVSS+EPSS+KEV combination with equal weights. Phase 2 added four context-aware baselines: EPSS$\times$Exposure, Exposure$\times$Criticality, Context-Enhanced CVSS, and EPSS$\times$Context. These use the same records and missing-data defaults. The original baselines do not use exposure or criticality, which is an information asymmetry. The ablation \texttt{VRS (No Context)} removes $N$ and $A$ and so isolates it.
+
+\subsection{Metrics}
+NDCG@10 uses exponential gain $2^{g}-1$ and a logarithmic discount, normalised by the ideal ordering of the sample. Precision@10 and Recall@10 are reported at two thresholds: Act only ($\tau = 3$; recall denominator 15) and Actionable (Act or Attend, $\tau = 2$; denominator 27). Spearman $\rho$ compares the predicted order with the reference order. Because the benchmark has 15 Act records, Precision@10 and NDCG@10 can reach their maximum without ranking the Attend items correctly, and this affects the reading of those metrics (Section~\ref{sec:results}).
+
+\textbf{Actionable metrics.} Actionable Precision@10 and Recall@10 are defined as Act-or-Attend (grade $\ge 2$) hits in the top 10, divided by 10 and by 27 respectively. Ties are broken deterministically. On this benchmark, every ranking in Table~\ref{tab:main} has Actionable Precision@10 of 1.0000 and Actionable Recall@10 of 0.3704, so these metrics do not separate the methods. We report them for completeness.
+
+\section{Experimental Setup}
+\label{sec:setup}
+
+\subsection{Data sources and snapshot}
+The reference benchmark was frozen on 2026-10-14 (SHA-256 prefix \texttt{27979cc0029e}). The EPSS values used in the 500-CVE corpus are from a cached FIRST API response with date 2026-10-13 for all 461 added records. The KEV catalog used for the 500-CVE analysis is version 2026.10.13 (1,741 entries). The CVSS base scores for the 461 added records come from the CVE List V5 release \texttt{cve\_2026-10-13\_2300Z}. The 39 curated records are retained in the 500-CVE corpus.
+
+\subsection{Temporal setting}
+All features are read from a single 2026 snapshot. We did not reconstruct the values that were available at each CVE's disclosure date. EPSS and KEV contain information from after disclosure, and CVSS base scores may have been revised. The evaluation is therefore retrospective present-state prioritization. It cannot be used to claim early or forward prediction. Each added CVE carries its publication date in \texttt{source\_timestamp}, but its features are 2026 values.
+
+\subsection{Software and reproducibility}
+The experiments use Python with NumPy 2.4.6 and SciPy 1.17.1 (the versions in \texttt{requirements-lock.txt}). Phase 3 bootstrap analyses use seed 20261126 and 2{,}000 resamples. Phase 4 uses a deterministic stub LLM. Results files are in \texttt{experiments/results/} and \texttt{experiments/revision/}. The benchmark SHA-256 values are recorded in the data manifest.
+
+\section{Results}
+\label{sec:results}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{../../experiments/results/figures/fig1.pdf}
+\caption{Ranking alignment and KEV recall. (a) Rank alignment with the author-assigned reference order on the 41-record benchmark (CVSS-only $\rho=0.736$, EPSS-only $\rho=0.824$, VRS $\rho=0.949$). (b) Retrospective recall against KEV membership on the 500-CVE corpus ($N_{\text{KEV}}=25$). Source: \texttt{experiments/results/figures/fig1.pdf}, generated from \texttt{experiments/results/}. Panel (b) is a policy-concordance check, as discussed in Section~\ref{sec:results}.}
+\label{fig:ranking_and_recall}
+\end{figure}
+
+\subsection{Prioritization on the reference benchmark (RQ1)}
+Table~\ref{tab:main} gives the point estimates on the 41-record benchmark. Table~\ref{tab:boot} gives bootstrap intervals for the principal metrics and paired differences against VRS.
+
+\begin{table}[t]
+\centering
+\caption{Point estimates on the 41-record reference benchmark (39 real CVEs and 2 synthetic records). Source: \texttt{experiments/results/metrics.json}.}
+\label{tab:main}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Model} & \textbf{NDCG@5} & \textbf{NDCG@10} & \textbf{NDCG@15} & \textbf{P@10 (Act)} & \textbf{R@10 (Act)} & \textbf{Spearman} \\
+\midrule
+CVSS-only           & 0.8062 & 0.7563 & 0.7855 & 0.6000 & 0.4000 & 0.7357 \\
+EPSS-only           & 1.0000 & 0.9217 & 0.8878 & 0.8000 & 0.5333 & 0.8237 \\
+KEV-first           & 0.8062 & 0.7945 & 0.8407 & 0.7000 & 0.4667 & 0.8247 \\
+CVSS+EPSS+KEV       & 0.9250 & 0.9513 & 0.9373 & 0.9000 & 0.6000 & 0.8800 \\
+VRS (vrs-v1)        & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 0.6667 & 0.9488 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+Two points limit how these numbers should be read. First, NDCG@10 and P@10 (Act) equal 1.0 for VRS because all of its top 10 items are Act records. Any ordering that places only Act records in the top 10 would obtain the same values, so these metrics cannot rank VRS above another method that also achieves the ceiling. Second, the benchmark is small. A single misplaced record changes NDCG@10 by a discrete amount.
+
+\begin{table}[t]
+\centering
+\caption{Bootstrap results on the 41-record benchmark. Percentile 95\% intervals from $B = 2{,}000$ paired resamples (plain record bootstrap, seed 20261126). Source: \texttt{experiments/revision/statistics/}.}
+\label{tab:boot}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llcc}
+\toprule
+\textbf{Comparison} & \textbf{Metric} & \textbf{Observed diff.} & \textbf{95\% paired CI} \\
+\midrule
+VRS $-$ CVSS-only & NDCG@10 & +0.244 & [0.036, 0.396] \\
+VRS $-$ CVSS-only & Spearman & +0.213 & [0.055, 0.430] \\
+VRS $-$ EPSS-only & Spearman & +0.125 & [0.048, 0.243] \\
+VRS $-$ KEV-first & Spearman & +0.124 & [$-$0.001, 0.307] \\
+VRS $-$ CVSS+EPSS+KEV & Spearman & +0.069 & [0.020, 0.169] \\
+VRS $-$ EPSS-only & NDCG@10 & +0.078 & [0.000, 0.210] \\
+VRS $-$ KEV-first & NDCG@10 & +0.206 & [0.000, 0.362] \\
+VRS $-$ CVSS+EPSS+KEV & NDCG@10 & +0.049 & [0.000, 0.175] \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+The bootstrap distribution of NDCG@10 for VRS is degenerate: VRS attains 1.0 in all 2{,}000 resamples. The lower bound of 0.000 for the NDCG@10 differences against EPSS-only, KEV-first, and the combination comes from baseline resamples that also reach 1.0, so a difference of zero is in the interval. These intervals do not support a claim that VRS beats those baselines on NDCG@10. For Spearman, the intervals against CVSS-only, EPSS-only, and the unweighted combination exclude zero; the interval against KEV-first includes zero. These are descriptive intervals from one 41-record sample. They are not significance tests, and no p-values are reported. The bootstrap resamples records with replacement, so duplicate records and the discrete metric scale mean that the nominal 95\% coverage is not guaranteed. Phase 3 emits 75 warnings, including ceiling, small-sample, and author-label warnings, and these are recorded in \texttt{statistical\_report.json}.
+
+\subsection{Context-aware baselines}
+Table~\ref{tab:context} compares VRS with the four context-aware baselines. These baselines use exposure or criticality, so they are information-symmetric with VRS. They were added in response to the information-asymmetry concern.
+
+\begin{table}[t]
+\centering
+\caption{Context-aware baselines on the 41-record benchmark. Source: \texttt{experiments/revision/baselines/results\_context.json}, \texttt{results\_original.json}; metrics computed by \texttt{experiments/revision/statistics/}.}
+\label{tab:context}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lccc}
+\toprule
+\textbf{Method} & \textbf{NDCG@10} & \textbf{R@10 (Act)} & \textbf{Spearman} \\
+\midrule
+EPSS$\times$Exposure         & 1.0000 & 0.6667 & 0.8909 \\
+Exposure$\times$Criticality  & 0.9552 & 0.6000 & 0.8951 \\
+Context-Enhanced CVSS        & 0.9458 & 0.6000 & 0.9243 \\
+EPSS$\times$Context          & 1.0000 & 0.6667 & 0.9334 \\
+VRS (vrs-v1)                 & 1.0000 & 0.6667 & 0.9488 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+The simple context baselines are competitive. EPSS$\times$Context achieves a Spearman of 0.9334, which is close to VRS's 0.9488. The paired intervals for VRS against these baselines are not reported in the main text, because we did not compute them as a separate table in this revision; the Phase 3 output contains only the four original baselines. VRS therefore does not show a demonstrated advantage over EPSS$\times$Context on this benchmark.
+
+\subsection{Weight sensitivity}
+We evaluated VRS under six weight configurations (Phase 2): the default, an equal-weight setting, a CVSS-heavy setting, an EPSS-heavy setting, a context-heavy setting, and an exposure-heavy setting. The configurations are listed in \texttt{experiments/revision/sensitivity/configurations.json}. All six configurations produce the same top-10 set as the default configuration (10 of 10 overlap in each case, from \texttt{results.json}). This shows top-10 membership is stable across these perturbations on this benchmark. We did not compute a rank-correlation summary (for example Spearman or Kendall across the full 41-record order) in this revision, so the stability of the full ordering is not reported. The weights remain exploratory.
+
+\subsection{Ablations (RQ2)}
+Table~\ref{tab:ablation} reports the ablations from \texttt{experiments/results/ablation.json}.
+
+\begin{table}[t]
+\centering
+\caption{VRS ablations on the 41-record benchmark. Source: \texttt{experiments/results/metrics.json}.}
+\label{tab:ablation}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Variant} & \textbf{NDCG@10} & \textbf{P@10 (Act)} & \textbf{R@10 (Act)} & \textbf{Spearman} \\
+\midrule
+VRS (full)                 & 1.0000 & 1.0000 & 0.6667 & 0.9488 \\
+VRS (No EPSS)              & 1.0000 & 1.0000 & 0.6667 & 0.9575 \\
+VRS (No KEV)               & 0.9581 & 0.9000 & 0.6000 & 0.9451 \\
+VRS (No Context)           & 0.9513 & 0.9000 & 0.6000 & 0.8782 \\
+VRS (No Bucket Override)   & 1.0000 & 1.0000 & 0.6667 & 0.9535 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+Removing context (No Context) lowers Spearman from 0.9488 to 0.8782, a drop of 0.0706. This value is close to the unweighted combination (0.8800). On this rubric, context accounts for most of the gap between VRS and the vulnerability-only combination. Because the rubric uses context as an input, this does not show that context improves real-world prioritization.
+
+Removing EPSS raises Spearman to 0.9575. We interpret this as a property of the rubric, not as evidence that EPSS is redundant. EPSS raises some low-impact reconnaissance flaws that the rubric places at the bottom. Removing the KEV bucket lowers NDCG@10 to 0.9581 and P@10 to 0.9000. Removing the bucket override raises Spearman to 0.9535. Its effect is mainly on the position of one high-CVSS item that is not KEV-listed.
+
+\subsection{Retrospective KEV concordance (500 CVEs)}
+To test behaviour at a larger scale, we evaluated a 500-CVE corpus: the 39 curated real records plus 461 CVEs sampled with seed 42 from CVE List V5 records of 2023–2024. The KEV catalog contains 25 entries in this corpus, all of them among the 39 curated records; none of the 461 added CVEs is in the KEV catalog. Table~\ref{tab:kev500} reports recall of KEV entries at depth 25.
+
+\begin{table}[t]
+\centering
+\caption{Retrospective KEV concordance on the 500-CVE corpus ($N_{\text{KEV}} = 25$). Source: \texttt{experiments/results/expanded\_500\_table.md}.}
+\label{tab:kev500}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Method} & \textbf{P@10} & \textbf{R@10} & \textbf{P@25} & \textbf{R@25} \\
+\midrule
+CVSS-only         & 0.7000 & 0.2800 & 0.4400 & 0.4400 \\
+EPSS-only         & 1.0000 & 0.4000 & 0.8800 & 0.8800 \\
+KEV-first         & 1.0000 & 0.4000 & 1.0000 & 1.0000 \\
+Combined baseline & 1.0000 & 0.4000 & 1.0000 & 1.0000 \\
+VRS (vrs-v1)      & 1.0000 & 0.4000 & 1.0000 & 1.0000 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+KEV-first, the combined baseline, and VRS all reach full recall at depth 25. This is expected, because each uses the KEV flag as an input or as a bucket rule, and the KEV catalog is also the evaluation label. The table therefore checks policy concordance, not prediction. The 500-CVE corpus also contains no per-asset context: its exposure and criticality values are not reported as a separate result here. Because the 461 added records were not labelled by the authors, the SSVC-based concordance is restricted to the 39 curated records.
+
+\subsection{Guardrail evaluation (RQ3)}
+\label{sec:guardrail}
+We built a 60-case corpus (version 1.0.0): 30 benign and 30 adversarial cases. Each case has a channel label. The keyword filter inspects only retrieved content, so 48 cases are inspected and 12 (queries, scan banners, one CVE description) are not. Table~\ref{tab:guard} gives the confusion matrix on the inspected cases, where a positive is an attack that should be blocked.
+
+\begin{table}[t]
+\centering
+\caption{Keyword guardrail on the 48 inspected cases (retrieved content). Source: \texttt{experiments/revision/guardrail/metrics.json}. Wilson 95\% intervals in brackets.}
+\label{tab:guard}
+\begin{tabular}{lcc}
+\toprule
+ & \textbf{Predicted block} & \textbf{Predicted allow} \\
+\midrule
+Actual attack (25) & TP = 9 & FN = 16 \\
+Actual benign (23) & FP = 7 & TN = 16 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Recall (TPR) is 0.36 [0.20, 0.55]; the false-positive rate is 0.30 [0.16, 0.51]; precision is 0.56; accuracy is 0.52; F1 is 0.44. The false positives are dominated by the bare term \emph{bypass} in ordinary advisory text (4 of 7), plus one quoted research example, \emph{you are now}, and \emph{forget everything} in operational wording. The false negatives include paraphrased instructions (``set the VRS score to 0''), Unicode and zero-width obfuscation, and all attacks on the query and banner channels. The corpus is small and was written by the authors, and several cases were written to test known gaps; these rates should not be read as estimates for real traffic.
+
+\subsection{Score integrity and schema validation}
+\label{sec:integrity}
+We simulated five payloads through the real \texttt{chat\_with\_validation} path with a stub LLM. The payloads attempted to set \texttt{vrs\_score} to 0, to downgrade priority for a KEV-listed finding, to supply an injected override in retrieved content, and to add an unexpected field. Table~\ref{tab:integrity} compares the unmodified assistant with the assistant after a KEV priority floor was added.
+
+\begin{table}[t]
+\centering
+\caption{Score-integrity simulation (5 payloads). The authoritative score was never changed by any payload. Source: \texttt{experiments/revision/guardrail/score\_integrity.json}; the unmodified result was obtained by running the same harness against the repository version before the Phase 4 change.}
+\label{tab:integrity}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Payload} & \textbf{Unmodified} & \textbf{With floor} \\
+\midrule
+S01: score 0, priority low (KEV) & fail (priority) & pass \\
+S02: priority low (KEV)          & fail (priority) & pass \\
+S03: priority high (non-KEV)     & pass            & pass \\
+S04: retrieved document requests low priority & fail (priority) & pass \\
+S05: unexpected priority field   & pass            & pass \\
+\midrule
+Total                            & 2 / 5           & 5 / 5 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The score was never corrupted. Every response carried the authoritative value. The defect was in the priority field: the unmodified assistant displayed \texttt{low} for KEV-listed findings. The floor raises the priority of KEV-listed findings to \texttt{high} and records the override in the uncertainties field. The floor applies only to the urgent bucket. A non-KEV finding can still receive any priority string the model produces. The schema check (10 fixtures) matched the expected verdict in all cases, using a strict validator. The production parser (Pydantic) silently ignores unexpected fields and accepts any string for priority; the strict validator is therefore a stricter standard than production behaviour.
+
+\subsection{Explanation quality}
+We did not measure explanation quality. The rubric (factual correctness, evidence consistency, score faithfulness, clarity, each on a 1--5 scale) is implemented as an import module that accepts human or automated ratings, and the rating file contains no rows. No human or automated judge was run. Claims about explanation utility are therefore not supported by this study.
+
+\subsection{Negative and limiting results}
+We report the following results that do not favour the system. VRS does not outperform EPSS$\times$Context on Spearman, and the difference between them is not tested in this revision. The paired NDCG@10 intervals against EPSS-only, KEV-first, and the combination include zero. The guardrail's false-positive rate is 0.30. The KEV concordance on 500 CVEs is identical across three methods. The actionable Precision@10 and Recall@10 do not discriminate between methods on this benchmark. The equal-weight and other weight configurations were not summarised in terms of stability.
+
+\section{Discussion}
+\textbf{Does context add value?} On the author-labelled rubric, yes: removing exposure and criticality reduces Spearman by 0.0706 and brings VRS close to the vulnerability-only combination. This is a measured effect, but the rubric uses the same context as an input, so it measures agreement with the rubric and not operational benefit.
+
+\textbf{Are simple context baselines competitive?} Yes, on this benchmark. EPSS$\times$Context reaches Spearman 0.9334 and NDCG@10 1.0 without a weighted score. Within this benchmark, the value of the VRS combination over these simpler products is not demonstrated.
+
+\textbf{Weight stability.} The weights are exploratory. Phase 2 produced six configurations and their top-10 sets, but we did not summarise rank stability across them. Any claim that the default weights are near-optimal, or stable across configurations, is not supported.
+
+\textbf{EPSS ablation.} Removing EPSS raises Spearman. We attribute this to the rubric's treatment of low-impact reconnaissance flaws and not to EPSS redundancy. An operational comparison would be needed to test whether EPSS helps analysts.
+
+\textbf{Score integrity.} The authoritative score was not changed by any simulated payload. The priority field was changed by the model in the unmodified system and was corrected by the floor. This is a measured result for five payloads on a stub model.
+
+\textbf{Explanation utility and practical applicability.} Explanation utility was not measured. We have no evidence that the explanations help analysts, and we have no analyst-time or remediation-outcome data.
+
+\textbf{Hypotheses for future work.} Whether a KEV-first ordering gives most of the benefit of VRS in operational queues; whether the guardrail's false positives on advisory text can be reduced without losing the tested detections; and whether independent annotators reproduce the reference grades.
+
+\section{Threats to Validity}
+\label{sec:threats}
+
+\textbf{Ground-truth circularity.} The reference grades use exploitation, exposure, and impact, which are the same inputs VRS uses. High agreement is evidence of consistency with the rubric, not predictive validity. This is the most important limit.
+
+\textbf{Small and author-curated benchmark.} The reference set has 41 records, of which 2 are synthetic. Relevance grades were assigned by the authors and not independently verified. No inter-rater agreement is reported, and the annotation pipeline has not been run with independent annotators.
+
+\textbf{Synthetic cases.} The two synthetic records (CVE-2024-99991 and CVE-2024-99992) are not real vulnerabilities. They are placed at the bottom of the reference ranking and do not affect the top-10 metrics. The Spearman value of 0.9488 includes them; restricted to the 39 real CVEs the Spearman value is 0.9433 (recomputed from the benchmark in this revision).
+
+\textbf{Temporal leakage.} All features come from a single 2026 snapshot. KEV and EPSS contain post-disclosure information. The evaluation is retrospective. Historical reconstruction was not feasible within this revision, and no early-prediction claim is made.
+
+\textbf{Data-source limitations.} KEV listing and EPSS depend on the sources and their coverage. We identified a mismatch between the \texttt{kev} flag in \texttt{cves.csv} and the cached CISA catalog for four records (CVE-2022-1292, CVE-2019-15846 flagged 1 but not listed; CVE-2021-3560, CVE-2022-0492 flagged 0 but listed). These four records are included in all results above. Correcting them may change the headline values. This discrepancy is not resolved in this revision. CPE matching was not evaluated against a labelled set, so the false-negative rate of the scanner-to-CVE step is unknown.
+
+\textbf{Weight selection.} The weights were chosen by the authors and are exploratory. They were not fitted to the benchmark. Their sensitivity was measured for six configurations, but no selection procedure is described, and the results are in-sample on the 41 records.
+
+\textbf{Metric limitations.} NDCG@10 and Precision@10 (Act) are at their maximum for VRS and cannot discriminate among methods that also reach the ceiling. Actionable Precision@10 and Recall@10 are identical across methods. Bootstrap intervals are discrete, small-sample, and computed on the same records used to evaluate methods.
+
+\textbf{Baseline fairness.} The original four baselines do not use exposure or criticality. We added four context-aware baselines to address this. The unweighted combination and KEV-first use the same KEV label as the evaluation, so their policy concordance is partly by construction.
+
+\textbf{Guardrail corpus limitations.} The 60-case corpus is small, author-written, and designed partly to test known gaps. It covers retrieved content only. Attacks on other channels are not measured. A regex filter is not a comprehensive injection defense, and the false-positive and false-negative rates above apply only to this corpus.
+
+\textbf{Automated explanation evaluation.} No automated judge was used, so no judge bias is present in this study. Explanation quality remains unmeasured. Any future automated judging would need a documented model, prompt, version, settings, and a human spot-check.
+
+\textbf{Generalizability.} The benchmark covers a narrow set of well-known vulnerabilities and archetypal assets. Exposure and criticality are assigned values, not measured on any network. The results may not transfer to other enterprise environments.
+
+\section{Conclusion}
+We presented Vulture-AI, a prototype that combines CVSS, EPSS, KEV status, exposure, and asset criticality in a deterministic score, and that keeps the score separate from a language-model explanation. On a 41-record author-labelled benchmark, VRS obtained NDCG@10 of 1.0 and Spearman 0.9488. Paired bootstrap intervals exclude zero for the Spearman difference against CVSS-only, EPSS-only, and the unweighted combination, and do not support an NDCG@10 advantage over EPSS-only, KEV-first, or the combination. Removing environmental context reduced Spearman to 0.8782. Simple context-aware baselines such as EPSS$\times$Context are competitive on this benchmark. In a stub-model harness, the score was never changed by simulated payloads, and a KEV priority floor corrected a priority downgrade. The keyword guardrail detected 9 of 25 attack cases and flagged 7 of 23 benign cases on retrieved content, and does not cover other input channels. Explanation quality was not measured.
+
+These results do not establish universal superiority over existing prioritization methods, optimal weights, comprehensive prompt-injection resistance, generalization to enterprise environments, or predictive performance. Independent annotation, a temporal evaluation against disclosure-date data, an SSVC decision-tree baseline, CVSS v4.0 scores, explanation-quality evaluation, and resolution of the KEV-flag discrepancy are required before stronger claims can be made.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

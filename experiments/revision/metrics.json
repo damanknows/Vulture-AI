@@ -1,0 +1,92 @@
+{
+  "CVSS-only": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "EPSS-only": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "KEV-first": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "CVSS+EPSS+KEV": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "VRS Proposed": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "EPSS\u00d7Exposure": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "Exposure\u00d7Criticality": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "Context-Enhanced CVSS": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "EPSS\u00d7Context": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "original": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "equal": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "cvss_heavy": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "epss_heavy": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "context_heavy": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  },
+  "exposure_heavy": {
+    "ndcg@10": null,
+    "precision@10": null,
+    "recall@10": null,
+    "spearman": null
+  }
+}

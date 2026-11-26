@@ -1,0 +1,99 @@
+strategy,comparison_type,model_a,model_b,statistic,observed,bootstrap_mean,bootstrap_sd,ci_low,ci_high,n_iterations,n_valid
+plain,ranking_similarity,VRS Proposed,CVSS-only,spearman_vs_model,0.759756,0.746834,0.076490,0.563227,0.873872,2000,2000
+plain,ranking_similarity,VRS Proposed,CVSS-only,kendall_tau_vs_model,0.587805,0.596662,0.074558,0.443841,0.736585,2000,2000
+plain,ranking_similarity,VRS Proposed,CVSS-only,top5_overlap,0.400000,0.409800,0.233262,0.000000,0.800000,2000,2000
+plain,ranking_similarity,VRS Proposed,CVSS-only,top10_overlap,0.600000,0.589900,0.137722,0.300000,0.800000,2000,2000
+plain,ranking_similarity,VRS Proposed,CVSS-only,top15_overlap,0.666667,0.698833,0.103793,0.466667,0.866667,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS-only,spearman_vs_model,0.874564,0.860662,0.048312,0.741764,0.927709,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS-only,kendall_tau_vs_model,0.692683,0.698943,0.053673,0.578049,0.790244,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS-only,top5_overlap,0.200000,0.385400,0.210164,0.000000,0.800000,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS-only,top10_overlap,0.600000,0.638700,0.131000,0.400000,0.900000,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS-only,top15_overlap,0.733333,0.768600,0.096913,0.533333,0.933333,2000,2000
+plain,ranking_similarity,VRS Proposed,KEV-first,spearman_vs_model,0.885366,0.873740,0.044586,0.768275,0.943733,2000,2000
+plain,ranking_similarity,VRS Proposed,KEV-first,kendall_tau_vs_model,0.726829,0.732794,0.056404,0.612195,0.836646,2000,2000
+plain,ranking_similarity,VRS Proposed,KEV-first,top5_overlap,0.400000,0.419500,0.235260,0.000000,0.800000,2000,2000
+plain,ranking_similarity,VRS Proposed,KEV-first,top10_overlap,0.700000,0.661200,0.133280,0.400000,0.900000,2000,2000
+plain,ranking_similarity,VRS Proposed,KEV-first,top15_overlap,0.800000,0.804133,0.092691,0.600000,0.933333,2000,2000
+plain,ranking_similarity,VRS Proposed,CVSS+EPSS+KEV,spearman_vs_model,0.966376,0.958589,0.021796,0.903833,0.987287,2000,2000
+plain,ranking_similarity,VRS Proposed,CVSS+EPSS+KEV,kendall_tau_vs_model,0.868293,0.870263,0.038835,0.782927,0.936585,2000,2000
+plain,ranking_similarity,VRS Proposed,CVSS+EPSS+KEV,top5_overlap,0.600000,0.659300,0.205340,0.200000,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,CVSS+EPSS+KEV,top10_overlap,0.900000,0.813900,0.118717,0.600000,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,CVSS+EPSS+KEV,top15_overlap,0.866667,0.885067,0.068389,0.733333,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS×Exposure,spearman_vs_model,0.921429,0.910604,0.031313,0.839016,0.958014,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS×Exposure,kendall_tau_vs_model,0.770732,0.775644,0.043135,0.687805,0.853659,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS×Exposure,top5_overlap,0.200000,0.433900,0.226840,0.000000,0.800000,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS×Exposure,top10_overlap,0.800000,0.773150,0.126420,0.500000,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS×Exposure,top15_overlap,0.866667,0.866833,0.076773,0.733333,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,Exposure×Criticality,spearman_vs_model,0.877700,0.868355,0.056888,0.734643,0.953493,2000,2000
+plain,ranking_similarity,VRS Proposed,Exposure×Criticality,kendall_tau_vs_model,0.743902,0.750401,0.062749,0.619451,0.858537,2000,2000
+plain,ranking_similarity,VRS Proposed,Exposure×Criticality,top5_overlap,1.000000,0.824100,0.173592,0.400000,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,Exposure×Criticality,top10_overlap,0.800000,0.822950,0.114476,0.600000,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,Exposure×Criticality,top15_overlap,0.933333,0.852900,0.086556,0.666667,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,Context-Enhanced CVSS,spearman_vs_model,0.905575,0.898662,0.054470,0.771402,0.977352,2000,2000
+plain,ranking_similarity,VRS Proposed,Context-Enhanced CVSS,kendall_tau_vs_model,0.809756,0.814634,0.062506,0.680488,0.921951,2000,2000
+plain,ranking_similarity,VRS Proposed,Context-Enhanced CVSS,top5_overlap,0.800000,0.832600,0.172488,0.400000,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,Context-Enhanced CVSS,top10_overlap,0.900000,0.881350,0.101155,0.700000,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,Context-Enhanced CVSS,top15_overlap,0.866667,0.875433,0.079998,0.733333,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS×Context,spearman_vs_model,0.951568,0.943556,0.026906,0.879264,0.980492,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS×Context,kendall_tau_vs_model,0.836585,0.840526,0.041080,0.753598,0.909756,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS×Context,top5_overlap,1.000000,0.892100,0.149896,0.600000,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS×Context,top10_overlap,0.800000,0.855000,0.108724,0.600000,1.000000,2000,2000
+plain,ranking_similarity,VRS Proposed,EPSS×Context,top15_overlap,0.933333,0.887333,0.071848,0.733333,1.000000,2000,2000
+plain,performance_vs_reference_labels,CVSS-only,reference_priority,spearman,0.735714,0.720987,0.098813,0.501529,0.878227,2000,2000
+plain,performance_vs_reference_labels,EPSS-only,reference_priority,spearman,0.823693,0.810522,0.053065,0.690392,0.899133,2000,2000
+plain,performance_vs_reference_labels,KEV-first,reference_priority,spearman,0.824739,0.809695,0.078906,0.620906,0.929970,2000,2000
+plain,performance_vs_reference_labels,CVSS+EPSS+KEV,reference_priority,spearman,0.879965,0.865898,0.044870,0.760105,0.933105,2000,2000
+plain,performance_vs_reference_labels,VRS Proposed,reference_priority,spearman,0.948780,0.939502,0.020396,0.892330,0.972652,2000,2000
+plain,performance_vs_reference_labels,EPSS×Exposure,reference_priority,spearman,0.890941,0.881485,0.040493,0.787265,0.944260,2000,2000
+plain,performance_vs_reference_labels,Exposure×Criticality,reference_priority,spearman,0.895122,0.884211,0.038546,0.791450,0.941642,2000,2000
+plain,performance_vs_reference_labels,Context-Enhanced CVSS,reference_priority,spearman,0.924390,0.912802,0.029696,0.840070,0.958537,2000,2000
+plain,performance_vs_reference_labels,EPSS×Context,reference_priority,spearman,0.933449,0.926187,0.034739,0.841625,0.972483,2000,2000
+stratified,ranking_similarity,VRS Proposed,CVSS-only,spearman_vs_model,0.759756,0.754761,0.058741,0.631520,0.857853,2000,2000
+stratified,ranking_similarity,VRS Proposed,CVSS-only,kendall_tau_vs_model,0.587805,0.600533,0.061366,0.482927,0.719512,2000,2000
+stratified,ranking_similarity,VRS Proposed,CVSS-only,top5_overlap,0.400000,0.413000,0.231642,0.000000,0.800000,2000,2000
+stratified,ranking_similarity,VRS Proposed,CVSS-only,top10_overlap,0.600000,0.604700,0.122456,0.400000,0.800000,2000,2000
+stratified,ranking_similarity,VRS Proposed,CVSS-only,top15_overlap,0.666667,0.661667,0.096435,0.466667,0.866667,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS-only,spearman_vs_model,0.874564,0.870659,0.035245,0.789895,0.926829,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS-only,kendall_tau_vs_model,0.692683,0.707707,0.043795,0.614634,0.787805,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS-only,top5_overlap,0.200000,0.388800,0.204684,0.000000,0.800000,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS-only,top10_overlap,0.600000,0.647300,0.120996,0.400000,0.900000,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS-only,top15_overlap,0.733333,0.756733,0.082693,0.600000,0.933333,2000,2000
+stratified,ranking_similarity,VRS Proposed,KEV-first,spearman_vs_model,0.885366,0.879887,0.036941,0.797722,0.941468,2000,2000
+stratified,ranking_similarity,VRS Proposed,KEV-first,kendall_tau_vs_model,0.726829,0.736798,0.051331,0.629268,0.831707,2000,2000
+stratified,ranking_similarity,VRS Proposed,KEV-first,top5_overlap,0.400000,0.420200,0.233022,0.000000,0.800000,2000,2000
+stratified,ranking_similarity,VRS Proposed,KEV-first,top10_overlap,0.700000,0.671200,0.121647,0.400000,0.900000,2000,2000
+stratified,ranking_similarity,VRS Proposed,KEV-first,top15_overlap,0.800000,0.769500,0.088646,0.600000,0.933333,2000,2000
+stratified,ranking_similarity,VRS Proposed,CVSS+EPSS+KEV,spearman_vs_model,0.966376,0.961211,0.016778,0.921054,0.986063,2000,2000
+stratified,ranking_similarity,VRS Proposed,CVSS+EPSS+KEV,kendall_tau_vs_model,0.868293,0.873468,0.031945,0.804878,0.931707,2000,2000
+stratified,ranking_similarity,VRS Proposed,CVSS+EPSS+KEV,top5_overlap,0.600000,0.648700,0.195518,0.200000,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,CVSS+EPSS+KEV,top10_overlap,0.900000,0.834400,0.108317,0.600000,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,CVSS+EPSS+KEV,top15_overlap,0.866667,0.853633,0.066090,0.733333,0.933333,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS×Exposure,spearman_vs_model,0.921429,0.918797,0.025829,0.862356,0.962718,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS×Exposure,kendall_tau_vs_model,0.770732,0.783849,0.040933,0.700000,0.858537,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS×Exposure,top5_overlap,0.200000,0.420800,0.210593,0.000000,0.800000,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS×Exposure,top10_overlap,0.800000,0.797700,0.103827,0.600000,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS×Exposure,top15_overlap,0.866667,0.885000,0.073302,0.733333,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,Exposure×Criticality,spearman_vs_model,0.877700,0.876963,0.042632,0.779778,0.945122,2000,2000
+stratified,ranking_similarity,VRS Proposed,Exposure×Criticality,kendall_tau_vs_model,0.743902,0.756322,0.049941,0.648780,0.848780,2000,2000
+stratified,ranking_similarity,VRS Proposed,Exposure×Criticality,top5_overlap,1.000000,0.852600,0.157752,0.400000,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,Exposure×Criticality,top10_overlap,0.800000,0.810850,0.117363,0.600000,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,Exposure×Criticality,top15_overlap,0.933333,0.933233,0.065996,0.800000,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,Context-Enhanced CVSS,spearman_vs_model,0.905575,0.904668,0.043053,0.807295,0.970035,2000,2000
+stratified,ranking_similarity,VRS Proposed,Context-Enhanced CVSS,kendall_tau_vs_model,0.809756,0.817126,0.050661,0.712134,0.907317,2000,2000
+stratified,ranking_similarity,VRS Proposed,Context-Enhanced CVSS,top5_overlap,0.800000,0.836700,0.166514,0.400000,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,Context-Enhanced CVSS,top10_overlap,0.900000,0.882900,0.097017,0.700000,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,Context-Enhanced CVSS,top15_overlap,0.866667,0.887700,0.064306,0.733333,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS×Context,spearman_vs_model,0.951568,0.948918,0.021885,0.897731,0.979795,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS×Context,kendall_tau_vs_model,0.836585,0.846884,0.036677,0.773171,0.909756,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS×Context,top5_overlap,1.000000,0.910500,0.138634,0.600000,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS×Context,top10_overlap,0.800000,0.842550,0.105641,0.600000,1.000000,2000,2000
+stratified,ranking_similarity,VRS Proposed,EPSS×Context,top15_overlap,0.933333,0.936367,0.062534,0.800000,1.000000,2000,2000
+stratified,performance_vs_reference_labels,CVSS-only,reference_priority,spearman,0.735714,0.732277,0.071448,0.582718,0.858541,2000,2000
+stratified,performance_vs_reference_labels,EPSS-only,reference_priority,spearman,0.823693,0.820505,0.046183,0.720553,0.897221,2000,2000
+stratified,performance_vs_reference_labels,KEV-first,reference_priority,spearman,0.824739,0.824014,0.051143,0.714804,0.913593,2000,2000
+stratified,performance_vs_reference_labels,CVSS+EPSS+KEV,reference_priority,spearman,0.879965,0.877459,0.035758,0.801037,0.937456,2000,2000
+stratified,performance_vs_reference_labels,VRS Proposed,reference_priority,spearman,0.948780,0.947193,0.014859,0.914804,0.973519,2000,2000
+stratified,performance_vs_reference_labels,EPSS×Exposure,reference_priority,spearman,0.890941,0.887998,0.033541,0.812535,0.944429,2000,2000
+stratified,performance_vs_reference_labels,Exposure×Criticality,reference_priority,spearman,0.895122,0.892172,0.027926,0.828044,0.940945,2000,2000
+stratified,performance_vs_reference_labels,Context-Enhanced CVSS,reference_priority,spearman,0.924390,0.919931,0.023301,0.867069,0.957143,2000,2000
+stratified,performance_vs_reference_labels,EPSS×Context,reference_priority,spearman,0.933449,0.930149,0.024865,0.872099,0.968123,2000,2000

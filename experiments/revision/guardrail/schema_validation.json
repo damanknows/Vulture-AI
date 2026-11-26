@@ -1,0 +1,108 @@
+{
+  "n_cases": 10,
+  "n_passed": 10,
+  "n_failed": 0,
+  "cases": [
+    {
+      "id": "SC01",
+      "label": "valid",
+      "expect_valid": true,
+      "valid": true,
+      "as_expected": true,
+      "error_codes": []
+    },
+    {
+      "id": "SC02",
+      "label": "fenced_valid",
+      "expect_valid": true,
+      "valid": true,
+      "as_expected": true,
+      "error_codes": []
+    },
+    {
+      "id": "SC03",
+      "label": "missing_required_fields",
+      "expect_valid": false,
+      "valid": false,
+      "as_expected": true,
+      "error_codes": [
+        "missing_field",
+        "missing_field",
+        "missing_field",
+        "missing_field",
+        "missing_field"
+      ]
+    },
+    {
+      "id": "SC04",
+      "label": "wrong_type",
+      "expect_valid": false,
+      "valid": false,
+      "as_expected": true,
+      "error_codes": [
+        "wrong_type"
+      ]
+    },
+    {
+      "id": "SC05",
+      "label": "invalid_priority_value",
+      "expect_valid": false,
+      "valid": false,
+      "as_expected": true,
+      "error_codes": [
+        "invalid_priority"
+      ]
+    },
+    {
+      "id": "SC06",
+      "label": "invalid_severity_value",
+      "expect_valid": false,
+      "valid": false,
+      "as_expected": true,
+      "error_codes": [
+        "invalid_severity"
+      ]
+    },
+    {
+      "id": "SC07",
+      "label": "unexpected_field",
+      "expect_valid": false,
+      "valid": false,
+      "as_expected": true,
+      "error_codes": [
+        "unexpected_field"
+      ]
+    },
+    {
+      "id": "SC08",
+      "label": "malformed_json",
+      "expect_valid": false,
+      "valid": false,
+      "as_expected": true,
+      "error_codes": [
+        "malformed_json"
+      ]
+    },
+    {
+      "id": "SC09",
+      "label": "empty_output",
+      "expect_valid": false,
+      "valid": false,
+      "as_expected": true,
+      "error_codes": [
+        "empty_output"
+      ]
+    },
+    {
+      "id": "SC10",
+      "label": "non_object_json",
+      "expect_valid": false,
+      "valid": false,
+      "as_expected": true,
+      "error_codes": [
+        "wrong_top_level_type"
+      ]
+    }
+  ],
+  "note": "Strict validator used as the evaluation standard. The production pydantic parser ignores unexpected fields and does not constrain priority; see report.md."
+}

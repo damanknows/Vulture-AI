@@ -1,0 +1,11 @@
+{
+  "corpus_version": "1.0.0",
+  "scope": "inspected cases (retrieved_content channel)",
+  "confusion_matrix": {
+    "TP": 9,
+    "FN": 16,
+    "FP": 7,
+    "TN": 16
+  },
+  "not_inspected": 12
+}

@@ -1,0 +1,50 @@
+{
+  "kev_feed": {
+    "file": "data/external/known_exploited_vulnerabilities.json",
+    "catalogVersion": "2026.10.13",
+    "dateReleased": "2026-10-13T19:10:43.6568Z",
+    "count": 1741
+  },
+  "checks": {
+    "added_461_in_kev_feed": 0,
+    "cves500_in_kev_feed": 25,
+    "cves500_kev_column_1": 25
+  },
+  "kev_column_vs_feed_mismatches_cves_csv": [
+    {
+      "cve_id": "CVE-2022-1292",
+      "file": "data/benchmark/cves.csv",
+      "csv_kev": "1",
+      "feed_listed": false,
+      "feed_dateAdded": null
+    },
+    {
+      "cve_id": "CVE-2019-15846",
+      "file": "data/benchmark/cves.csv",
+      "csv_kev": "1",
+      "feed_listed": false,
+      "feed_dateAdded": null
+    },
+    {
+      "cve_id": "CVE-2021-3560",
+      "file": "data/benchmark/cves.csv",
+      "csv_kev": "0",
+      "feed_listed": true,
+      "feed_dateAdded": "2023-05-12"
+    },
+    {
+      "cve_id": "CVE-2022-0492",
+      "file": "data/benchmark/cves.csv",
+      "csv_kev": "0",
+      "feed_listed": true,
+      "feed_dateAdded": "2026-06-02"
+    }
+  ],
+  "note": "The same 4 CVEs disagree with the KEV feed in both cves.csv (41 records, headline results) and cves_500.csv (500 records, which includes the same 39 original rows). Each disagreement is a flag-vs-feed mismatch that needs an author decision; no benchmark value was changed.",
+  "kev_column_vs_feed_mismatches_cves_500_csv": [
+    "CVE-2022-1292",
+    "CVE-2019-15846",
+    "CVE-2021-3560",
+    "CVE-2022-0492"
+  ]
+}

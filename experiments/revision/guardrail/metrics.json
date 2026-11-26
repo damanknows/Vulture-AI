@@ -1,0 +1,107 @@
+{
+  "corpus_version": "1.0.0",
+  "n_cases": 60,
+  "n_inspected": 48,
+  "n_not_inspected": 12,
+  "n_attack_inspected": 25,
+  "n_benign_inspected": 23,
+  "confusion_matrix": {
+    "TP": 9,
+    "FN": 16,
+    "FP": 7,
+    "TN": 16
+  },
+  "not_inspected": 12,
+  "metrics": {
+    "TPR_recall": 0.36,
+    "FPR": 0.30434782608695654,
+    "precision": 0.5625,
+    "accuracy": 0.5208333333333334,
+    "F1": 0.43902439024390244,
+    "n": 48
+  },
+  "wilson_95ci": {
+    "TPR_recall": [
+      0.20247880774458224,
+      0.5548150225183514
+    ],
+    "FPR": [
+      0.15604024453214022,
+      0.508657562687592
+    ]
+  },
+  "per_channel": {
+    "cve_description": {
+      "counts": {
+        "TP": 0,
+        "TN": 0,
+        "FP": 0,
+        "FN": 0,
+        "not_inspected": 1
+      },
+      "metrics": {
+        "TPR_recall": null,
+        "FPR": null,
+        "precision": null,
+        "accuracy": null,
+        "F1": null,
+        "n": 0
+      },
+      "n_cases": 1
+    },
+    "query": {
+      "counts": {
+        "TP": 0,
+        "TN": 0,
+        "FP": 0,
+        "FN": 0,
+        "not_inspected": 6
+      },
+      "metrics": {
+        "TPR_recall": null,
+        "FPR": null,
+        "precision": null,
+        "accuracy": null,
+        "F1": null,
+        "n": 0
+      },
+      "n_cases": 6
+    },
+    "retrieved_content": {
+      "counts": {
+        "TP": 9,
+        "TN": 16,
+        "FP": 7,
+        "FN": 16,
+        "not_inspected": 0
+      },
+      "metrics": {
+        "TPR_recall": 0.36,
+        "FPR": 0.30434782608695654,
+        "precision": 0.5625,
+        "accuracy": 0.5208333333333334,
+        "F1": 0.43902439024390244,
+        "n": 48
+      },
+      "n_cases": 48
+    },
+    "scan_banner": {
+      "counts": {
+        "TP": 0,
+        "TN": 0,
+        "FP": 0,
+        "FN": 0,
+        "not_inspected": 5
+      },
+      "metrics": {
+        "TPR_recall": null,
+        "FPR": null,
+        "precision": null,
+        "accuracy": null,
+        "F1": null,
+        "n": 0
+      },
+      "n_cases": 5
+    }
+  }
+}

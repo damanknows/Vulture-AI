@@ -1,0 +1,162 @@
+{
+  "metadata": {
+    "schema_version": "1.0",
+    "dataset_name": "Vulture-AI Curated Reference Benchmark",
+    "dataset_version": "v1.0-original",
+    "generation_timestamp_utc": "2026-11-26T13:46:29.503256+00:00",
+    "benchmark_snapshot_date": "2026-10-14T00:00:00Z"
+  },
+  "population": {
+    "total_records": 41,
+    "real_cve_count": 39,
+    "synthetic_cve_count": 2,
+    "real_cve_ids": [
+      "CVE-2015-3306",
+      "CVE-2017-0144",
+      "CVE-2018-15473",
+      "CVE-2019-11510",
+      "CVE-2019-15846",
+      "CVE-2020-0601",
+      "CVE-2020-13935",
+      "CVE-2020-1472",
+      "CVE-2021-22947",
+      "CVE-2021-23017",
+      "CVE-2021-26855",
+      "CVE-2021-3156",
+      "CVE-2021-32625",
+      "CVE-2021-33037",
+      "CVE-2021-34527",
+      "CVE-2021-3560",
+      "CVE-2021-41773",
+      "CVE-2021-44228",
+      "CVE-2022-0492",
+      "CVE-2022-0847",
+      "CVE-2022-1292",
+      "CVE-2022-1388",
+      "CVE-2022-1552",
+      "CVE-2022-22965",
+      "CVE-2022-22978",
+      "CVE-2022-23710",
+      "CVE-2022-30190",
+      "CVE-2023-20198",
+      "CVE-2023-23397",
+      "CVE-2023-2640",
+      "CVE-2023-28252",
+      "CVE-2023-34362",
+      "CVE-2023-3519",
+      "CVE-2023-38546",
+      "CVE-2023-38831",
+      "CVE-2023-46805",
+      "CVE-2024-1709",
+      "CVE-2024-21413",
+      "CVE-2024-3094"
+    ],
+    "synthetic_cve_ids": [
+      "CVE-2024-99991",
+      "CVE-2024-99992"
+    ]
+  },
+  "feature_provenance": {
+    "cvss": {
+      "source": "NIST NVD v2.0 API",
+      "version": "v3.1",
+      "snapshot_date": "2026-10-14T00:00:00Z",
+      "metric": "Base Score",
+      "range": [
+        0.0,
+        10.0
+      ],
+      "completeness": "40/41"
+    },
+    "epss": {
+      "source": "FIRST.org EPSS API",
+      "snapshot_date": "2026-10-14T00:00:00Z",
+      "metric": "30-day exploitation probability",
+      "range": [
+        0.0,
+        1.0
+      ],
+      "completeness": "39/41",
+      "note": "Rolling 30-day forecast; subject to drift"
+    },
+    "kev": {
+      "source": "CISA Known Exploited Vulnerabilities Catalog",
+      "version": "2026.10.13",
+      "release_date": "2026-10-13T19:10:43.6568Z",
+      "metric": "Binary KEV catalog membership",
+      "kev_listed_count": 25,
+      "kev_unlisted_count": 16
+    },
+    "exposure": {
+      "source": "Archetypal profiles (not organization-specific)",
+      "metric": "Network exposure (N): [0.0, 1.0]",
+      "values": {
+        "1.0": "Internet-facing perimeter",
+        "0.7": "DMZ or partner network",
+        "0.3": "Internal subnet",
+        "0.0": "Air-gapped / isolated"
+      },
+      "note": "Archetypal profiles, not organization-specific"
+    },
+    "asset_criticality": {
+      "source": "Archetypal profiles (not organization-specific)",
+      "metric": "Asset criticality (A): [0.0, 1.0]",
+      "values": {
+        "1.0": "Tier 1 critical (domain controller, payment gateway, DNS)",
+        "0.7": "Tier 2 high-value (production database, VPN)",
+        "0.3": "Tier 3 moderate (internal workstations, dev hosts)",
+        "0.0": "Tier 4 low-value (test environments)"
+      },
+      "note": "Archetypal profiles, not organization-specific"
+    }
+  },
+  "label_provenance": {
+    "origin": "Author-curated SSVC reference rubric (not independently validated)",
+    "methodology": "Manual application of CISA SSVC decision rubric v2.0",
+    "reference": "Spring et al. (2020) Prioritizing Vulnerability Response: A Stakeholder-Specific Vulnerability Categorization (SSVC)",
+    "note": "Author-curated heuristic judgments; NOT independently validated breach ground truth",
+    "distribution": {
+      "Act": 15,
+      "Attend": 12,
+      "Track": 8,
+      "Defer": 6
+    }
+  },
+  "missing_data_inventory": {
+    "missing_cvss": {
+      "count": 1,
+      "cve_ids": [
+        "CVE-2024-99991"
+      ],
+      "handling_policy": "Records with missing CVSS are assigned VRS=None, bucket='unavailable'"
+    },
+    "missing_epss": {
+      "count": 2,
+      "cve_ids": [
+        "CVE-2024-99991",
+        "CVE-2024-99992"
+      ],
+      "handling_policy": "Records with missing EPSS default to EPSS=0.0 with uncertainty flag"
+    }
+  },
+  "data_lineage": {
+    "steps": [
+      "1. 39 real CVEs sourced from NVD (CVSS), FIRST (EPSS), CISA (KEV)",
+      "2. 2 synthetic edge-case records created: CVE-2024-99991 (missing CVSS), CVE-2024-99992 (missing EPSS)",
+      "3. Labels assigned via SSVC rubric traversal by authors",
+      "4. Environment context (N, A) assigned via archetypal profiles",
+      "5. Benchmark frozen at snapshot_date",
+      "6. Manifest generated for reproducibility auditing"
+    ]
+  },
+  "critical_disclaimers": [
+    "Labels are AUTHOR-CURATED using SSVC rubric, NOT independently validated breach ground truth.",
+    "Construct circularity: Reference labels use same features (KEV, EPSS, N) evaluated by VRS.",
+    "High VRS performance reflects CONSTRUCT ALIGNMENT with SSVC rubric, not independent prediction.",
+    "Environment context (N, A) are archetypal profiles, NOT organization-specific telemetry.",
+    "EPSS is rolling 30-day forecast; subject to drift; exact values dependent on query date.",
+    "KEV membership indicates unobserved in federal civilian reporting, NOT confirmed non-exploitation.",
+    "Synthetic edge-case CVEs (CVE-2024-99991, CVE-2024-99992) are non-existent; for testing only.",
+    "Independent analyst validation remains PENDING (future Experiment 2.1)."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "comparison": "Phase 6 re-run of score-integrity harness against git HEAD vulture_chatbot.py vs working tree",
+  "results": {
+    "unmodified_HEAD": {
+      "n_passed": 2,
+      "n_cases": 5,
+      "per_case": {
+        "S01": "fail",
+        "S02": "fail",
+        "S03": "pass",
+        "S04": "fail",
+        "S05": "pass"
+      },
+      "failure_codes": {
+        "S01": [
+          "priority_contradicts_bucket"
+        ],
+        "S02": [
+          "priority_contradicts_bucket"
+        ],
+        "S04": [
+          "priority_contradicts_bucket"
+        ]
+      }
+    },
+    "with_kev_floor": {
+      "n_passed": 5,
+      "n_cases": 5,
+      "per_case": {
+        "S01": "pass",
+        "S02": "pass",
+        "S03": "pass",
+        "S04": "pass",
+        "S05": "pass"
+      },
+      "failure_codes": {}
+    }
+  }
+}

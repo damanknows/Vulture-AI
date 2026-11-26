@@ -1,0 +1,416 @@
+{
+  "phase": "Phase 3: statistical validation and bootstrap analysis",
+  "benchmark": {
+    "file": "data/benchmark/cves.csv",
+    "sha256": "27979cc0029e3d383dc4380c5ab991c4774d15539f5f3058f9ffb7f007416b5e",
+    "n_records": 41,
+    "n_synthetic": 2,
+    "synthetic_ids": [
+      "CVE-2024-99991",
+      "CVE-2024-99992"
+    ],
+    "grade_counts": {
+      "Act": 15,
+      "Attend": 12,
+      "Track": 8,
+      "Defer": 6
+    },
+    "reference_labels": "author-curated SSVC-inspired rubric (not independent ground truth)"
+  },
+  "configuration": {
+    "iterations": 2000,
+    "max_iterations": 5000,
+    "seed": 20261126,
+    "strategies": [
+      "plain",
+      "stratified"
+    ],
+    "ci_method": "percentile bootstrap, 95%, linear interpolation (numpy default)",
+    "k": 10,
+    "thresholds": {
+      "act": 3,
+      "actionable": 2
+    },
+    "topk_levels": [
+      5,
+      10,
+      15
+    ],
+    "numpy": "2.4.6",
+    "scipy": "1.17.1"
+  },
+  "phase2_rankings_reproduced": {
+    "CVSS-only": true,
+    "EPSS-only": true,
+    "KEV-first": true,
+    "CVSS+EPSS+KEV": true,
+    "VRS Proposed": true,
+    "EPSS\u00d7Exposure": true,
+    "Exposure\u00d7Criticality": true,
+    "Context-Enhanced CVSS": true,
+    "EPSS\u00d7Context": true
+  },
+  "observed_metrics": {
+    "CVSS-only": {
+      "ndcg@10": 0.7562813151239033,
+      "precision@10_act": 0.6,
+      "recall@10_act": 0.4,
+      "precision@10_actionable": 1.0,
+      "recall@10_actionable": 0.37037037037037035,
+      "spearman": 0.7357142857142858
+    },
+    "EPSS-only": {
+      "ndcg@10": 0.921723022686679,
+      "precision@10_act": 0.8,
+      "recall@10_act": 0.5333333333333333,
+      "precision@10_actionable": 1.0,
+      "recall@10_actionable": 0.37037037037037035,
+      "spearman": 0.8236933797909407
+    },
+    "KEV-first": {
+      "ndcg@10": 0.7944514789418119,
+      "precision@10_act": 0.7,
+      "recall@10_act": 0.4666666666666667,
+      "precision@10_actionable": 1.0,
+      "recall@10_actionable": 0.37037037037037035,
+      "spearman": 0.8247386759581882
+    },
+    "CVSS+EPSS+KEV": {
+      "ndcg@10": 0.9513467899190737,
+      "precision@10_act": 0.9,
+      "recall@10_act": 0.6,
+      "precision@10_actionable": 1.0,
+      "recall@10_actionable": 0.37037037037037035,
+      "spearman": 0.8799651567944251
+    },
+    "VRS Proposed": {
+      "ndcg@10": 1.0,
+      "precision@10_act": 1.0,
+      "recall@10_act": 0.6666666666666666,
+      "precision@10_actionable": 1.0,
+      "recall@10_actionable": 0.37037037037037035,
+      "spearman": 0.948780487804878
+    },
+    "EPSS\u00d7Exposure": {
+      "ndcg@10": 1.0,
+      "precision@10_act": 1.0,
+      "recall@10_act": 0.6666666666666666,
+      "precision@10_actionable": 1.0,
+      "recall@10_actionable": 0.37037037037037035,
+      "spearman": 0.8909407665505227
+    },
+    "Exposure\u00d7Criticality": {
+      "ndcg@10": 0.9552009891550427,
+      "precision@10_act": 0.9,
+      "recall@10_act": 0.6,
+      "precision@10_actionable": 1.0,
+      "recall@10_actionable": 0.37037037037037035,
+      "spearman": 0.8951219512195122
+    },
+    "Context-Enhanced CVSS": {
+      "ndcg@10": 0.9458352203602567,
+      "precision@10_act": 0.9,
+      "recall@10_act": 0.6,
+      "precision@10_actionable": 1.0,
+      "recall@10_actionable": 0.37037037037037035,
+      "spearman": 0.9243902439024391
+    },
+    "EPSS\u00d7Context": {
+      "ndcg@10": 1.0,
+      "precision@10_act": 1.0,
+      "recall@10_act": 0.6666666666666666,
+      "precision@10_actionable": 1.0,
+      "recall@10_actionable": 0.37037037037037035,
+      "spearman": 0.9334494773519164
+    }
+  },
+  "actionable_verification": {
+    "definition_precision": "|{i in top-10 : grade_i >= 2}| / 10. Denominator fixed at K=10.",
+    "definition_recall": "|{i in top-10 : grade_i >= 2}| / |{r in benchmark : grade_r >= 2}|. Denominator is the count of Act+Attend records.",
+    "relevant_population_size": 27,
+    "ties": "Scores are tied-broken by ascending CVE ID (ranking is a strict permutation). Bootstrap draws tie-break by draw index.",
+    "per_model": {
+      "CVSS-only": {
+        "precision_metrics_py": 1.0,
+        "recall_metrics_py": 0.3704,
+        "precision_matches": true,
+        "recall_matches": true
+      },
+      "EPSS-only": {
+        "precision_metrics_py": 1.0,
+        "recall_metrics_py": 0.3704,
+        "precision_matches": true,
+        "recall_matches": true
+      },
+      "KEV-first": {
+        "precision_metrics_py": 1.0,
+        "recall_metrics_py": 0.3704,
+        "precision_matches": true,
+        "recall_matches": true
+      },
+      "CVSS+EPSS+KEV": {
+        "precision_metrics_py": 1.0,
+        "recall_metrics_py": 0.3704,
+        "precision_matches": true,
+        "recall_matches": true
+      },
+      "VRS Proposed": {
+        "precision_metrics_py": 1.0,
+        "recall_metrics_py": 0.3704,
+        "precision_matches": true,
+        "recall_matches": true
+      },
+      "EPSS\u00d7Exposure": {
+        "precision_metrics_py": 1.0,
+        "recall_metrics_py": 0.3704,
+        "precision_matches": true,
+        "recall_matches": true
+      },
+      "Exposure\u00d7Criticality": {
+        "precision_metrics_py": 1.0,
+        "recall_metrics_py": 0.3704,
+        "precision_matches": true,
+        "recall_matches": true
+      },
+      "Context-Enhanced CVSS": {
+        "precision_metrics_py": 1.0,
+        "recall_metrics_py": 0.3704,
+        "precision_matches": true,
+        "recall_matches": true
+      },
+      "EPSS\u00d7Context": {
+        "precision_metrics_py": 1.0,
+        "recall_metrics_py": 0.3704,
+        "precision_matches": true,
+        "recall_matches": true
+      }
+    },
+    "all_match_metrics_py": true,
+    "discriminative": false
+  },
+  "tests_considered": {
+    "paired_t_test": "not used: metric differences are not normal or independent; a single ranking per model yields one observation",
+    "wilcoxon_or_sign_test_on_records": "not used: NDCG/Recall/Spearman are not per-record additive; no per-query distribution exists",
+    "bootstrap_percentile_interval": "used, descriptive only",
+    "p_values": "not reported: no valid null distribution exists for this design"
+  },
+  "warnings": [
+    "SMALL SAMPLE: n=41 < 100. Bootstrap intervals are unstable at this size.",
+    "SYNTHETIC RECORDS: 2 of 41 records are synthetic edge cases (no real CVE). They are included as in the original benchmark.",
+    "CEILING: VRS NDCG@10 is 1.0 on the observed data. The bootstrap distribution is truncated at 1.0.",
+    "CEILING: VRS P@10(Act) is 1.0 on the observed data.",
+    "CEILING: plain/CVSS-only/precision@10_actionable is at its maximum in 99.9% of iterations.",
+    "CEILING: plain/EPSS-only/precision@10_actionable is at its maximum in 99.9% of iterations.",
+    "DEGENERATE: plain/KEV-first/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: plain/CVSS+EPSS+KEV/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: plain/VRS Proposed/ndcg@10 has zero bootstrap variance or no valid iterations.",
+    "CEILING: plain/VRS Proposed/precision@10_act is at its maximum in 97.0% of iterations.",
+    "DEGENERATE: plain/VRS Proposed/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "CEILING: plain/EPSS\u00d7Exposure/ndcg@10 is at its maximum in 75.8% of iterations.",
+    "CEILING: plain/EPSS\u00d7Exposure/precision@10_act is at its maximum in 75.1% of iterations.",
+    "UNSTABLE INTERVAL: plain/EPSS\u00d7Exposure/recall@10_act split-half CI drift 0.091 > 0.05.",
+    "DEGENERATE: plain/EPSS\u00d7Exposure/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "CEILING: plain/Exposure\u00d7Criticality/precision@10_actionable is at its maximum in 99.4% of iterations.",
+    "UNSTABLE INTERVAL: plain/Context-Enhanced CVSS/precision@10_act split-half CI drift 0.100 > 0.05.",
+    "DEGENERATE: plain/Context-Enhanced CVSS/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "CEILING: plain/EPSS\u00d7Context/ndcg@10 is at its maximum in 79.7% of iterations.",
+    "CEILING: plain/EPSS\u00d7Context/precision@10_act is at its maximum in 78.5% of iterations.",
+    "UNSTABLE INTERVAL: plain/EPSS\u00d7Context/precision@10_act split-half CI drift 0.100 > 0.05.",
+    "DEGENERATE: plain/EPSS\u00d7Context/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/CVSS-only/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/CVSS-only/recall@10_actionable has zero bootstrap variance or no valid iterations.",
+    "CEILING: stratified/EPSS-only/precision@10_actionable is at its maximum in 100.0% of iterations.",
+    "DEGENERATE: stratified/KEV-first/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/KEV-first/recall@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/CVSS+EPSS+KEV/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/CVSS+EPSS+KEV/recall@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/VRS Proposed/ndcg@10 has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/VRS Proposed/precision@10_act has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/VRS Proposed/recall@10_act has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/VRS Proposed/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/VRS Proposed/recall@10_actionable has zero bootstrap variance or no valid iterations.",
+    "CEILING: stratified/EPSS\u00d7Exposure/ndcg@10 is at its maximum in 87.2% of iterations.",
+    "CEILING: stratified/EPSS\u00d7Exposure/precision@10_act is at its maximum in 87.2% of iterations.",
+    "DEGENERATE: stratified/EPSS\u00d7Exposure/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/EPSS\u00d7Exposure/recall@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/Exposure\u00d7Criticality/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/Exposure\u00d7Criticality/recall@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/Context-Enhanced CVSS/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/Context-Enhanced CVSS/recall@10_actionable has zero bootstrap variance or no valid iterations.",
+    "CEILING: stratified/EPSS\u00d7Context/ndcg@10 is at its maximum in 88.2% of iterations.",
+    "CEILING: stratified/EPSS\u00d7Context/precision@10_act is at its maximum in 88.2% of iterations.",
+    "UNSTABLE INTERVAL: stratified/EPSS\u00d7Context/precision@10_act split-half CI drift 0.100 > 0.05.",
+    "UNSTABLE INTERVAL: stratified/EPSS\u00d7Context/recall@10_act split-half CI drift 0.067 > 0.05.",
+    "DEGENERATE: stratified/EPSS\u00d7Context/precision@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE: stratified/EPSS\u00d7Context/recall@10_actionable has zero bootstrap variance or no valid iterations.",
+    "DEGENERATE COMPARISON: plain VRS vs KEV-first on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: plain VRS vs KEV-first on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: plain VRS vs CVSS+EPSS+KEV on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: plain VRS vs CVSS+EPSS+KEV on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: plain VRS vs EPSS\u00d7Exposure on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: plain VRS vs EPSS\u00d7Exposure on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: plain VRS vs Context-Enhanced CVSS on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: plain VRS vs Context-Enhanced CVSS on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: plain VRS vs EPSS\u00d7Context on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: plain VRS vs EPSS\u00d7Context on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs CVSS-only on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs CVSS-only on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs KEV-first on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs KEV-first on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs CVSS+EPSS+KEV on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs CVSS+EPSS+KEV on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs EPSS\u00d7Exposure on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs EPSS\u00d7Exposure on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs Exposure\u00d7Criticality on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs Exposure\u00d7Criticality on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs Context-Enhanced CVSS on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs Context-Enhanced CVSS on recall@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs EPSS\u00d7Context on precision@10_actionable: no variation in paired difference.",
+    "DEGENERATE COMPARISON: stratified VRS vs EPSS\u00d7Context on recall@10_actionable: no variation in paired difference.",
+    "AUTHOR-CURATED LABELS: reference grades come from the authors' SSVC-inspired rubric, not independent ground truth.",
+    "NON-INDEPENDENT LABELS: reference labels use the same features as VRS (KEV, EPSS, exposure, criticality).",
+    "NO SIGNIFICANCE CLAIMS: intervals are descriptive. No p-values are reported."
+  ],
+  "limitations": [
+    "Sample size: n=41 records; 2 of them (CVE-2024-99991/99992) are synthetic, so 39 are real CVEs.",
+    "Reference labels are author-curated SSVC-inspired judgments, not independent ground truth.",
+    "Circularity: reference labels use KEV, EPSS, exposure and criticality, which are the same inputs VRS uses. Agreement with the reference is construct consistency, not predictive validity.",
+    "Non-independence: records share vendors and products (e.g. several Microsoft, Apache and Linux entries), so i.i.d. record resampling understates clustering.",
+    "Discreteness: with n=41 each record shifts the metrics by discrete steps. Recall denominators are fixed small integers (15 Act, 27 Actionable).",
+    "Ceiling: VRS attains NDCG@10=1.0 and P@10(Act)=1.0 on the observed data, so the bootstrap distribution is truncated at 1.0 and CI endpoints are biased low.",
+    "Duplicates: with-replacement resampling of n=41 leaves about 63% of distinct records in each sample (1-(1-1/n)^n) and ~37% of draws are duplicates. Duplicate draws are counted as separate items, so a record drawn twice can occupy two top-10 slots and inflate hit counts and the weight of that record.",
+    "Percentile CI: no bias correction (BCa) is applied. Coverage at n=41 with ceiling and discrete metrics is not guaranteed.",
+    "Bootstrap quantifies sampling variability of the benchmark composition only. It does not represent the population of real-world vulnerabilities.",
+    "No significance tests are reported. Each model has one ranking over one benchmark, so there is no independent observation set for a classical test. Bootstrap intervals are descriptive.",
+    "Multiplicity: 8 baseline comparisons x 6 metrics x 2 strategies are reported with no adjustment; interval exclusion is not a confirmed effect.",
+    "Actionable P@10 and R@10 are non-discriminative on this benchmark (see actionable_verification)."
+  ],
+  "strategy_meta": {
+    "plain": {
+      "seed": 20261126,
+      "iterations": 2000,
+      "resampled_units": 41,
+      "stability_draws": {
+        "CVSS-only": {
+          "spearman_vs_model": 0.07647126356435709,
+          "kendall_tau_vs_model": 0.07453926328631845,
+          "top5_overlap": 0.2332036877924532,
+          "top10_overlap": 0.13768801690779048,
+          "top15_overlap": 0.10376669879001539
+        },
+        "EPSS-only": {
+          "spearman_vs_model": 0.048300309429112884,
+          "kendall_tau_vs_model": 0.053660065263701456,
+          "top5_overlap": 0.21011149421200165,
+          "top10_overlap": 0.13096682786110384,
+          "top15_overlap": 0.09688845820495515
+        },
+        "KEV-first": {
+          "spearman_vs_model": 0.04457441672965789,
+          "kendall_tau_vs_model": 0.056389591404255146,
+          "top5_overlap": 0.23520150934889852,
+          "top10_overlap": 0.13324623822082185,
+          "top15_overlap": 0.09266800958259545
+        },
+        "CVSS+EPSS+KEV": {
+          "spearman_vs_model": 0.02179033960971813,
+          "kendall_tau_vs_model": 0.03882572419173263,
+          "top5_overlap": 0.20528884528877844,
+          "top10_overlap": 0.11868778370160935,
+          "top15_overlap": 0.06837231408496668
+        },
+        "EPSS\u00d7Exposure": {
+          "spearman_vs_model": 0.03130488176937689,
+          "kendall_tau_vs_model": 0.0431240483432229,
+          "top5_overlap": 0.22678357524300566,
+          "top10_overlap": 0.12638859719136059,
+          "top15_overlap": 0.07675339297603288
+        },
+        "Exposure\u00d7Criticality": {
+          "spearman_vs_model": 0.05687331347625983,
+          "kendall_tau_vs_model": 0.0627328708569976,
+          "top5_overlap": 0.17354881157760774,
+          "top10_overlap": 0.11444779377515324,
+          "top15_overlap": 0.08653471365103527
+        },
+        "Context-Enhanced CVSS": {
+          "spearman_vs_model": 0.05445615194598022,
+          "kendall_tau_vs_model": 0.062490689371934874,
+          "top5_overlap": 0.17244488974742048,
+          "top10_overlap": 0.10112950855215307,
+          "top15_overlap": 0.07997799002781258
+        },
+        "EPSS\u00d7Context": {
+          "spearman_vs_model": 0.02689976614886437,
+          "kendall_tau_vs_model": 0.04106991613821774,
+          "top5_overlap": 0.1498585666553634,
+          "top10_overlap": 0.10869682608061747,
+          "top15_overlap": 0.07183004632850766
+        }
+      }
+    },
+    "stratified": {
+      "seed": 20261126,
+      "iterations": 2000,
+      "resampled_units": 41,
+      "stability_draws": {
+        "CVSS-only": {
+          "spearman_vs_model": 0.058726031572720716,
+          "kendall_tau_vs_model": 0.06135073671601555,
+          "top5_overlap": 0.23158367818134334,
+          "top10_overlap": 0.12242511997135229,
+          "top15_overlap": 0.09641058033224362
+        },
+        "EPSS-only": {
+          "spearman_vs_model": 0.03523613083847094,
+          "kendall_tau_vs_model": 0.043783606112196644,
+          "top5_overlap": 0.2046327442028768,
+          "top10_overlap": 0.12096573895115924,
+          "top15_overlap": 0.08267201595595831
+        },
+        "KEV-first": {
+          "spearman_vs_model": 0.036931668837786105,
+          "kendall_tau_vs_model": 0.0513177009490489,
+          "top5_overlap": 0.23296343060660832,
+          "top10_overlap": 0.1216164462562527,
+          "top15_overlap": 0.08862389319164697
+        },
+        "CVSS+EPSS+KEV": {
+          "spearman_vs_model": 0.016774237633649897,
+          "kendall_tau_vs_model": 0.031936983981984836,
+          "top5_overlap": 0.19546946053028338,
+          "top10_overlap": 0.10828961169013397,
+          "top15_overlap": 0.06607335149496943
+        },
+        "EPSS\u00d7Exposure": {
+          "spearman_vs_model": 0.02582272757804142,
+          "kendall_tau_vs_model": 0.040922811221698024,
+          "top5_overlap": 0.21054063740760356,
+          "top10_overlap": 0.1038013005698869,
+          "top15_overlap": 0.07328407436514127
+        },
+        "Exposure\u00d7Criticality": {
+          "spearman_vs_model": 0.0426209370301849,
+          "kendall_tau_vs_model": 0.049928952258650884,
+          "top5_overlap": 0.15771252328207802,
+          "top10_overlap": 0.1173340423747516,
+          "top15_overlap": 0.06597971910620211
+        },
+        "Context-Enhanced CVSS": {
+          "spearman_vs_model": 0.04304193936343464,
+          "kendall_tau_vs_model": 0.05064797485811096,
+          "top5_overlap": 0.16647255028983007,
+          "top10_overlap": 0.09699273168645163,
+          "top15_overlap": 0.06428961381470917
+        },
+        "EPSS\u00d7Context": {
+          "spearman_vs_model": 0.021879750281767987,
+          "kendall_tau_vs_model": 0.03666771169846389,
+          "top5_overlap": 0.13859924242217198,
+          "top10_overlap": 0.10561485454234172,
+          "top15_overlap": 0.06251861056250903
+        }
+      }
+    }
+  }
+}

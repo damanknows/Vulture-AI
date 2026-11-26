@@ -127,7 +127,14 @@ def chat_with_validation(query: str, dataset: list[dict], cve_id: str = None, fi
         if finding:
             vrs_data = risk_engine.compute_vrs(finding)
             validated["vrs_score"] = vrs_data.get("vrs")
-            
+            # Deterministic priority floor: a KEV-listed (bucket "urgent") finding
+            # cannot be reported below "high", regardless of LLM output.
+            if vrs_data.get("bucket") == "urgent" and validated.get("priority") != "high":
+                validated["uncertainties"].append(
+                    f"LLM priority '{validated.get('priority')}' overridden to 'high' by deterministic KEV rule"
+                )
+                validated["priority"] = "high"
+                
         return validated
         
     except Exception as e:
