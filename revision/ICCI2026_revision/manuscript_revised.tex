@@ -215,7 +215,7 @@ CVSS+EPSS+KEV & AP & $+0.0177$ & $[0.0000, 0.1084]$ & No \\
 Because $K=0$, \texttt{KEV-first} reduces to \texttt{CVSS-only}. Both single-signal baselines underperform the combined methods in point estimates, and VRS shows statistically significant gains over \texttt{CVSS-only}/\texttt{KEV-first} on Recall@50 ($+0.2193$) and over \texttt{EPSS-only} on AP ($+0.0655$). However, \textbf{VRS does not demonstrate statistically significant superiority over \texttt{CVSS+EPSS+KEV}}: all six 95\% bootstrap intervals include zero.
 
 \subsection{Exploratory 41-CVE Policy Concordance (RQ2)}
-On the separate 41-CVE exploratory benchmark (v1, SHA prefix \texttt{27979cc0}), VRS obtains NDCG@10 of 1.0000 and Spearman $\rho$ of 0.9488 (versus CVSS-only 0.7563 / 0.7357, EPSS-only 0.9217 / 0.8237, KEV-first 0.7945 / 0.8247, and CVSS+EPSS+KEV 0.9513 / 0.8800; Table~\ref{tab:exploratory} and Fig.~\ref{fig:ranking_and_recall}). Removing environmental context (\texttt{No Context}) drops $\rho$ to 0.8782, whereas simple context-aware baselines are competitive: \texttt{EPSS$\times$Context} achieves NDCG@10 of 1.0000 and $\rho$ of 0.9334 (paired 95\% CI vs VRS: $[-0.038, 0.080]$, including zero). Across six exploratory weight perturbations, top-10 membership remained 10/10 identical, with full-rank Spearman $\rho \in [0.9915, 0.9990]$ (mean 0.9948) and Kendall $\tau \in [0.9415, 0.9878]$ (mean 0.9620; \texttt{sensitivity/stability\_summary.json}). On benchmark v2 (correcting 4 KEV flags, SHA \texttt{2b78d7c2}), VRS achieves $\rho = 0.9317$ vs \texttt{EPSS$\times$Context} $\rho = 0.9334$ (diff $-0.002 [-0.070, 0.059]$). On the 500-CVE snapshot check, all 25 KEV entries belong to the 39 curated records, so KEV-first, CVSS+EPSS+KEV, and VRS all reach R@25 = 1.0000 by construction.
+On the separate 41-CVE exploratory benchmark (v1, SHA prefix \texttt{27979cc0}), VRS obtains NDCG@10 of 1.0000 and Spearman $\rho$ of 0.9488 (versus CVSS-only 0.7563 / 0.7357, EPSS-only 0.9217 / 0.8237, KEV-first 0.7945 / 0.8247, CVSS+EPSS+KEV 0.9513 / 0.8800, and a vendored CISA/SEI SSVC v2.0 decision-tree baseline 0.6939 / 0.6129; Table~\ref{tab:exploratory} and Fig.~\ref{fig:ranking_and_recall}). Under 2{,}000 paired bootstrap resamples (seed \texttt{20261126}), VRS outperforms the SSVC tree by $+0.3061$ ($[0.0938, 0.4754]$) on NDCG@10 and $+0.3359$ ($[0.1300, 0.6242]$) on Spearman $\rho$ (Actionable P@10/R@10 are 1.0000 / 0.3704 for both); across all $2\times2$ combinations of SSVC's default assumptions (\texttt{Automatable} $\times$ \texttt{Public Well-being}), SSVC's Spearman $\rho$ ranges over $[0.6129, 0.7620]$ (\texttt{results\_ssvc.json}). Removing environmental context (\texttt{No Context}) drops $\rho$ to 0.8782, whereas simple context-aware baselines are competitive: \texttt{EPSS$\times$Context} achieves NDCG@10 of 1.0000 and $\rho$ of 0.9334 (paired 95\% CI vs VRS: $[-0.038, 0.080]$, including zero). Across six exploratory weight perturbations, top-10 membership remained 10/10 identical, with full-rank Spearman $\rho \in [0.9915, 0.9990]$ (mean 0.9948) and Kendall $\tau \in [0.9415, 0.9878]$ (mean 0.9620; \texttt{sensitivity/stability\_summary.json}). On benchmark v2 (correcting 4 KEV flags, SHA \texttt{2b78d7c2}), VRS achieves $\rho = 0.9317$ vs \texttt{EPSS$\times$Context} $\rho = 0.9334$ (diff $-0.002 [-0.070, 0.059]$). On the 500-CVE snapshot check, all 25 KEV entries belong to the 39 curated records, so KEV-first, CVSS+EPSS+KEV, and VRS all reach R@25 = 1.0000 by construction.
 
 \begin{figure}[t]
 \centering
@@ -226,13 +226,14 @@ On the separate 41-CVE exploratory benchmark (v1, SHA prefix \texttt{27979cc0}),
 
 \begin{table}[t]
 \centering
-\caption{Exploratory 41-CVE SSVC-inspired benchmark (v1): baselines, context baselines, and ablations. Source: \texttt{experiments/results/metrics.json}, \texttt{statistics/}.}
+\caption{Exploratory 41-CVE SSVC-inspired benchmark (v1): baselines, SSVC tree, context baselines, and ablations. Source: \texttt{experiments/results/metrics.json}, \texttt{baselines/results\_ssvc.json}, \texttt{statistics/}.}
 \label{tab:exploratory}
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Method / Variant} & \textbf{NDCG@10} & \textbf{P@10 (Act)} & \textbf{R@10 (Act)} & \textbf{Spearman $\rho$} \\
 \midrule
+SSVC tree$^\dagger$      & 0.6939 & 0.5000 & 0.3333 & 0.6129 \\
 CVSS-only               & 0.7563 & 0.6000 & 0.4000 & 0.7357 \\
 EPSS-only               & 0.9217 & 0.8000 & 0.5333 & 0.8237 \\
 KEV-first               & 0.7945 & 0.7000 & 0.4667 & 0.8247 \\
@@ -241,6 +242,7 @@ EPSS$\times$Context     & 1.0000 & --     & 0.6667 & 0.9334 \\
 VRS (No Context)        & 0.9513 & 0.9000 & 0.6000 & 0.8782 \\
 \textbf{VRS (vrs-v1)}   & \textbf{1.0000} & \textbf{1.0000} & \textbf{0.6667} & \textbf{0.9488} \\
 \bottomrule
+\multicolumn{5}{l}{\footnotesize $^\dagger$Assumptions: \texttt{Automatable=yes}, \texttt{Public Well-being=minimal}, $\text{EPSS}\ge0.1$ (PoC), $\text{CVSS}\ge9.0$ (total).} \\
 \end{tabular}%
 }
 \end{table}
@@ -293,7 +295,7 @@ TEOB demonstrates that combining historical CVSS and EPSS signals improves ranki
     \item \textbf{KEV outcome proxy:} Future CISA KEV addition reflects federal-reported exploitation, not exhaustive real-world exploitation or organizational remediation urgency. Also, using a single \texttt{2026.10.13} snapshot cannot detect hypothetical additions later removed before \texttt{2026-10-13}.
     \item \textbf{Sparse positives and missing CVSS v4.0:} Only 11 of 7,927 CVEs (0.139\%) entered KEV within 90 days, producing wide bootstrap intervals. Additionally, 518 CVEs had CVSS v4.0 only and were treated as missing CVSS v3.x.
     \item \textbf{Exploratory benchmark limits:} The 41-CVE set is small, author-graded without inter-rater agreement, and shares inputs with VRS; weights remain exploratory and uncalibrated.
-    \item \textbf{Unmeasured components (\texttt{NOT\_AVAILABLE}):} Explanation quality (0 ratings in \texttt{explanation\_evaluation.csv}), scanner-to-CVE matching accuracy (no labelled Nmap corpus), live frontier-LLM guardrail behavior (no local model server), and SSVC/CVSS v4.0 comparison on the 41-CVE benchmark (\texttt{cves.csv} lacks SSVC/v4.0 inputs) remain unmeasured (TODO: future work).
+    \item \textbf{Unmeasured components (\texttt{NOT\_AVAILABLE}):} Explanation quality (0 ratings in \texttt{explanation\_evaluation.csv}), scanner-to-CVE matching accuracy (no labelled Nmap corpus), live frontier-LLM guardrail behavior (no local model server), and CVSS v4.0 on the 41-CVE benchmark (\texttt{cves.csv} lacks v4.0 inputs) remain unmeasured (TODO: future work). The SSVC tree is omitted from TEOB because historical Mission Prevalence and Public Well-being context are unavailable at \texttt{2026-07-01} and pre-cutoff KEV is zero (\texttt{ssvc\_teob\_infeasible.md}).
 \end{itemize}
 
 \section{Conclusion}

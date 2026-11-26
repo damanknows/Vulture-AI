@@ -1,0 +1,648 @@
+{
+  "implementation_provenance": "vendored, cited (CISA/SEI SSVC v2.0; Spring et al. CMU/SEI-2019-TR-005)",
+  "benchmark": "data/benchmark/cves.csv",
+  "n_records": 41,
+  "config": {
+    "epss_poc_threshold": 0.1,
+    "cvss_total_threshold": 9.0,
+    "automatable_default": "yes",
+    "automatable_assumption": "Default 'yes' (no per-record automatable field in cves.csv).",
+    "public_wellbeing_default": "minimal",
+    "public_wellbeing_assumption": "Default 'minimal' (no public well-being field in cves.csv).",
+    "tier_mapping": {
+      "Act": 3,
+      "Attend": 2,
+      "Track*": 1,
+      "Track": 1
+    }
+  },
+  "metrics": {
+    "ndcg@10": 0.6939,
+    "precision@10_act": 0.5,
+    "recall@10_act": 0.3333,
+    "precision@10_actionable": 1.0,
+    "recall@10_actionable": 0.3704,
+    "spearman": 0.6129
+  },
+  "paired_bootstrap_vrs_minus_ssvc": {
+    "ndcg@10": {
+      "vrs_observed": 1.0,
+      "ssvc_observed": 0.6939,
+      "observed_diff": 0.3061,
+      "ci_95": [
+        0.0938,
+        0.4754
+      ],
+      "significant_95": true
+    },
+    "precision@10_act": {
+      "vrs_observed": 1.0,
+      "ssvc_observed": 0.5,
+      "observed_diff": 0.5,
+      "ci_95": [
+        0.2,
+        0.8
+      ],
+      "significant_95": true
+    },
+    "recall@10_act": {
+      "vrs_observed": 0.6667,
+      "ssvc_observed": 0.3333,
+      "observed_diff": 0.3333,
+      "ci_95": [
+        0.1053,
+        0.7
+      ],
+      "significant_95": true
+    },
+    "precision@10_actionable": {
+      "vrs_observed": 1.0,
+      "ssvc_observed": 1.0,
+      "observed_diff": 0.0,
+      "ci_95": [
+        0.0,
+        0.0
+      ],
+      "significant_95": false
+    },
+    "recall@10_actionable": {
+      "vrs_observed": 0.3704,
+      "ssvc_observed": 0.3704,
+      "observed_diff": 0.0,
+      "ci_95": [
+        0.0,
+        0.0
+      ],
+      "significant_95": false
+    },
+    "spearman": {
+      "vrs_observed": 0.9488,
+      "ssvc_observed": 0.6129,
+      "observed_diff": 0.3359,
+      "ci_95": [
+        0.13,
+        0.6242
+      ],
+      "significant_95": true
+    }
+  },
+  "assumption_sensitivity_2x2": {
+    "combinations": {
+      "automatable=yes|public_wellbeing=minimal": {
+        "spearman": 0.6129,
+        "ndcg@10": 0.6939
+      },
+      "automatable=yes|public_wellbeing=material": {
+        "spearman": 0.6129,
+        "ndcg@10": 0.6939
+      },
+      "automatable=no|public_wellbeing=minimal": {
+        "spearman": 0.762,
+        "ndcg@10": 0.8759
+      },
+      "automatable=no|public_wellbeing=material": {
+        "spearman": 0.762,
+        "ndcg@10": 0.8759
+      }
+    },
+    "spearman_min": 0.6129,
+    "spearman_max": 0.762
+  },
+  "ranking": [
+    "CVE-2015-3306",
+    "CVE-2017-0144",
+    "CVE-2019-11510",
+    "CVE-2019-15846",
+    "CVE-2020-0601",
+    "CVE-2020-1472",
+    "CVE-2021-26855",
+    "CVE-2021-3156",
+    "CVE-2021-34527",
+    "CVE-2021-41773",
+    "CVE-2021-44228",
+    "CVE-2022-0847",
+    "CVE-2022-1292",
+    "CVE-2022-1388",
+    "CVE-2022-22965",
+    "CVE-2022-22978",
+    "CVE-2022-30190",
+    "CVE-2023-20198",
+    "CVE-2023-23397",
+    "CVE-2023-28252",
+    "CVE-2023-34362",
+    "CVE-2023-3519",
+    "CVE-2023-46805",
+    "CVE-2024-1709",
+    "CVE-2024-21413",
+    "CVE-2024-3094",
+    "CVE-2021-23017",
+    "CVE-2022-1552",
+    "CVE-2023-38831",
+    "CVE-2018-15473",
+    "CVE-2020-13935",
+    "CVE-2021-22947",
+    "CVE-2021-32625",
+    "CVE-2021-33037",
+    "CVE-2021-3560",
+    "CVE-2022-0492",
+    "CVE-2022-23710",
+    "CVE-2023-2640",
+    "CVE-2023-38546",
+    "CVE-2024-99991",
+    "CVE-2024-99992"
+  ],
+  "per_record": {
+    "CVE-2015-3306": {
+      "rank": 1,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2017-0144": {
+      "rank": 2,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2019-11510": {
+      "rank": 3,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2019-15846": {
+      "rank": 4,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2020-0601": {
+      "rank": 5,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2020-1472": {
+      "rank": 6,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2021-26855": {
+      "rank": 7,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2021-3156": {
+      "rank": 8,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2021-34527": {
+      "rank": 9,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2021-41773": {
+      "rank": 10,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2021-44228": {
+      "rank": 11,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2022-0847": {
+      "rank": 12,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2022-1292": {
+      "rank": 13,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2022-1388": {
+      "rank": 14,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2022-22965": {
+      "rank": 15,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2022-22978": {
+      "rank": 16,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "poc",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2022-30190": {
+      "rank": 17,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2023-20198": {
+      "rank": 18,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2023-23397": {
+      "rank": 19,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2023-28252": {
+      "rank": 20,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2023-34362": {
+      "rank": 21,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2023-3519": {
+      "rank": 22,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2023-46805": {
+      "rank": 23,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2024-1709": {
+      "rank": 24,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2024-21413": {
+      "rank": 25,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2024-3094": {
+      "rank": 26,
+      "ssvc_outcome": "Act",
+      "ssvc_tier_score": 3,
+      "inputs": {
+        "exploitation": "poc",
+        "automatable": "yes",
+        "technical_impact": "total",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2021-23017": {
+      "rank": 27,
+      "ssvc_outcome": "Attend",
+      "ssvc_tier_score": 2,
+      "inputs": {
+        "exploitation": "poc",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2022-1552": {
+      "rank": 28,
+      "ssvc_outcome": "Attend",
+      "ssvc_tier_score": 2,
+      "inputs": {
+        "exploitation": "poc",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "essential",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2023-38831": {
+      "rank": 29,
+      "ssvc_outcome": "Attend",
+      "ssvc_tier_score": 2,
+      "inputs": {
+        "exploitation": "active",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2018-15473": {
+      "rank": 30,
+      "ssvc_outcome": "Track*",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "poc",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2020-13935": {
+      "rank": 31,
+      "ssvc_outcome": "Track*",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "poc",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2021-22947": {
+      "rank": 32,
+      "ssvc_outcome": "Track",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "none",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "negligible",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2021-32625": {
+      "rank": 33,
+      "ssvc_outcome": "Track",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "none",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2021-33037": {
+      "rank": 34,
+      "ssvc_outcome": "Track*",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "poc",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2021-3560": {
+      "rank": 35,
+      "ssvc_outcome": "Track*",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "poc",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2022-0492": {
+      "rank": 36,
+      "ssvc_outcome": "Track",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "none",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2022-23710": {
+      "rank": 37,
+      "ssvc_outcome": "Track",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "none",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2023-2640": {
+      "rank": 38,
+      "ssvc_outcome": "Track*",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "poc",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2023-38546": {
+      "rank": 39,
+      "ssvc_outcome": "Track",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "none",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "negligible",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2024-99991": {
+      "rank": 40,
+      "ssvc_outcome": "Track",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "none",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    },
+    "CVE-2024-99992": {
+      "rank": 41,
+      "ssvc_outcome": "Track",
+      "ssvc_tier_score": 1,
+      "inputs": {
+        "exploitation": "none",
+        "automatable": "yes",
+        "technical_impact": "partial",
+        "mission_prevalence": "support",
+        "public_wellbeing": "minimal"
+      }
+    }
+  }
+}

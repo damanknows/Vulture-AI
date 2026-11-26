@@ -131,6 +131,16 @@ def audit_manuscript_numbers(tex_path: Path = MANUSCRIPT_TEX) -> Dict[str, objec
     check_token("guardrail.TN", str(cm["TN"]))
     check_token("integrity.passed", f"{integ['n_passed']} / {integ['n_cases']}")
 
+    # SSVC baseline on 41-CVE benchmark
+    ssvc_json = Path("experiments/revision/baselines/results_ssvc.json")
+    if ssvc_json.exists():
+        with open(ssvc_json, "r", encoding="utf-8") as f:
+            ssvc = json.load(f)
+        for k in ("ndcg@10", "precision@10_act", "recall@10_act", "spearman"):
+            val = ssvc["metrics"][k]
+            assert 0.0 <= val <= 1.0
+            check_token(f"ssvc.{k}", f"{val:.4f}")
+
     all_ok = all(c["present_in_tex"] for c in checks)
     return {"all_checked_metrics_match": all_ok, "n_checks": len(checks), "checks": checks}
 
