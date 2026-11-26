@@ -25,7 +25,7 @@ TEOB_EVAL_JSON = Path("experiments/revision/teob_evaluation.json")
 METRICS_41_JSON = Path("experiments/results/metrics.json")
 GUARDRAIL_JSON = Path("experiments/revision/guardrail/metrics.json")
 INTEGRITY_JSON = Path("experiments/revision/guardrail/score_integrity.json")
-SENSITIVITY_JSON = Path("experiments/revision/sensitivity/stability_summary.json")
+SENSITIVITY_JSON = Path("experiments/revision/sensitivity/full_rank_results.json")
 MANUSCRIPT_TEX = Path("revision/ICCI2026_revision/manuscript_revised.tex")
 OUT_JSON = Path("experiments/revision/remaining_gaps_audit.json")
 
@@ -115,13 +115,23 @@ def audit_manuscript_numbers(tex_path: Path = MANUSCRIPT_TEX) -> Dict[str, objec
     # Weight sensitivity stability summary
     if SENSITIVITY_JSON.exists():
         with open(SENSITIVITY_JSON, "r", encoding="utf-8") as f:
-            sens = json.load(f)["aggregate"]
+            sens = json.load(f)["aggregate_excluding_original"]
         assert 0.0 <= sens["spearman_rho_min"] <= sens["spearman_rho_max"] <= 1.0
         assert 0.0 <= sens["kendall_tau_min"] <= sens["kendall_tau_max"] <= 1.0
         check_token("sensitivity.rho_min", f"{sens['spearman_rho_min']:.4f}")
         check_token("sensitivity.rho_max", f"{sens['spearman_rho_max']:.4f}")
         check_token("sensitivity.tau_min", f"{sens['kendall_tau_min']:.4f}")
         check_token("sensitivity.tau_max", f"{sens['kendall_tau_max']:.4f}")
+
+    # Ablation metrics
+    ablation_json = Path("experiments/results/ablation.json")
+    if ablation_json.exists():
+        with open(ablation_json, "r", encoding="utf-8") as f:
+            abl = json.load(f).get("metrics", {})
+        for vname, mets in abl.items():
+            for mk, mv in mets.items():
+                assert 0.0 <= mv <= 1.0, f"ablation.{vname}.{mk}={mv} > 1.0"
+                check_token(f"ablation.{vname}.{mk}", f"{mv:.4f}")
 
     # Guardrail & Integrity
     cm = guard["confusion_matrix"]

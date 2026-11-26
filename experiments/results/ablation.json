@@ -272,5 +272,47 @@
     "CVE-2021-22947",
     "CVE-2023-38546",
     "CVE-2024-99991"
-  ]
+  ],
+  "metrics": {
+    "vrs_full": {
+      "ndcg5": 1.0,
+      "ndcg10": 1.0,
+      "ndcg15": 1.0,
+      "precision10_act": 1.0,
+      "recall10_act": 0.6667,
+      "spearman": 0.9488
+    },
+    "vrs_no_epss": {
+      "ndcg5": 1.0,
+      "ndcg10": 1.0,
+      "ndcg15": 1.0,
+      "precision10_act": 1.0,
+      "recall10_act": 0.6667,
+      "spearman": 0.9575
+    },
+    "vrs_no_kev": {
+      "ndcg5": 1.0,
+      "ndcg10": 0.9581,
+      "ndcg15": 0.9675,
+      "precision10_act": 0.9,
+      "recall10_act": 0.6,
+      "spearman": 0.9451
+    },
+    "vrs_no_context": {
+      "ndcg5": 0.925,
+      "ndcg10": 0.9513,
+      "ndcg15": 0.913,
+      "precision10_act": 0.9,
+      "recall10_act": 0.6,
+      "spearman": 0.8782
+    },
+    "vrs_no_buckets": {
+      "ndcg5": 1.0,
+      "ndcg10": 1.0,
+      "ndcg15": 1.0,
+      "precision10_act": 1.0,
+      "recall10_act": 0.6667,
+      "spearman": 0.9535
+    }
+  }
 }

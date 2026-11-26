@@ -28,6 +28,13 @@ from typing import Dict, List
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from risk_engine import DEFAULT_WEIGHTS, rank_findings
+from experiments.metrics import (
+    THRESHOLD_ACT,
+    ndcg_at_k,
+    precision_at_k,
+    recall_at_k,
+    spearman_correlation,
+)
 from experiments.run_baselines import load_benchmark
 
 
@@ -98,7 +105,24 @@ def run_ablation(benchmark_path="data/benchmark/cves.csv"):
         "vrs_no_epss": no_epss_ranking,
         "vrs_no_kev": no_kev_ranking,
         "vrs_no_context": no_context_ranking,
-        "vrs_no_buckets": no_bucket_ranking
+        "vrs_no_buckets": no_bucket_ranking,
+        "metrics": {
+            name: {
+                "ndcg5": ndcg_at_k(order, relevance_dict, k=5),
+                "ndcg10": ndcg_at_k(order, relevance_dict, k=10),
+                "ndcg15": ndcg_at_k(order, relevance_dict, k=15),
+                "precision10_act": precision_at_k(order, relevance_dict, k=10, threshold=THRESHOLD_ACT),
+                "recall10_act": recall_at_k(order, relevance_dict, k=10, threshold=THRESHOLD_ACT),
+                "spearman": spearman_correlation(order, ref_ranking),
+            }
+            for name, order in (
+                ("vrs_full", full_ranking),
+                ("vrs_no_epss", no_epss_ranking),
+                ("vrs_no_kev", no_kev_ranking),
+                ("vrs_no_context", no_context_ranking),
+                ("vrs_no_buckets", no_bucket_ranking),
+            )
+        },
     }
 
     os.makedirs("experiments/results", exist_ok=True)

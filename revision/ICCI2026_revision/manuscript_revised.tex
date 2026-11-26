@@ -215,7 +215,7 @@ CVSS+EPSS+KEV & AP & $+0.0177$ & $[0.0000, 0.1084]$ & No \\
 Because $K=0$, \texttt{KEV-first} reduces to \texttt{CVSS-only}. Both single-signal baselines underperform the combined methods in point estimates, and VRS shows statistically significant gains over \texttt{CVSS-only}/\texttt{KEV-first} on Recall@50 ($+0.2193$) and over \texttt{EPSS-only} on AP ($+0.0655$). However, \textbf{VRS does not demonstrate statistically significant superiority over \texttt{CVSS+EPSS+KEV}}: all six 95\% bootstrap intervals include zero.
 
 \subsection{Exploratory 41-CVE Policy Concordance (RQ2)}
-On the separate 41-CVE exploratory benchmark (v1, SHA prefix \texttt{27979cc0}), VRS obtains NDCG@10 of 1.0000 and Spearman $\rho$ of 0.9488 (versus CVSS-only 0.7563 / 0.7357, EPSS-only 0.9217 / 0.8237, KEV-first 0.7945 / 0.8247, CVSS+EPSS+KEV 0.9513 / 0.8800, and a vendored CISA/SEI SSVC v2.0 decision-tree baseline 0.6939 / 0.6129; Table~\ref{tab:exploratory} and Fig.~\ref{fig:ranking_and_recall}). Under 2{,}000 paired bootstrap resamples (seed \texttt{20261126}), VRS outperforms the SSVC tree by $+0.3061$ ($[0.0938, 0.4754]$) on NDCG@10 and $+0.3359$ ($[0.1300, 0.6242]$) on Spearman $\rho$ (Actionable P@10/R@10 are 1.0000 / 0.3704 for both); across all $2\times2$ combinations of SSVC's default assumptions (\texttt{Automatable} $\times$ \texttt{Public Well-being}), SSVC's Spearman $\rho$ ranges over $[0.6129, 0.7620]$ (\texttt{results\_ssvc.json}). Removing environmental context (\texttt{No Context}) drops $\rho$ to 0.8782, whereas simple context-aware baselines are competitive: \texttt{EPSS$\times$Context} achieves NDCG@10 of 1.0000 and $\rho$ of 0.9334 (paired 95\% CI vs VRS: $[-0.038, 0.080]$, including zero). Across six exploratory weight perturbations, top-10 membership remained 10/10 identical, with full-rank Spearman $\rho \in [0.9915, 0.9990]$ (mean 0.9948) and Kendall $\tau \in [0.9415, 0.9878]$ (mean 0.9620; \texttt{sensitivity/stability\_summary.json}). On benchmark v2 (correcting 4 KEV flags, SHA \texttt{2b78d7c2}), VRS achieves $\rho = 0.9317$ vs \texttt{EPSS$\times$Context} $\rho = 0.9334$ (diff $-0.002 [-0.070, 0.059]$). On the 500-CVE snapshot check, all 25 KEV entries belong to the 39 curated records, so KEV-first, CVSS+EPSS+KEV, and VRS all reach R@25 = 1.0000 by construction.
+On the separate 41-CVE exploratory benchmark (v1, SHA prefix \texttt{27979cc0}), VRS obtains NDCG@10 of 1.0000 and Spearman $\rho$ of 0.9488 (versus CVSS-only 0.7563 / 0.7357, EPSS-only 0.9217 / 0.8237, KEV-first 0.7945 / 0.8247, CVSS+EPSS+KEV 0.9513 / 0.8800, and a vendored CISA/SEI SSVC v2.0 decision-tree baseline 0.6939 / 0.6129; Table~\ref{tab:exploratory} and Fig.~\ref{fig:ranking_and_recall}). Under 2{,}000 paired bootstrap resamples (seed \texttt{20261126}), VRS outperforms the SSVC tree by $+0.3061$ ($[0.0938, 0.4754]$) on NDCG@10 and $+0.3359$ ($[0.1300, 0.6242]$) on Spearman $\rho$ (Actionable P@10/R@10 are 1.0000 / 0.3704 for both); across all $2\times2$ combinations of SSVC's default assumptions (\texttt{Automatable} $\times$ \texttt{Public Well-being}), SSVC's Spearman $\rho$ ranges over $[0.6129, 0.7620]$ (\texttt{results\_ssvc.json}). Removing environmental context (\texttt{No Context}) drops $\rho$ to 0.8782, whereas simple context-aware baselines are competitive: \texttt{EPSS$\times$Context} achieves NDCG@10 of 1.0000 and $\rho$ of 0.9334 (paired 95\% CI vs VRS: $[-0.038, 0.080]$, including zero). Across the five weight perturbations in \texttt{configurations.json} relative to \texttt{original}, full-rank stability is high: Spearman $\rho \in [0.9937, 0.9993]$ (mean 0.9964), Kendall $\tau \in [0.9512, 0.9902]$ (mean 0.9702), top-5 overlap is 5/5 across all configurations, top-10 overlap is 10/10 for four configurations (9/10 for \texttt{exposure\_heavy}), top-15 overlap is 15/15 for four configurations (14/15 for \texttt{cvss\_heavy}), and the maximum per-record rank shift is 5 positions (\texttt{CVE-2021-33037} under \texttt{cvss\_heavy}; \texttt{full\_rank\_results.json}). On benchmark v2 (correcting 4 KEV flags, SHA \texttt{2b78d7c2}), VRS achieves $\rho = 0.9317$ vs \texttt{EPSS$\times$Context} $\rho = 0.9334$ (diff $-0.002 [-0.070, 0.059]$). On the 500-CVE snapshot check, all 25 KEV entries belong to the 39 curated records, so KEV-first, CVSS+EPSS+KEV, and VRS all reach R@25 = 1.0000 by construction.
 
 \begin{figure}[t]
 \centering
@@ -239,13 +239,33 @@ EPSS-only               & 0.9217 & 0.8000 & 0.5333 & 0.8237 \\
 KEV-first               & 0.7945 & 0.7000 & 0.4667 & 0.8247 \\
 CVSS+EPSS+KEV           & 0.9513 & 0.9000 & 0.6000 & 0.8800 \\
 EPSS$\times$Context     & 1.0000 & --     & 0.6667 & 0.9334 \\
-VRS (No Context)        & 0.9513 & 0.9000 & 0.6000 & 0.8782 \\
 \textbf{VRS (vrs-v1)}   & \textbf{1.0000} & \textbf{1.0000} & \textbf{0.6667} & \textbf{0.9488} \\
 \bottomrule
 \multicolumn{5}{l}{\footnotesize $^\dagger$Assumptions: \texttt{Automatable=yes}, \texttt{Public Well-being=minimal}, $\text{EPSS}\ge0.1$ (PoC), $\text{CVSS}\ge9.0$ (total).} \\
 \end{tabular}%
 }
 \end{table}
+
+\begin{table}[t]
+\centering
+\caption{VRS ablations on the 41-CVE exploratory benchmark. Source: \texttt{experiments/results/ablation.json}.}
+\label{tab:ablation}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Variant} & \textbf{NDCG@5} & \textbf{NDCG@10} & \textbf{NDCG@15} & \textbf{P@10} & \textbf{R@10} & \textbf{Spearman $\rho$} \\
+\midrule
+VRS (full)               & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 0.6667 & 0.9488 \\
+VRS (No EPSS)            & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 0.6667 & 0.9575 \\
+VRS (No KEV)             & 1.0000 & 0.9581 & 0.9675 & 0.9000 & 0.6000 & 0.9451 \\
+VRS (No Context)         & 0.9250 & 0.9513 & 0.9130 & 0.9000 & 0.6000 & 0.8782 \\
+VRS (No Bucket Override) & 1.0000 & 1.0000 & 1.0000 & 1.0000 & 0.6667 & 0.9535 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+Table~\ref{tab:ablation} shows that \texttt{VRS (No EPSS)} ($\rho=0.9575$) and \texttt{VRS (No Bucket Override)} ($\rho=0.9535$) score at least as high as full VRS ($\rho=0.9488$) on this rubric. Thus, EPSS is not shown to be indispensable on this benchmark; its value is not established by these data. Removing environmental context (\texttt{No Context}) causes the largest drop ($\rho=0.8782$), reflecting that the rubric itself uses context as an input.
 
 \subsection{Guardrail, Score Integrity, and Explanation Quality (RQ3)}
 We evaluated the prototype keyword guardrail on a 60-case author-written corpus (Table~\ref{tab:guard}). Only the 48 retrieved-content cases are inspected; 12 query/banner/description cases are not inspected by \texttt{evidence\_validator}. On the 48 inspected cases, TPR is 0.36 $[0.20, 0.55]$, FPR is 0.30 $[0.16, 0.51]$, precision is 0.56, accuracy is 0.52, and F1 is 0.44. False positives stem from benign advisory wording (e.g., \emph{bypass}), while false negatives include paraphrased instructions, Unicode obfuscation, and uninspected channels.

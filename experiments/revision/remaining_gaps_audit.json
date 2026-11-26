@@ -20,7 +20,7 @@
   },
   "manuscript_consistency_audit": {
     "all_checked_metrics_match": true,
-    "n_checks": 45,
+    "n_checks": 75,
     "checks": [
       {
         "label": "teob.CVSS-only.ndcg@10",
@@ -184,22 +184,172 @@
       },
       {
         "label": "sensitivity.rho_min",
-        "expected": "0.9915",
+        "expected": "0.9937",
         "present_in_tex": true
       },
       {
         "label": "sensitivity.rho_max",
-        "expected": "0.9990",
+        "expected": "0.9993",
         "present_in_tex": true
       },
       {
         "label": "sensitivity.tau_min",
-        "expected": "0.9415",
+        "expected": "0.9512",
         "present_in_tex": true
       },
       {
         "label": "sensitivity.tau_max",
-        "expected": "0.9878",
+        "expected": "0.9902",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_full.ndcg5",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_full.ndcg10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_full.ndcg15",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_full.precision10_act",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_full.recall10_act",
+        "expected": "0.6667",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_full.spearman",
+        "expected": "0.9488",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_epss.ndcg5",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_epss.ndcg10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_epss.ndcg15",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_epss.precision10_act",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_epss.recall10_act",
+        "expected": "0.6667",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_epss.spearman",
+        "expected": "0.9575",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_kev.ndcg5",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_kev.ndcg10",
+        "expected": "0.9581",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_kev.ndcg15",
+        "expected": "0.9675",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_kev.precision10_act",
+        "expected": "0.9000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_kev.recall10_act",
+        "expected": "0.6000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_kev.spearman",
+        "expected": "0.9451",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_context.ndcg5",
+        "expected": "0.9250",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_context.ndcg10",
+        "expected": "0.9513",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_context.ndcg15",
+        "expected": "0.9130",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_context.precision10_act",
+        "expected": "0.9000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_context.recall10_act",
+        "expected": "0.6000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_context.spearman",
+        "expected": "0.8782",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_buckets.ndcg5",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_buckets.ndcg10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_buckets.ndcg15",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_buckets.precision10_act",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_buckets.recall10_act",
+        "expected": "0.6667",
+        "present_in_tex": true
+      },
+      {
+        "label": "ablation.vrs_no_buckets.spearman",
+        "expected": "0.9535",
         "present_in_tex": true
       },
       {
