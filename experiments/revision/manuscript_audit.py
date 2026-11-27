@@ -151,6 +151,14 @@ def run_manuscript_audit(tex_path: Path = TEX_PATH) -> Tuple[bool, List[Tuple[st
     verify("tab:teob_cohort", "nvd_total", coh_rows[0][1], str(teob_m["nvd_total"]), is_unit_metric=False)
     verify("tab:teob_cohort", "eligible_total", coh_rows[2][1].split()[0], str(teob_m["eligible_total"]), is_unit_metric=False)
 
+    # 7. Lint: forbid internal status strings in manuscript and paper/*.tex
+    forbidden_re = re.compile(r"NOT(?:\\)?_AVAILABLE|PENDING|TODO|FIXME")
+    lint_targets = [tex_path] + [p for p in sorted(Path("paper").glob("*.tex")) if p.resolve() != tex_path.resolve()]
+    for target in lint_targets:
+        text = target.read_text(encoding="utf-8")
+        hits = forbidden_re.findall(text)
+        checks.append(("lint", f"{target}.status_strings", ",".join(sorted(set(hits))) or "none", "none", len(hits) == 0))
+
     all_ok = all(c[4] for c in checks)
     return all_ok, checks
 
