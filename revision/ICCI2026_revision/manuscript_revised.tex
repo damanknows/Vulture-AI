@@ -229,7 +229,7 @@ On the separate 41-CVE exploratory benchmark (v1, SHA prefix \texttt{27979cc0}),
 
 \begin{table}[t]
 \centering
-\caption{Exploratory 41-CVE SSVC-inspired benchmark (v1): baselines, SSVC tree, context baselines, and ablations. Source: \texttt{experiments/results/metrics.json}, \texttt{baselines/results\_ssvc.json}, \texttt{baselines/exploratory\_actionable.json}.}
+\caption{Exploratory 41-CVE SSVC-inspired benchmark (v1): baselines, SSVC tree, context baselines, and ablations. Source: \texttt{experiments/results/metrics.json}, \texttt{baselines/results\_ssvc.json}, \texttt{baselines/results\_cvss\_env.json}, \texttt{baselines/exploratory\_actionable.json}.}
 \label{tab:exploratory}
 \resizebox{\columnwidth}{!}{%
 \begin{tabular}{lcccccc}
@@ -238,6 +238,7 @@ On the separate 41-CVE exploratory benchmark (v1, SHA prefix \texttt{27979cc0}),
 \midrule
 SSVC tree$^\dagger$      & 0.6939 & 0.5000 & 0.3333 & 1.0000 & 0.3704 & 0.6129 \\
 CVSS-only               & 0.7563 & 0.6000 & 0.4000 & 1.0000 & 0.3704 & 0.7357 \\
+CVSS v3.1 env. proxy$^\ddagger$ & 0.8380 & 0.7000 & 0.4667 & 1.0000 & 0.3704 & 0.7979 \\
 EPSS-only               & 0.9217 & 0.8000 & 0.5333 & 1.0000 & 0.3704 & 0.8237 \\
 KEV-first               & 0.7945 & 0.7000 & 0.4667 & 1.0000 & 0.3704 & 0.8247 \\
 CVSS+EPSS+KEV           & 0.9513 & 0.9000 & 0.6000 & 1.0000 & 0.3704 & 0.8800 \\
@@ -245,6 +246,7 @@ EPSS$\times$Context     & 1.0000 & --     & 0.6667 & 1.0000 & 0.3704 & 0.9334 \\
 \textbf{VRS (vrs-v1)}   & \textbf{1.0000} & \textbf{1.0000} & \textbf{0.6667} & \textbf{1.0000} & \textbf{0.3704} & \textbf{0.9488} \\
 \bottomrule
 \multicolumn{7}{l}{\footnotesize $^\dagger$Assumptions: \texttt{Automatable=yes}, \texttt{Public Well-being=minimal}, $\text{EPSS}\ge0.1$ (PoC), $\text{CVSS}\ge9.0$ (total).} \\
+\multicolumn{7}{l}{\footnotesize $^\ddagger$CVSS v4.0 vectors unavailable in \texttt{cves.csv}; scalar v3.1 environmental/threat proxy (not equivalent to CVSS v4.0).} \\
 \end{tabular}%
 }
 \end{table}
@@ -320,7 +322,7 @@ TEOB demonstrates that combining historical CVSS and EPSS signals improves ranki
     \item \textbf{KEV outcome proxy:} Future CISA KEV addition reflects federal-reported exploitation, not exhaustive real-world exploitation or organizational remediation urgency. Also, using a single \texttt{2026.10.13} snapshot cannot detect hypothetical additions later removed before \texttt{2026-10-13}.
     \item \textbf{Sparse positives and missing CVSS v4.0:} Only 11 of 7,927 CVEs (0.139\%) entered KEV within 90 days, producing wide bootstrap intervals. Additionally, 518 CVEs had CVSS v4.0 only and were treated as missing CVSS v3.x.
     \item \textbf{Exploratory benchmark limits:} The 41-CVE set is small, author-graded without inter-rater agreement, and shares inputs with VRS; weights remain exploratory and uncalibrated.
-    \item \textbf{Unmeasured components (\texttt{NOT\_AVAILABLE}):} Explanation quality (0 ratings in \texttt{explanation\_evaluation.csv}), scanner-to-CVE matching accuracy (no labelled Nmap corpus), live frontier-LLM guardrail behavior (no local model server), and CVSS v4.0 on the 41-CVE benchmark (\texttt{cves.csv} lacks v4.0 inputs) remain unmeasured (TODO: future work). The SSVC tree is omitted from TEOB because historical Mission Prevalence and Public Well-being context are unavailable at \texttt{2026-07-01} and pre-cutoff KEV is zero (\texttt{ssvc\_teob\_infeasible.md}).
+    \item \textbf{Unmeasured components (\texttt{NOT\_AVAILABLE}):} Explanation quality (\texttt{explanation\_summary.json}), scanner-to-CVE matching accuracy (no labelled Nmap corpus), live frontier-LLM guardrail behavior (no local model server), and true CVSS v4.0 environmental scoring (\texttt{cves.csv} lacks v4.0 vectors, so Table~\ref{tab:exploratory} uses a v3.1 scalar proxy) remain unmeasured (TODO: future work). Neither SSVC nor CVSS v4.0 environmental scoring is run on TEOB because historical context and complete pre-cutoff v4.0 vectors are unavailable at \texttt{2026-07-01} (\texttt{ssvc\_teob\_infeasible.md}, \texttt{cvss\_v4\_teob\_infeasible.md}).
 \end{itemize}
 
 \section{Conclusion}

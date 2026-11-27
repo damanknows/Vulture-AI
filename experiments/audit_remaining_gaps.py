@@ -161,6 +161,16 @@ def audit_manuscript_numbers(tex_path: Path = MANUSCRIPT_TEX) -> Dict[str, objec
                 assert 0.0 <= mv <= 1.0, f"actionable.{mname}.{mk}={mv} > 1.0"
                 check_token(f"actionable.{mname}.{mk}", f"{mv:.4f}")
 
+    # CVSS v3.1 environmental proxy on 41-CVE benchmark
+    env_json = Path("experiments/revision/baselines/results_cvss_env.json")
+    if env_json.exists():
+        with open(env_json, "r", encoding="utf-8") as f:
+            env = json.load(f)
+        for k in ("ndcg@10", "precision@10_act", "recall@10_act", "AP@10", "AR@10", "spearman"):
+            val = env["metrics"][k]
+            assert 0.0 <= val <= 1.0
+            check_token(f"cvss_env.{k}", f"{val:.4f}")
+
     all_ok = all(c["present_in_tex"] for c in checks)
     return {"all_checked_metrics_match": all_ok, "n_checks": len(checks), "checks": checks}
 

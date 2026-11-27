@@ -20,7 +20,7 @@
   },
   "manuscript_consistency_audit": {
     "all_checked_metrics_match": true,
-    "n_checks": 89,
+    "n_checks": 95,
     "checks": [
       {
         "label": "teob.CVSS-only.ndcg@10",
@@ -465,6 +465,36 @@
       {
         "label": "actionable.VRS (vrs-v1).AR@10",
         "expected": "0.3704",
+        "present_in_tex": true
+      },
+      {
+        "label": "cvss_env.ndcg@10",
+        "expected": "0.8380",
+        "present_in_tex": true
+      },
+      {
+        "label": "cvss_env.precision@10_act",
+        "expected": "0.7000",
+        "present_in_tex": true
+      },
+      {
+        "label": "cvss_env.recall@10_act",
+        "expected": "0.4667",
+        "present_in_tex": true
+      },
+      {
+        "label": "cvss_env.AP@10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "cvss_env.AR@10",
+        "expected": "0.3704",
+        "present_in_tex": true
+      },
+      {
+        "label": "cvss_env.spearman",
+        "expected": "0.7979",
         "present_in_tex": true
       }
     ]
