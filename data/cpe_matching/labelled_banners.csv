@@ -1,0 +1,37 @@
+banner_id,service,product,version,extra,expected_vendor,expected_product,expected_version,has_expected_cpe,source_type
+B01,http,Apache httpd,2.4.49,(Unix),apache,http_server,2.4.49,1,synthesized_public_example
+B02,http,Apache httpd,2.4.52,(Ubuntu),apache,http_server,2.4.52,1,synthesized_public_example
+B03,ssh,OpenSSH,8.2p1,Ubuntu 4ubuntu0.5,openbsd,openssh,8.2p1,1,synthesized_public_example
+B04,ssh,OpenSSH,9.3p1,Debian 1,openbsd,openssh,9.3p1,1,synthesized_public_example
+B05,http,nginx,1.18.0,(Ubuntu),f5,nginx,1.18.0,1,synthesized_public_example
+B06,http,nginx,1.24.0,,nginx,nginx,1.24.0,1,synthesized_public_example
+B07,postgresql,PostgreSQL DB,14.5,,postgresql,postgresql,14.5,1,synthesized_public_example
+B08,mysql,MySQL,8.0.32,,oracle,mysql,8.0.32,1,synthesized_public_example
+B09,redis,Redis key-value store,7.0.11,,redis,redis,7.0.11,1,synthesized_public_example
+B10,mongodb,MongoDB,6.0.5,,mongodb,mongodb,6.0.5,1,synthesized_public_example
+B11,ftp,vsftpd,3.0.3,,vsftpd_project,vsftpd,3.0.3,1,synthesized_public_example
+B12,ftp,ProFTPD,1.3.5,,proftpd,proftpd,1.3.5,1,synthesized_public_example
+B13,http,Apache Tomcat,9.0.75,,apache,tomcat,9.0.75,1,synthesized_public_example
+B14,http,Jetty,11.0.15,,eclipse,jetty,11.0.15,1,synthesized_public_example
+B15,http,Jenkins,2.401.1,,jenkins,jenkins,2.401.1,1,synthesized_public_example
+B16,smtp,Postfix smtpd,,,postfix,postfix,,0,synthesized_public_example
+B17,ssh,Dropbear sshd,2022.83,,dropbear_ssh_project,dropbear_ssh,2022.83,1,synthesized_public_example
+B18,http,lighttpd,1.4.69,,lighttpd,lighttpd,1.4.69,1,synthesized_public_example
+B19,http,Caddy httpd,2.6.4,,caddyserver,caddy,2.6.4,1,synthesized_public_example
+B20,dns,ISC BIND,9.18.12,,isc,bind,9.18.12,1,synthesized_public_example
+B21,smb,Samba smbd,4.17.7,Ubuntu,samba,samba,4.17.7,1,synthesized_public_example
+B22,ldap,OpenLDAP slapd,2.5.14,,openldap,openldap,2.5.14,1,synthesized_public_example
+B23,http,Microsoft IIS httpd,10.0,,microsoft,internet_information_services,10.0,1,synthesized_public_example
+B24,rdp,Microsoft Terminal Services,,,microsoft,remote_desktop_protocol,,0,synthesized_public_example
+B25,http,Node.js Express framework,,,nodejs,node.js,,0,synthesized_public_example
+B26,http,Grafana,9.5.2,,grafana,grafana,9.5.2,1,synthesized_public_example
+B27,http,GitLab,16.0.1,,gitlab,gitlab,16.0.1,1,synthesized_public_example
+B28,http,WordPress,6.2.2,,wordpress,wordpress,6.2.2,1,synthesized_public_example
+B29,http,PHP,8.1.18,cli,php,php,8.1.18,1,synthesized_public_example
+B30,ssl,OpenSSL,3.0.8,,openssl,openssl,3.0.8,1,synthesized_public_example
+B31,http,HAProxy,2.6.12,,haproxy,haproxy,2.6.12,1,synthesized_public_example
+B32,http,Traefik,2.10.1,,traefik,traefik,2.10.1,1,synthesized_public_example
+B33,http,unknown,,,unknown,,,0,synthesized_public_example
+B34,tcpwrapped,,,,unknown,,,0,synthesized_public_example
+B35,http,CustomApp,v2.1-beta3,,customapp,customapp,2.1,1,synthesized_public_example
+B36,memcached,Memcached,1.6.19,,memcached,memcached,1.6.19,1,synthesized_public_example

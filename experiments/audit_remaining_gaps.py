@@ -171,6 +171,16 @@ def audit_manuscript_numbers(tex_path: Path = MANUSCRIPT_TEX) -> Dict[str, objec
             assert 0.0 <= val <= 1.0
             check_token(f"cvss_env.{k}", f"{val:.4f}")
 
+    # CPE matching evaluation on synthesized banners
+    cpe_json = Path("experiments/revision/cpe/cpe_matching_results.json")
+    if cpe_json.exists():
+        with open(cpe_json, "r", encoding="utf-8") as f:
+            cpe = json.load(f)
+        for k in ("precision", "recall", "f1"):
+            val = cpe["metrics"][k]
+            assert 0.0 <= val <= 1.0
+            check_token(f"cpe.{k}", f"{val:.4f}")
+
     all_ok = all(c["present_in_tex"] for c in checks)
     return {"all_checked_metrics_match": all_ok, "n_checks": len(checks), "checks": checks}
 

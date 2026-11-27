@@ -20,7 +20,7 @@
   },
   "manuscript_consistency_audit": {
     "all_checked_metrics_match": true,
-    "n_checks": 95,
+    "n_checks": 98,
     "checks": [
       {
         "label": "teob.CVSS-only.ndcg@10",
@@ -495,6 +495,21 @@
       {
         "label": "cvss_env.spearman",
         "expected": "0.7979",
+        "present_in_tex": true
+      },
+      {
+        "label": "cpe.precision",
+        "expected": "0.8387",
+        "present_in_tex": true
+      },
+      {
+        "label": "cpe.recall",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "cpe.f1",
+        "expected": "0.9123",
         "present_in_tex": true
       }
     ]
