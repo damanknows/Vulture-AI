@@ -1,0 +1,9 @@
+{
+  "status": "NOT_AVAILABLE",
+  "n_records": 25,
+  "stub_validation_passed": 25,
+  "seed": 20261127,
+  "judge_prompt_sha256": "fe5571a309887438dd83fdcef4ae19d1f2fbe1228c059f649af9c9f5d71f92c2",
+  "reason": "Live LLM judge unavailable (HTTPError: HTTP Error 402: Payment Required)",
+  "human_spot_check": "PENDING (see docs/annotation/explanation_protocol.md)"
+}

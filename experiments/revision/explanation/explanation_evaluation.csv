@@ -1,0 +1,2 @@
+status,seed,judge_prompt_sha256,stub_validation_passed,reason
+NOT_AVAILABLE,20261127,fe5571a309887438dd83fdcef4ae19d1f2fbe1228c059f649af9c9f5d71f92c2,25,Live LLM judge unavailable (HTTPError: HTTP Error 402: Payment Required)

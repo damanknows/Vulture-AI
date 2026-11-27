@@ -68,7 +68,7 @@ We investigate three research questions:
 \begin{itemize}
     \item \textbf{RQ1 (Temporal outcome ranking):} How does VRS rank June 2026 CVEs for 90-day future CISA KEV inclusion relative to CVSS-only, EPSS-only, KEV-first, and CVSS+EPSS+KEV under strict point-in-time feature reconstruction?
     \item \textbf{RQ2 (Exploratory policy concordance):} How closely does VRS align with an author-labelled SSVC-inspired rubric, and how much of that alignment is driven by environmental context versus simpler context baselines?
-    \item \textbf{RQ3 (Guardrail and score integrity):} Does the prototype keyword guardrail detect tested injection patterns, and is the authoritative VRS preserved under adversarial LLM outputs?
+    \item \textbf{RQ3 (Guardrail and score integrity):} Does the prototype keyword guardrail detect tested injection patterns, and is the authoritative VRS preserved under adversarial LLM outputs? Semantic explanation quality is out of scope of the empirical evaluation because no live judge endpoint with quota or human SOC-analyst ratings is available.
 \end{itemize}
 
 \section{Related Work}
@@ -284,7 +284,7 @@ Actual benign (23) & FP = 7 & TN = 16 \\
 \end{tabular}
 \end{table}
 
-In a 5-payload stub-LLM simulation through \texttt{chat\_with\_validation} (Table~\ref{tab:integrity}), the numeric \texttt{vrs\_score} was never corrupted (0/5 changes). However, the unmodified assistant allowed priority downgrades on KEV-listed findings (2/5 pass); adding the deterministic KEV priority floor raised this to 5/5. Non-KEV priority strings remain unconstrained by the Pydantic parser. \textbf{Explanation quality was not measured} (\texttt{explanation\_evaluation.csv} contains 0 rows), so no claim of explanation accuracy or analyst utility is made.
+In a 5-payload stub-LLM simulation through \texttt{chat\_with\_validation} (Table~\ref{tab:integrity}), the numeric \texttt{vrs\_score} was never corrupted (0/5 changes). However, the unmodified assistant allowed priority downgrades on KEV-listed findings (2/5 pass); adding the deterministic KEV priority floor raised this to 5/5. Non-KEV priority strings remain unconstrained by the Pydantic parser. \textbf{Explanation quality (\texttt{NOT\_AVAILABLE}):} While 25 deterministic stub explanations passed \texttt{chat\_with\_validation} structural and evidence-grounding checks (25/25), semantic explanation quality is \texttt{NOT\_AVAILABLE} (\texttt{explanation\_summary.json}): live LLM judging failed with HTTP~402 (no active Cerebras API quota), no local Ollama model was running, and the 10-item human spot-check protocol (\texttt{docs/annotation/explanation\_protocol.md}) remains \texttt{PENDING}. Consequently, no claim of explanation accuracy or analyst utility is made.
 
 \begin{table}[t]
 \centering
