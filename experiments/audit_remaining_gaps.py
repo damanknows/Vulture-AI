@@ -151,6 +151,16 @@ def audit_manuscript_numbers(tex_path: Path = MANUSCRIPT_TEX) -> Dict[str, objec
             assert 0.0 <= val <= 1.0
             check_token(f"ssvc.{k}", f"{val:.4f}")
 
+    # Actionable P@10 / R@10 summary
+    act_json = Path("experiments/revision/baselines/exploratory_actionable.json")
+    if act_json.exists():
+        with open(act_json, "r", encoding="utf-8") as f:
+            act = json.load(f)
+        for mname, mets in act.get("methods", {}).items():
+            for mk, mv in mets.items():
+                assert 0.0 <= mv <= 1.0, f"actionable.{mname}.{mk}={mv} > 1.0"
+                check_token(f"actionable.{mname}.{mk}", f"{mv:.4f}")
+
     all_ok = all(c["present_in_tex"] for c in checks)
     return {"all_checked_metrics_match": all_ok, "n_checks": len(checks), "checks": checks}
 

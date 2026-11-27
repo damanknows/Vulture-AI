@@ -20,7 +20,7 @@
   },
   "manuscript_consistency_audit": {
     "all_checked_metrics_match": true,
-    "n_checks": 75,
+    "n_checks": 89,
     "checks": [
       {
         "label": "teob.CVSS-only.ndcg@10",
@@ -395,6 +395,76 @@
       {
         "label": "ssvc.spearman",
         "expected": "0.6129",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.SSVC tree.AP@10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.SSVC tree.AR@10",
+        "expected": "0.3704",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.CVSS-only.AP@10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.CVSS-only.AR@10",
+        "expected": "0.3704",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.EPSS-only.AP@10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.EPSS-only.AR@10",
+        "expected": "0.3704",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.KEV-first.AP@10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.KEV-first.AR@10",
+        "expected": "0.3704",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.CVSS+EPSS+KEV.AP@10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.CVSS+EPSS+KEV.AR@10",
+        "expected": "0.3704",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.EPSS\u00d7Context.AP@10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.EPSS\u00d7Context.AR@10",
+        "expected": "0.3704",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.VRS (vrs-v1).AP@10",
+        "expected": "1.0000",
+        "present_in_tex": true
+      },
+      {
+        "label": "actionable.VRS (vrs-v1).AR@10",
+        "expected": "0.3704",
         "present_in_tex": true
       }
     ]

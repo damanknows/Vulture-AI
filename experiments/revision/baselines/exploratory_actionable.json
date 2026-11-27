@@ -1,0 +1,36 @@
+{
+  "threshold": 2,
+  "precision_denominator": 10,
+  "recall_denominator": 27,
+  "all_identical": true,
+  "methods": {
+    "SSVC tree": {
+      "AP@10": 1.0,
+      "AR@10": 0.3704
+    },
+    "CVSS-only": {
+      "AP@10": 1.0,
+      "AR@10": 0.3704
+    },
+    "EPSS-only": {
+      "AP@10": 1.0,
+      "AR@10": 0.3704
+    },
+    "KEV-first": {
+      "AP@10": 1.0,
+      "AR@10": 0.3704
+    },
+    "CVSS+EPSS+KEV": {
+      "AP@10": 1.0,
+      "AR@10": 0.3704
+    },
+    "EPSS\u00d7Context": {
+      "AP@10": 1.0,
+      "AR@10": 0.3704
+    },
+    "VRS (vrs-v1)": {
+      "AP@10": 1.0,
+      "AR@10": 0.3704
+    }
+  }
+}

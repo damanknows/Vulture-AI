@@ -229,25 +229,27 @@ On the separate 41-CVE exploratory benchmark (v1, SHA prefix \texttt{27979cc0}),
 
 \begin{table}[t]
 \centering
-\caption{Exploratory 41-CVE SSVC-inspired benchmark (v1): baselines, SSVC tree, context baselines, and ablations. Source: \texttt{experiments/results/metrics.json}, \texttt{baselines/results\_ssvc.json}, \texttt{statistics/}.}
+\caption{Exploratory 41-CVE SSVC-inspired benchmark (v1): baselines, SSVC tree, context baselines, and ablations. Source: \texttt{experiments/results/metrics.json}, \texttt{baselines/results\_ssvc.json}, \texttt{baselines/exploratory\_actionable.json}.}
 \label{tab:exploratory}
 \resizebox{\columnwidth}{!}{%
-\begin{tabular}{lcccc}
+\begin{tabular}{lcccccc}
 \toprule
-\textbf{Method / Variant} & \textbf{NDCG@10} & \textbf{P@10 (Act)} & \textbf{R@10 (Act)} & \textbf{Spearman $\rho$} \\
+\textbf{Method / Variant} & \textbf{NDCG@10} & \textbf{P@10 (Act)} & \textbf{R@10 (Act)} & \textbf{AP@10} & \textbf{AR@10} & \textbf{Spearman $\rho$} \\
 \midrule
-SSVC tree$^\dagger$      & 0.6939 & 0.5000 & 0.3333 & 0.6129 \\
-CVSS-only               & 0.7563 & 0.6000 & 0.4000 & 0.7357 \\
-EPSS-only               & 0.9217 & 0.8000 & 0.5333 & 0.8237 \\
-KEV-first               & 0.7945 & 0.7000 & 0.4667 & 0.8247 \\
-CVSS+EPSS+KEV           & 0.9513 & 0.9000 & 0.6000 & 0.8800 \\
-EPSS$\times$Context     & 1.0000 & --     & 0.6667 & 0.9334 \\
-\textbf{VRS (vrs-v1)}   & \textbf{1.0000} & \textbf{1.0000} & \textbf{0.6667} & \textbf{0.9488} \\
+SSVC tree$^\dagger$      & 0.6939 & 0.5000 & 0.3333 & 1.0000 & 0.3704 & 0.6129 \\
+CVSS-only               & 0.7563 & 0.6000 & 0.4000 & 1.0000 & 0.3704 & 0.7357 \\
+EPSS-only               & 0.9217 & 0.8000 & 0.5333 & 1.0000 & 0.3704 & 0.8237 \\
+KEV-first               & 0.7945 & 0.7000 & 0.4667 & 1.0000 & 0.3704 & 0.8247 \\
+CVSS+EPSS+KEV           & 0.9513 & 0.9000 & 0.6000 & 1.0000 & 0.3704 & 0.8800 \\
+EPSS$\times$Context     & 1.0000 & --     & 0.6667 & 1.0000 & 0.3704 & 0.9334 \\
+\textbf{VRS (vrs-v1)}   & \textbf{1.0000} & \textbf{1.0000} & \textbf{0.6667} & \textbf{1.0000} & \textbf{0.3704} & \textbf{0.9488} \\
 \bottomrule
-\multicolumn{5}{l}{\footnotesize $^\dagger$Assumptions: \texttt{Automatable=yes}, \texttt{Public Well-being=minimal}, $\text{EPSS}\ge0.1$ (PoC), $\text{CVSS}\ge9.0$ (total).} \\
+\multicolumn{7}{l}{\footnotesize $^\dagger$Assumptions: \texttt{Automatable=yes}, \texttt{Public Well-being=minimal}, $\text{EPSS}\ge0.1$ (PoC), $\text{CVSS}\ge9.0$ (total).} \\
 \end{tabular}%
 }
 \end{table}
+
+Actionable P/R@10 (grade $\ge 2$, denominator 10 for AP@10 and 27 for AR@10) do not separate methods on this benchmark because every ranking places all Act/Attend items in the top 10 (Table~\ref{tab:exploratory}).
 
 \begin{table}[t]
 \centering
