@@ -1,0 +1,21 @@
+cve_id,description
+CVE-2017-0144,SMBv1 Remote Code Execution (EternalBlue)
+CVE-2020-13935,Apache Tomcat WebSocket Denial of Service
+CVE-2021-22947,curl Server Protocol Command Injection STARTTLS
+CVE-2021-26855,Microsoft Exchange Server Pre-auth SSRF (ProxyLogon)
+CVE-2021-3156,Sudo Heap-based Buffer Overflow (Baron Samedit)
+CVE-2021-3560,Polkit Local Privilege Escalation
+CVE-2021-41773,Apache HTTP Server 2.4.49 Path Traversal and RCE
+CVE-2022-1292,OpenSSL c_rehash Script Command Injection
+CVE-2022-1388,F5 BIG-IP iControl REST Auth Bypass RCE
+CVE-2022-22965,Spring Framework RCE (Spring4Shell)
+CVE-2022-22978,Spring Security RegexRequestMatcher Auth Bypass
+CVE-2022-30190,Microsoft Windows MSDT Code Execution (Follina)
+CVE-2023-23397,Microsoft Outlook NTLM Credential Theft Priv Esc
+CVE-2023-28252,Windows Common Log File System (CLFS) Elevation
+CVE-2023-34362,Progress MOVEit Transfer SQLi RCE
+CVE-2023-38546,curl Cookie Injection via Control Code Path
+CVE-2023-38831,WinRAR Processing Code Execution
+CVE-2023-46805,Ivanti Connect Secure Authentication Bypass
+CVE-2024-1709,ConnectWise ScreenConnect Authentication Bypass
+CVE-2024-21413,Microsoft Outlook Moniker RCE (#MonikerLink)

@@ -1,0 +1,41 @@
+{
+  "n_raters": 2,
+  "n_common_items": 20,
+  "is_synthetic_dry_run": true,
+  "real_rater_data": "PENDING",
+  "pairwise": {
+    "synthetic_rater_A_vs_synthetic_rater_B": {
+      "n_items": 20,
+      "percent_agreement": 0.25,
+      "cohens_kappa": 0.0099,
+      "weighted_kappa": 0.1365,
+      "confusion_matrix_0_to_3": [
+        [
+          1,
+          1,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          0,
+          1
+        ],
+        [
+          0,
+          0,
+          1,
+          3
+        ],
+        [
+          0,
+          1,
+          2,
+          0
+        ]
+      ]
+    }
+  },
+  "fleiss_kappa": null
+}
