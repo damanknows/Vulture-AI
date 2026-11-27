@@ -139,7 +139,7 @@ To eliminate author-label circularity and temporal leakage, we construct TEOB (\
 Because 63 eligible CVEs tie at $\text{CVSS}=10.0$ in TEOB, deterministic CVE-ID tie-breaking would make top-10 metrics an artifact of string ordering. In \texttt{evaluate\_temporal.py}, all methods are ranked on unrounded float64 scores, and we compute exact analytical expected NDCG@10, Precision@10 (denominator $\min(10, N)$), Recall@\{10, 50, 100\}, and Average Precision over uniform random permutations within tied score blocks. Uncertainty is estimated via 1,000-iteration paired stratified bootstrap (seed \texttt{20261127}), resampling positives and negatives separately with identical indices across methods; significance at 95\% is claimed only when the rounded 95\% percentile interval excludes zero.
 
 \subsection{Secondary Exploratory Benchmark (41 CVEs)}
-We retain the original 41-record author-labelled benchmark (39 real CVEs, 2 synthetic edge cases; SSVC-inspired grades Act=3, Attend=2, Track=1, Defer=0) solely as an exploratory policy-concordance check~\cite{nvd2023}. Because its labels share inputs with VRS and use a 2026 snapshot, it is reported separately from TEOB.
+We retain the original 41-record author-labelled benchmark (39 real CVEs, 2 synthetic edge cases; SSVC-inspired grades Act=3, Attend=2, Track=1, Defer=0) solely as an exploratory policy-concordance check~\cite{nvd2023}. Because its labels share inputs with VRS and use a 2026 snapshot, it is reported separately from TEOB. Anonymized code, frozen datasets, and reproduction scripts are available at \url{https://anonymous.4open.science/r/Vulture-AI}.
 
 \section{Results}
 \label{sec:results}
