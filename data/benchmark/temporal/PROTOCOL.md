@@ -33,7 +33,8 @@
 ## 3. Historical Feature Reconstruction Rules
 
 1. **EPSS (`epss_as_of_cutoff`):**
-   - Queried directly from the FIRST EPSS API (`https://api.first.org/data/v1/epss?cve=...&date=2026-07-01`).
+   - Queried retrospectively from the FIRST EPSS historical archive (`https://api.first.org/data/v1/epss?cve=...&date=2026-07-01`).
+   - **Temporal granularity note:** FIRST EPSS `date` has day-level granularity only (no intraday timestamp; daily scores are typically published midday UTC), so exact availability at `2026-07-01T00:00:00Z` cannot be established. Because the earliest positive KEV addition in TEOB is `2026-07-07` (6 days later), no future-outcome leakage occurs.
    - Records absent from the historical EPSS snapshot on `2026-07-01` are left blank (`None`) and handled by each scorer's documented missing-data policy (e.g., `E = 0.0` in `risk_engine.py`).
 
 2. **CVSS (`cvss_as_of_cutoff`):**

@@ -26,7 +26,7 @@
 - **Local Cache:** `data/benchmark/temporal/cache/epss_2026-07-01.json`
 - **Relevant Timestamp Fields:** `data[].date` (`2026-07-01`)
 - **Coverage & Limitations:** FIRST serves exact historical daily EPSS scores via the `date` parameter. Very newly published CVEs (e.g., late June 2026) may not yet have an EPSS score on `2026-07-01`; such records are left blank (`None`) and never backfilled from later dates.
-- **Cutoff Verifiability:** Directly verified via API `date=2026-07-01`.
+- **Cutoff Verifiability:** Retrospectively retrieved from FIRST's daily historical archive (`date=2026-07-01`, `retrieved_utc: 2026-11-26T21:37:33Z`). Day-level granularity only (no intraday timestamp; daily runs are typically published midday UTC, so strict `00:00:00Z` availability is not established, though earliest KEV outcome is `2026-07-07`).
 
 ## Source 4: CISA Known Exploited Vulnerabilities (KEV) Catalog
 - **Official URL:** `https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json`
