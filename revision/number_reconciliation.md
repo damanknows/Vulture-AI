@@ -2,7 +2,7 @@
 
 **Source TeX:** `revision/ICCI2026_revision/manuscript_revised.tex`  
 **Total cells/claims checked:** 183  
-**MISMATCH count:** 1
+**MISMATCH count:** 0
 
 ## Explicit Reconciliation Checklist
 
@@ -14,7 +14,7 @@
 
 ## MISMATCH Summary
 
-- **Table V (tab:exploratory) | EPSS×Context | P@10 (Act)**: TeX=`--` vs JSON=`1.0000` (`experiments/revision/statistics/statistical_report.json -> observed_metrics.EPSS×Context.precision@10_act`). Decision rule: **JSON wins**; regenerate Table V row from JSON.
+- None.
 
 ## Full Reconciliation Table
 
@@ -144,7 +144,7 @@
 | Table V (tab:exploratory) | CVSS+EPSS+KEV | AR@10 | `0.3704` | `experiments/revision/baselines/exploratory_actionable.json` | `methods.CVSS+EPSS+KEV.AR@10` | `0.3704` | **MATCH** |
 | Table V (tab:exploratory) | CVSS+EPSS+KEV | Spearman ρ | `0.8800` | `experiments/results/metrics.json` | `CVSS+EPSS+KEV.spearman` | `0.8800` | **MATCH** |
 | Table V (tab:exploratory) | EPSS×Context | NDCG@10 | `1.0000` | `experiments/revision/statistics/statistical_report.json` | `observed_metrics.EPSS×Context.ndcg@10` | `1.0000` | **MATCH** |
-| Table V (tab:exploratory) | EPSS×Context | P@10 (Act) | `--` | `experiments/revision/statistics/statistical_report.json` | `observed_metrics.EPSS×Context.precision@10_act` | `1.0000` | **MISMATCH** |
+| Table V (tab:exploratory) | EPSS×Context | P@10 (Act) | `1.0000` | `experiments/revision/statistics/statistical_report.json` | `observed_metrics.EPSS×Context.precision@10_act` | `1.0000` | **MATCH** |
 | Table V (tab:exploratory) | EPSS×Context | R@10 (Act) | `0.6667` | `experiments/revision/statistics/statistical_report.json` | `observed_metrics.EPSS×Context.recall@10_act` | `0.6667` | **MATCH** |
 | Table V (tab:exploratory) | EPSS×Context | AP@10 | `1.0000` | `experiments/revision/baselines/exploratory_actionable.json` | `methods.EPSS×Context.AP@10` | `1.0000` | **MATCH** |
 | Table V (tab:exploratory) | EPSS×Context | AR@10 | `0.3704` | `experiments/revision/baselines/exploratory_actionable.json` | `methods.EPSS×Context.AR@10` | `0.3704` | **MATCH** |
