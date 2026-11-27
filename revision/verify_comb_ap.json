@@ -1,0 +1,36 @@
+{
+  "deciding_json": "experiments/revision/teob_evaluation.json",
+  "recompute_command": "python3 -m experiments.evaluate_temporal",
+  "B": 1000,
+  "seed": 20261127,
+  "json_entry": {
+    "observed_diff": 0.0177,
+    "ci_95": [
+      0.0,
+      0.1084
+    ],
+    "n_valid": 1000,
+    "significant_95": false
+  },
+  "recomputed_entry": {
+    "observed_diff": 0.0177,
+    "ci_95": [
+      0.0,
+      0.1084
+    ],
+    "n_valid": 1000,
+    "significant_95": false
+  },
+  "replicate_stats": {
+    "n": 1000,
+    "observed_diff_unrounded": 0.017652375843855123,
+    "mean_replicates": 0.02032244883633529,
+    "median_replicates": 0.005549929595856436,
+    "min": 0.0,
+    "p025": 1.730429324488872e-05,
+    "p975": 0.1061387213268709,
+    "max": 0.17281642550839368,
+    "frac_le_zero": 0.01
+  },
+  "asymmetry_explanation": "Both VRS and CVSS+EPSS+KEV rank the same 2 positives in the top 10 and 4 positives in the top 50, so many bootstrap resamples of the 11 positives yield zero or near-zero AP difference while resamples emphasizing positives ranked higher by VRS create a right-skewed upper tail up to +0.1084."
+}
