@@ -10,7 +10,7 @@
 
 #### Test 1: Comprehensive Baseline Tests
 ```bash
-cd /home/daman/Projects/vulture
+cd <repo_root>
 python3 tests/test_baselines_comprehensive.py
 ```
 
@@ -93,7 +93,7 @@ Phase 2 Revision Experiments COMPLETE
 
 ### Output Files Created
 
-**Directory:** `/home/daman/Projects/vulture/experiments/revision/`
+**Directory:** `<repo_root>/experiments/revision/`
 
 | File Path | Type | Records | Size | Status |
 |-----------|------|---------|------|--------|
@@ -109,7 +109,7 @@ Phase 2 Revision Experiments COMPLETE
 
 ### Original Results Preserved
 
-**Directory:** `/home/daman/Projects/vulture/experiments/results/`
+**Directory:** `<repo_root>/experiments/results/`
 
 ```
 ablation.json (5.9K) - ✓ UNCHANGED

@@ -410,7 +410,7 @@ experiments/revision/summary.json (new)
 
 ### Setup
 ```bash
-cd /home/daman/Projects/vulture
+cd <repo_root>
 ```
 
 ### Test Execution
