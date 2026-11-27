@@ -171,7 +171,7 @@ def reconcile(tex_path: Path = DEFAULT_TEX) -> Tuple[List[Dict[str, str]], List[
         "P@10 / R@10 / R@50 / R@100": ["precision@10", "recall@10", "recall@50", "recall@100"],
     }
     for r in t4_rows:
-        b_label = r[0].split("/")[0].strip()
+        b_label = r[0].strip()
         m_label = r[1]
         obs_tex = r[2]
         ci_tex = r[3]

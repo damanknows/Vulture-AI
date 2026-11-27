@@ -1,7 +1,7 @@
 # Number Reconciliation Report
 
 **Source TeX:** `revision/ICCI2026_revision/manuscript_revised.tex`  
-**Total cells/claims checked:** 174  
+**Total cells/claims checked:** 183  
 **MISMATCH count:** 1
 
 ## Explicit Reconciliation Checklist
@@ -74,6 +74,15 @@
 | Table IV (tab:teob_boot) | CVSS-only | average_precision | Obs. Diff | `+0.0845` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.CVSS-only.average_precision.observed_diff` | `+0.0845` | **MATCH** |
 | Table IV (tab:teob_boot) | CVSS-only | average_precision | 95% CI | `[-0.0029, 0.3204]` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.CVSS-only.average_precision.ci_95` | `[-0.0029, 0.3204]` | **MATCH** |
 | Table IV (tab:teob_boot) | CVSS-only | average_precision | Sig. | `No` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.CVSS-only.average_precision.significant_95` | `No` | **MATCH** |
+| Table IV (tab:teob_boot) | KEV-first | ndcg@10 | Obs. Diff | `+0.1765` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.KEV-first.ndcg@10.observed_diff` | `+0.1765` | **MATCH** |
+| Table IV (tab:teob_boot) | KEV-first | ndcg@10 | 95% CI | `[-0.0484, 0.4737]` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.KEV-first.ndcg@10.ci_95` | `[-0.0484, 0.4737]` | **MATCH** |
+| Table IV (tab:teob_boot) | KEV-first | ndcg@10 | Sig. | `No` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.KEV-first.ndcg@10.significant_95` | `No` | **MATCH** |
+| Table IV (tab:teob_boot) | KEV-first | recall@50 | Obs. Diff | `+0.2193` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.KEV-first.recall@50.observed_diff` | `+0.2193` | **MATCH** |
+| Table IV (tab:teob_boot) | KEV-first | recall@50 | 95% CI | `[0.0152, 0.4684]` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.KEV-first.recall@50.ci_95` | `[0.0152, 0.4684]` | **MATCH** |
+| Table IV (tab:teob_boot) | KEV-first | recall@50 | Sig. | `Yes` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.KEV-first.recall@50.significant_95` | `Yes` | **MATCH** |
+| Table IV (tab:teob_boot) | KEV-first | average_precision | Obs. Diff | `+0.0845` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.KEV-first.average_precision.observed_diff` | `+0.0845` | **MATCH** |
+| Table IV (tab:teob_boot) | KEV-first | average_precision | 95% CI | `[-0.0029, 0.3204]` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.KEV-first.average_precision.ci_95` | `[-0.0029, 0.3204]` | **MATCH** |
+| Table IV (tab:teob_boot) | KEV-first | average_precision | Sig. | `No` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.KEV-first.average_precision.significant_95` | `No` | **MATCH** |
 | Table IV (tab:teob_boot) | EPSS-only | ndcg@10 | Obs. Diff | `+0.1135` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.EPSS-only.ndcg@10.observed_diff` | `+0.1135` | **MATCH** |
 | Table IV (tab:teob_boot) | EPSS-only | ndcg@10 | 95% CI | `[0.0000, 0.2593]` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.EPSS-only.ndcg@10.ci_95` | `[0.0000, 0.2593]` | **MATCH** |
 | Table IV (tab:teob_boot) | EPSS-only | ndcg@10 | Sig. | `No` | `experiments/revision/teob_evaluation.json` | `paired_stratified_bootstrap.EPSS-only.ndcg@10.significant_95` | `No` | **MATCH** |
