@@ -1,0 +1,29 @@
+{
+  "deciding_json": "experiments/revision/teob_evaluation.json",
+  "recompute_command": "python3 -m experiments.evaluate_temporal",
+  "json_metrics": {
+    "ndcg@10": 0.0948,
+    "precision@10": 0.1,
+    "recall@10": 0.0909,
+    "recall@50": 0.1818,
+    "recall@100": 0.1818,
+    "average_precision": 0.0449
+  },
+  "recomputed_unrounded": {
+    "ndcg@10": 0.09478836436955078,
+    "precision@10": 0.1,
+    "recall@10": 0.09090909090909091,
+    "recall@50": 0.18181818181818182,
+    "recall@100": 0.18181818181818182,
+    "average_precision": 0.04486987620173957
+  },
+  "recomputed_4dp": {
+    "ndcg@10": 0.0948,
+    "precision@10": 0.1,
+    "recall@10": 0.0909,
+    "recall@50": 0.1818,
+    "recall@100": 0.1818,
+    "average_precision": 0.0449
+  },
+  "abstract_and_tab3_match": true
+}
